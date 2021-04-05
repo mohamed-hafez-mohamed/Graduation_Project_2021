@@ -1,6 +1,6 @@
 # Graduation_Project_2021
 
-Internal Bootloader SW Release
+The First Release For FOTA Project R1.0
 
 
 
