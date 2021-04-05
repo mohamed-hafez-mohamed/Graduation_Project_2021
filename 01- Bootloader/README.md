@@ -1,4 +1,7 @@
 # Graduation_Project_2021
 
-Bootloader Internal SW Release
+Internal Bootloader SW Release R1.0
+
+
+
 
