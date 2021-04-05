@@ -1,7 +1,7 @@
 # OTA/FOTA
 
 <p align="center">
-  <img width="600" src="Images/Head_image.png">
+  <img width="600" src="04- Images/Head_image.png">
 </p>
 
 
@@ -54,9 +54,9 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 ### Connection between Server and gateway
 
 <p align="left">
-  <img width="350" src="Images/Node_MCU.png">
+  <img width="350" src="04- Images/Node_MCU.png">
   <d align="right">
-  <img width="350" src="Images/Fire_base.png">
+  <img width="350" src="04- Images/Fire_base.png">
 </d>
 </p>
 
@@ -69,7 +69,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 ### Bootloader Design
 
 <p align="center">
-  <img width="600" src="Images/Bootloader.png">
+  <img width="600" src="04- Images/Bootloader.png">
 </p>
 
 * A boot-loader is an application whose primary purpose is to allow a systems software to be updated. 
@@ -89,7 +89,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 ### Software Security
 
 <p align="center">
-  <img width="700" src="Images/Encry&Decry_process.png">
+  <img width="700" src="04- Images/Encry&Decry_process.png">
 </p>
 
 **The following countermeasures should be applied to secure firmware:**
