@@ -4,8 +4,8 @@
  /* date        : 4/3/2021                          */
 /****************************************************/
 
-#ifndef STD_TYPES_H
-#define STD_TYPES_H 
+#ifndef  PLATFORM_TYPES_H
+#define  PLATFORM_TYPES_H 
 
 /* Published information */
 #define    PLATFORM_MODULE_ID                     0x030u
