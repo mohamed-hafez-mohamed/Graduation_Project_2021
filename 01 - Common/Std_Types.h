@@ -68,7 +68,7 @@ typedef struct {
 transformer class to which the error belongs */
 typedef struct {
 	uint8            errorCode ;
-	transformerClass transformerClass ;
+	Std_TransformerClass transformerClass ;
 }Std_TransformerError;
 
 
