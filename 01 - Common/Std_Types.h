@@ -42,11 +42,11 @@
 #define STD_OFF 0x00u
 
 /* Std_TransformerClass range */
-#STD_TRANSFORMER_UNSPECIFIED      0x00  //Transformer of a unspecified transformer class.
-#STD_TRANSFORMER_SERIALIZER       0x01  //Transformer of a serializer class.
-#STD_TRANSFORMER_SAFETY           0x02  //Transformer of a safety class.
-#STD_TRANSFORMER_SECURITY         0x03  //Transformer of a security class.
-#STD_TRANSFORMER_CUSTOM           0xFF  //Transformer of a custom class not standardized by AUTOSAR
+#define STD_TRANSFORMER_UNSPECIFIED      0x00  //Transformer of a unspecified transformer class.
+#define STD_TRANSFORMER_SERIALIZER       0x01  //Transformer of a serializer class.
+#define STD_TRANSFORMER_SAFETY           0x02  //Transformer of a safety class.
+#define STD_TRANSFORMER_SECURITY         0x03  //Transformer of a security class.
+#define STD_TRANSFORMER_CUSTOM           0xFF  //Transformer of a custom class not standardized by AUTOSAR
 
 /* 8.1 Type definitions */
 
