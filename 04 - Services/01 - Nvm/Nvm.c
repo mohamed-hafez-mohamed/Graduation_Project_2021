@@ -87,7 +87,7 @@ Std_ReturnType Nvm_ReadBlock(uint8 *Cpy_DataPtr , uint16 Cpy_DataLength)
 	
 	for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength ; Local_Counter++)
 	{
-		Cpy_DataPtr[Local_Counter] = (* (uint8 *) Global_ReadAddress ) ;
+		Cpy_DataPtr[Local_Counter] = (* (volatile uint8 *) Global_ReadAddress ) ;
 		Global_ReadAddress++;
 	}
 	
