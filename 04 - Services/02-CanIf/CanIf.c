@@ -122,7 +122,7 @@ uint8 CanIf_uint8Transmit_1Byte( uint8 Copy_uint8Data, uint8 Copy_uint8NodeID)
 		
 	/*static configuration for all sent messages*/
 	/*
-	DLC = 8 BYTE
+	DLC = 1 BYTE
 	IDE = 0
 	RTR = 0
 	CANX = CAN1
