@@ -38,6 +38,12 @@ Std_ReturnType Rte_WriteDecryptedDataBuffer (uint8 *Cpy_DecryptedDataBufferPtr);
 Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr);
 
 /**************************************************************************/
+/*                         DecryptedDataBufferFlag Port                   */
+/**************************************************************************/
+Std_ReturnType Rte_WriteDecryptedDataBufferFlag (BufferFlagType Cpy_DecryptedDataBufferFlag);
+Std_ReturnType Rte_ReadDecryptedDataBufferFlag (BufferFlagType *Cpy_DecryptedDataBufferFlag);
+
+/**************************************************************************/
 /*                         SystemState Port                               */
 /**************************************************************************/
 Std_ReturnType Rte_WriteSystemState (SystemStateType Cpy_SystemState);

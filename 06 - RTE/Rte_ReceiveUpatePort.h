@@ -12,7 +12,7 @@
 /*                         Provided Ports                                 */
 /**************************************************************************/
 #define    RTE_WRITE_CRC_VALUE         Rte_WriteCrc
-#deine     RTE_WRITE_CODE_SIZE         Rte_WriteCodeSize
+#define    RTE_WRITE_CODE_SIZE         Rte_WriteCodeSize
 #define    RTE_WEITE_DYCREPTION_KEY    Rte_WriteDecryptionKey
 #define    RTE_WRITE_SYSTEM_STATE      Rte_WriteSystemState
 

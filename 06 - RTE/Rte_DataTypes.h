@@ -6,7 +6,6 @@
 #ifndef RTE_DATA_TYPES_H
 #define RTE_DATA_TYPES_H
 
-#include "Rte.h"
 
 typedef     uint8    SystemStateType ;
 
@@ -19,7 +18,10 @@ typedef     uint8    SystemStateType ;
 #define    SYS_DONE_UPDATE             0x5u
 
 
+typedef     uint8    BufferFlagType ;
 
-
+/* SystemStateType  values */
+#define    BUFFER_NOT_SET                    0x0u
+#define    BUFFER_SET                        0x1u
 
 #endif
