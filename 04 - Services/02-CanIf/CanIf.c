@@ -55,9 +55,13 @@ uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8N
 	
 	          break;
 		 
-		default   :		
+		default   :
+					                  	/*wrong input node id */
+
+           Local_ReturnError = E_NOT_OK ;// error status = not  ok 
+		                              
+	  return  Local_ReturnError ;   //return error stats				
 			
-	                  	/*wrong input node id */
 		        break;						
                                                  /*END OF SWITCH CASE*/
 	}
