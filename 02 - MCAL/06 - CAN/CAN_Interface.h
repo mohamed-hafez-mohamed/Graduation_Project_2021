@@ -187,6 +187,19 @@ typedef struct {
 }CanRxMsg ;
 
 
+/*
+This container contains the configuration parameters 
+and sub containers of the  Can HW.
+/*Not used in this version*/
+volatile typedef struct 
+{
+    /*Reference to CAN Controller */
+    CAN_TypeDef*  CanControllerBaseAddress;
+    /*This container contains the configuration  */
+    CAN_InitTypeDef*  CanHwdefRef;
+	
+} Can_ConfigType;
+
 
 /***********************************************************************************/
                       /***FUNCTIONS PROTOTYPES***/
@@ -201,15 +214,17 @@ typedef struct {
 							
 *pos-Cond   : None
 
-*Input      : canx struct "x=1,2,..."  according to how many can in controller
+*Input      : -canx struct "x=1,2,..."  according to how many can in controller
               CAN InitStruct to specifiy the configuration
+             fifo number we want to receive the message located on itvoid
+               message fram struct address that will contain reveived message	
+*Output     :
 
-*Output     : void
 
 *Return     : void
 
 ************************************************************************************/
-void CAN_VoidInit(CAN_TypeDef* CANx, CAN_InitTypeDef* CANInitStruct);
+void CAN_VoidInit(CAN_TypeDef* CANx, CAN_InitTypeDef* CANInitStruct) ;
 /************************************************************************************
 
 *Name       :   CAN_VoidFilterSet
@@ -221,7 +236,7 @@ void CAN_VoidInit(CAN_TypeDef* CANx, CAN_InitTypeDef* CANInitStruct);
 							
 *pos-Cond   : None
 
-*Input      : defined filter intit structure address 
+*Input      : None 
 
 *Output     : void
 

@@ -16,7 +16,18 @@
 #define CAN_CFG_H
 
 #include "Std_Types.h"
-#include "CAN_Private.h"
+#include "CAN_Interface.h"
+
+
+/***********************************************************************************/
+                      /*** HW Macros***/
+/***********************************************************************************/						
+
+#define MAX_CONTROLLERS_NUMBER    (2U)                  
+#define USED_CONTROLLERS_NUMBER   (1U)
+#define USED_FILTERS_NUMBERS      (2U)
+
+
 
 
 /*
@@ -68,6 +79,8 @@ typedef struct
   FunctionalState CAN_FilterActivation; // specify the state of the filter "ENABLE OR DISABLE"
 	
 } CAN_FilterInitTypeDef;
+
+
 
 
 #endif
