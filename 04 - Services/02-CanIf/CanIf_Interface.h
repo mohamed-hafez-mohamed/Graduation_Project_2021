@@ -1,5 +1,5 @@
 /*******************************************************************************
-**  FILENAME     : CanIF_Interface.h         			                              **
+**  FILENAME     : ComM_Interface.h         			                              **
 **                                                                            **
 **  VERSION      : 1.0.0                                                      **
 **                                                                            **
@@ -26,9 +26,9 @@
 #include "CanIf_Private.h"
 #include "CanIf_cfg.h"
 
-
-/************************************************************************************
-
+/***********************************************************************************/
+                      /***FUNCTIONS PROTOTYPES***/
+/***********************************************************************************
 *Name       :   CanIf_uint8TransmitData
 
 *Description: *Send an array of Data according to static configuration

@@ -1,5 +1,5 @@
 /*******************************************************************************
-**  FILENAME     : CanIf.c         			                                        **
+**  FILENAME     : ComM.c         			                                        **
 **                                                                            **
 **  VERSION      : 1.0.0                                                      **
 **                                                                            **
@@ -32,7 +32,10 @@ uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8N
 	/* Check input pionter */
 	if (NULL_PTR == Copy_uint8DataPtr)
 	{
-		Local_ReturnError = E_NOT_OK ;
+		Local_ReturnError = E_NOT_OK ;// error status = not  ok 
+		                              
+	  return  Local_ReturnError ;   //return error stats
+
 	}
 	
 	/*Init transmit struct*/
@@ -71,10 +74,10 @@ uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8N
   TxMessage.RTR = CONFOIG_RTR ;
   uint8 Local_uint8FramsNumber = (uint8)(Copy_uint8DataLenght / FRAME_DATA_BYTES ) ;	
 	
-for (uint8 Round_Counter = ZERO; Round_Counter < Local_uint8FramsNumber ; Round_Counter++) // send 8 byte in each round  
+for (uint8 Round_Counter = 0; Round_Counter < Local_uint8FramsNumber ; Round_Counter++) // send 8 byte in each round  
     {
 			/*fetch Data from input buffer byte by byte*/
-			for( uint8 Data_Counter = ZERO ; Data_Counter < EIGTH_ROUNDS ; Data_Counter++)	
+			for( uint8 Data_Counter = 0 ; Data_Counter < EIGTH_ROUNDS ; Data_Counter++)	
 	    {
 				
        TxMessage.DATA[Data_Counter] = Copy_uint8DataPtr[Data_Counter] ;
@@ -116,13 +119,16 @@ uint8 CanIf_uint8Transmit_1Byte( uint8 Copy_uint8Data, uint8 Copy_uint8NodeID)
 		default   :		
 			
 			   Local_ReturnError = E_NOT_OK;	                  	/*wrong input node id */
+			   
+			   return Local_ReturnError ;
+
 		        break;						
                                                  /*END OF SWITCH CASE*/
 	}
 		
 	/*static configuration for all sent messages*/
 	/*
-	DLC = 1 BYTE
+	DLC = 8 BYTE
 	IDE = 0
 	RTR = 0
 	CANX = CAN1
@@ -144,7 +150,7 @@ uint8 CanIf_uint8Receive_1Byte(void)
 /* CAN messge   struct  for  receiving*/
 CanRxMsg  RxMessage;
 	/*init received byte as zero*/
-RxMessage.DATA[BYTE_ZERO] = ZERO ; 	
+RxMessage.DATA[0] = 0 ; 	
 
 /*static configuration for all sent messages*/
 	/*
@@ -165,8 +171,12 @@ uint8 CanIf_uint8Receive_Struct(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber, CanR
 	/* Check input pionter */
 	if (NULL_PTR == CANx)
 	{
-		Local_ReturnError = E_NOT_OK ;
+		Local_ReturnError = E_NOT_OK ; // error status = not  ok 
+		
+		return  Local_ReturnError ;    //return error stats
+
 	}
+	
 /*static configuration for all sent messages*/
 	/*
  FIFO NUMBER = FIFO 0
@@ -186,7 +196,10 @@ uint8 CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage )
 	/* Check input pionter */
 	if (NULL_PTR == CANx)
 	{
-		Local_ReturnError = E_NOT_OK ;
+		Local_ReturnError = E_NOT_OK ; // error status = not  ok  
+		                               
+		return  Local_ReturnError ;    //return error stats
+		
 	}
 	
 /*static configuration for all sent messages*/
@@ -195,7 +208,7 @@ uint8 CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage )
 */
   CAN_VoidTransmit( CANx , &TxMessage) ;
 
-		return Local_ReturnError ;
+	return Local_ReturnError ;
 
 }
 

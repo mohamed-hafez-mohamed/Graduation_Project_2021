@@ -1,5 +1,5 @@
 /*******************************************************************************
-**  FILENAME     : CanIf_Private.h         			                              **
+**  FILENAME     : ComM_Private.h         			                              **
 **                                                                            **
 **  VERSION      : 1.0.0                                                      **
 **                                                                            **
@@ -35,7 +35,6 @@
 #define FRAME_DATA_BYTES             8
 #define ONE_BTYE                     1
 #define BYTE_ZERO                    0
-#define ZERO                         0 
 
 
 
