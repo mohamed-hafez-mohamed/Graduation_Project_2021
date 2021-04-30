@@ -88,7 +88,7 @@ Std_ReturnType EcuM_unit8StartupPeriph()
 
 		/*******************  CAN1 INTIT FILTERS  *******************/	
 	  CAN_VoidFilterSet( & CAN_FilterInitStruct_1 ); // ID = OXO3
-//   CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
+         CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
 	
 		/*******************  UART1 INTI HW  *******************/		
 	
