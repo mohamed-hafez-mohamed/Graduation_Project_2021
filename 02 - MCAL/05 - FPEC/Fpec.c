@@ -15,6 +15,9 @@
 Std_ReturnType FPEC_WriteHalfWord( uint32 copy_u32Address, uint16 copy_u16Data)
 {
 	Std_ReturnType local_u8Error ; 
+	/* Wait if read or write operation is under execution */
+	while (GET_BIT ((FPEC -> FLASH_SR ), BSY ));
+	
 	/* Check on the lock bit */
 	if (GET_BIT ((FPEC -> FLASH_CR ), LOCK )){
 		/* if FPEC locked perform a lock sequence */
@@ -47,6 +50,9 @@ Std_ReturnType FPEC_WriteHalfWord( uint32 copy_u32Address, uint16 copy_u16Data)
 
 void FPEC_voidErasePage( uint8 copy_u8PageNumber )
 { 
+	/* Wait if read or write operation is under execution */
+	while (GET_BIT ((FPEC -> FLASH_SR ), BSY ));
+	
 	/* Check on the lock bit */
 	if (GET_BIT ((FPEC -> FLASH_CR ), LOCK )){
 		/* if FPEC locked perform a lock sequence */

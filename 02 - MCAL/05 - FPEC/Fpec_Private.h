@@ -19,7 +19,7 @@ typedef struct {
 	volatile uint32 FLASH_WRPR ;
 }FPEC_t ;
 
-#define   FPEC    ((FPEC_t *)0x40022000)
+#define   FPEC    ((volatile FPEC_t *)0x40022000)
 
 /** Register bits **/
 
