@@ -16,8 +16,8 @@
 #include "Fpec_Interface.h"
 #include "RCC_interface.h"
 
-uint32 Global_WriteAddress ; 
-uint32 Global_ReadAddress ;
+volatile uint32 Global_WriteAddress ; 
+volatile uint32 Global_ReadAddress ;
 
 void Nvm_voidInitVariables (void)
 {
@@ -38,7 +38,7 @@ Std_ReturnType Nvm_WriteBlock(const uint8 *Cpy_DataPtr , uint16 Cpy_DataLength )
 { 
 	/* Local Variables */
 	Std_ReturnType Local_ReturnError = E_OK;
-	uint8 Local_PageNumber = INITIAL_ZERO ;
+	volatile uint32 Local_PageNumber = INITIAL_ZERO ;
 	uint16 Local_Word = INITIAL_ZERO ;
 	uint16 Local_Counter = INITIAL_ZERO;
 	
@@ -49,19 +49,21 @@ Std_ReturnType Nvm_WriteBlock(const uint8 *Cpy_DataPtr , uint16 Cpy_DataLength )
 	}
 	else 
 	{
-		/* Get page number */
-		Local_PageNumber = (uint8) (( Global_WriteAddress - NVM_FLASH_START_ADDRESS ) /FPEC_FLASH_PAGE_SIZE );
 		
-		/* Erase the page first */ 
-		FPEC_voidErasePage (Local_PageNumber) ;
-		
-		/* Write to flash */
-		for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength  ;  Local_Counter+= READ_ADDRESS_STEP )
-		{
-			Local_Word = Cpy_DataPtr[Local_Counter] | (Cpy_DataPtr[Local_Counter+1] << SHIFT_RIGHT_8) ;
-			FPEC_WriteHalfWord (Global_WriteAddress , Local_Word);
-			Global_WriteAddress += READ_ADDRESS_STEP ;
-		}
+	}
+	
+	/* Get page number */
+	Local_PageNumber = ( Global_WriteAddress - NVM_FLASH_START_ADDRESS ) / FPEC_FLASH_PAGE_SIZE ;
+	
+	/* Erase the page first */ 
+	FPEC_voidErasePage ((uint8)Local_PageNumber) ;
+	
+	/* Write to flash */
+	for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength  ;  Local_Counter+= READ_ADDRESS_STEP )
+	{
+		Local_Word = Cpy_DataPtr[Local_Counter] | (Cpy_DataPtr[Local_Counter+1] << SHIFT_RIGHT_8) ;
+		FPEC_WriteHalfWord (Global_WriteAddress , Local_Word);
+		Global_WriteAddress += READ_ADDRESS_STEP ;
 	}
 	
 	return Local_ReturnError ;
@@ -80,11 +82,13 @@ Std_ReturnType Nvm_ReadBlock(uint8 *Cpy_DataPtr , uint16 Cpy_DataLength)
 	}
 	else 
 	{
-		for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength ; Local_Counter++)
-		{
-			Cpy_DataPtr[Local_Counter] = (* (volatile uint8 *) Global_ReadAddress ) ;
-			Global_ReadAddress++;
-		}
+		
+	}
+	
+	for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength ; Local_Counter++)
+	{
+		Cpy_DataPtr[Local_Counter] = (* (uint8 *) Global_ReadAddress ) ;
+		Global_ReadAddress++;
 	}
 	
 	return Local_ReturnError ;
