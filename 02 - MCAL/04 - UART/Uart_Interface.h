@@ -26,7 +26,7 @@ typedef enum {
 	MAX_TIMERS
 }UART_Ch_t;
 
-typedef void (*Uart_pFunc_t)(void);
+typedef void (*Uart_pFunc_t)(uint8 );
 
 
 
@@ -41,7 +41,7 @@ void Uart_voidInit(void);
   * UART_voidSendDataSynch - > send a character or string to uart  
   * I/P : UART_Ch_t   /  pointer to (uint8)
 */
-void Uart_voidSendDataSynch(UART_Ch_t copy_ch , uint8 *copy_u8data);
+void Uart_voidTxSynch(UART_Ch_t copy_ch , uint8 *copy_u8data);
 
 /* 
   * UART_voidRecDataSynch - > receive a character or string to uart  

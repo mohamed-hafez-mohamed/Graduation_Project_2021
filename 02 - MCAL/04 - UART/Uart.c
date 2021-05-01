@@ -93,7 +93,7 @@ void Uart_voidRxSynch (UART_Ch_t copy_ch , uint8 *copy_u8data , uint8 copy_u8Dat
 {
 	while (copy_u8DataLength--){
 		while (GET_BIT ((*(UART[copy_ch]+SR)) , RXNE) == 0);
-		*copy_u8data = *(UART[copy_ch]+DR);
+		*copy_u8data = (uint8) (*(UART[copy_ch]+DR));
 		copy_u8data++;
 	}
 }
@@ -116,6 +116,39 @@ void Uart_voidRxAsynch(UART_Ch_t copy_ch , Uart_pFunc_t func )
 void Uart_voidRxDisableInterrupt (UART_Ch_t copy_ch)
 {
 	CLR_BIT((*(UART[copy_ch]+CR1)) , RXNEIE);
+}
+
+void USART1_IRQHandler(void)
+{
+	// Determine what cause interrupt.
+   if(GET_BIT( (*(UART[UART1]+SR)), RXNE))
+	{
+		// Clear Flag.
+		CLR_BIT( (*(UART[UART1]+SR)), RXNE);
+		Uart_CallBack[UART1]( (uint8)(*(UART[UART1]+DR)));
+	}
+}
+
+void USART2_IRQHandler(void)
+{
+	// Determine what cause interrupt.
+   if(GET_BIT( (*(UART[UART2]+SR)), RXNE))
+	{
+		// Clear Flag.
+		CLR_BIT( (*(UART[UART2]+SR)), RXNE);
+		Uart_CallBack[UART2]((uint8) (*(UART[UART2]+DR)));
+	}
+}
+
+void USART3_IRQHandler(void)
+{
+	// Determine what cause interrupt.
+   if(GET_BIT( (*(UART[UART3]+SR)), RXNE))
+	{
+		// Clear Flag.
+		CLR_BIT( (*(UART[UART3]+SR)), RXNE);
+		Uart_CallBack[UART3]( (uint8)(*(UART[UART3]+DR)));
+	}
 }
 
 
