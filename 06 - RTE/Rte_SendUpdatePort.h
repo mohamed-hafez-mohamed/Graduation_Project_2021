@@ -19,6 +19,7 @@
 /**************************************************************************/
 #define    RTE_READ_CRC_VALUE                  Rte_ReadCrc
 #define    RTE_READ_CODE_SIZE                  Rte_ReadCodeSize
+#define    RTE_READ_NODE_ID                    Rte_ReadNodeId
 #define    RTE_READ_DECRYPTED_DATA_BUFFER      Rte_ReadDecryptedDataBuffer
 #define    RTE_READ_DECRYPTED_DATA_BUFFER_FLAG Rte_ReadDecryptedDataBufferFlag
 

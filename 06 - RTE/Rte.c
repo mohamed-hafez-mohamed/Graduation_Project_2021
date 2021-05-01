@@ -18,7 +18,7 @@ typedef    uint8   PortStateType  ;
 /* Rte Golable Variables */
 static uint32 Global_CrcValue                         = INITIAL_VALUE ;
 static uint16 Global_CodeSizeValue                    = INITIAL_VALUE ;
-static uint8 *Global_DecryptionKeyPtr                 = NULL_PTR ;
+static uint8  Global_NodeId                           = INITIAL_VALUE ;
 static uint8 *Global_DecryptedDataBufferPtr           = NULL_PTR ;
 static BufferFlagType Global_DecryptedDataBufferFlag  = INITIAL_VALUE ;
 static SystemStateType Global_SystemStateMachine      = INITIAL_VALUE ;
@@ -27,7 +27,7 @@ static SystemStateType Global_SystemStateMachine      = INITIAL_VALUE ;
 /* Rte protection flag */
 static PortStateType Global_CrcPortState                   = IDLE;
 static PortStateType Global_CodeSizePortState              = IDLE;
-static PortStateType Global_DecryptionKeyPortState         = IDLE;
+static PortStateType Global_NodeIdPortState                = IDLE;
 static PortStateType Global_DecryptedDataBufferState       = IDLE;
 static PortStateType Global_DecryptedDataBufferFlagState   = IDLE;
 static PortStateType Global_SystemStateMachineState        = IDLE;
@@ -120,20 +120,20 @@ Std_ReturnType Rte_ReadCodeSize (uint16 *Cpy_CodeSize)
 }
 
 /**************************************************************************/
-/*                         DecryptionKey Port                             */
+/*                         NodeId Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptionKey (uint8 *Cpy_DecryptionKeyPtr)
+Std_ReturnType Rte_WriteNodeId (uint8 Cpy_NodeId)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ((Global_DecryptionKeyPortState == IDLE) && (Cpy_DecryptionKeyPtr != NULL_PTR))
+	if (Global_NodeIdPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_DecryptionKeyPortState = BUSY ;
+		Global_NodeIdPortState = BUSY ;
 		/* Write the data to the port */
-		Global_DecryptionKeyPtr = Cpy_DecryptionKeyPtr ; 
+		Global_NodeId = Cpy_NodeId ; 
 		/* Unlock the port after done writing */
-		Global_DecryptionKeyPortState = IDLE ;
+		Global_NodeIdPortState = IDLE ;
 	}
 	else
 	{
@@ -142,18 +142,18 @@ Std_ReturnType Rte_WriteDecryptionKey (uint8 *Cpy_DecryptionKeyPtr)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadDecryptionKey (uint8 **Cpy_DecryptionKeyPtr)
+Std_ReturnType Rte_ReadNodeId (uint16 *Cpy_NodeId)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_DecryptionKeyPortState == IDLE) && (Cpy_DecryptionKeyPtr != NULL_PTR) )
+	if ( (Global_NodeIdPortState == IDLE) && (Cpy_NodeId != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_DecryptionKeyPortState = BUSY ;
+		Global_NodeIdPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_DecryptionKeyPtr) = Global_DecryptionKeyPtr ; 
+		 (*Cpy_NodeId) = Global_NodeId ; 
 		/* Unlock the port after done writing */
-		Global_DecryptionKeyPortState = IDLE ;
+		Global_NodeIdPortState = IDLE ;
 	}
 	else
 	{
@@ -161,6 +161,8 @@ Std_ReturnType Rte_ReadDecryptionKey (uint8 **Cpy_DecryptionKeyPtr)
 	}
 	return Local_ReturnError ;
 }
+
+
 
 /**************************************************************************/
 /*                         DecryptedDataBuffer Port                       */

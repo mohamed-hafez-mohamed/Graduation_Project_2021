@@ -26,10 +26,10 @@ Std_ReturnType Rte_WriteCodeSize (uint16 Cpy_CodeSize);
 Std_ReturnType Rte_ReadCodeSize (uint16 *Cpy_CodeSize);
 
 /**************************************************************************/
-/*                         DecryptionKey Port                             */
+/*                         NodeId Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptionKey (uint8 *Cpy_DecryptionKeyPtr);
-Std_ReturnType Rte_ReadDecryptionKey (uint8 **Cpy_DecryptionKeyPtr);
+Std_ReturnType Rte_WriteNodeId (uint8 Cpy_NodeId);
+Std_ReturnType Rte_ReadNodeId (uint16 *Cpy_NodeId);
 
 /**************************************************************************/
 /*                         DecryptedDataBuffer Port                       */
