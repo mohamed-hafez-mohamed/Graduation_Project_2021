@@ -49,21 +49,20 @@ Std_ReturnType Nvm_WriteBlock(const uint8 *Cpy_DataPtr , uint16 Cpy_DataLength )
 	}
 	else 
 	{
+	
+		/* Get page number */
+		Local_PageNumber = ( Global_WriteAddress - NVM_FLASH_START_ADDRESS ) / FPEC_FLASH_PAGE_SIZE ;
 		
-	}
-	
-	/* Get page number */
-	Local_PageNumber = ( Global_WriteAddress - NVM_FLASH_START_ADDRESS ) / FPEC_FLASH_PAGE_SIZE ;
-	
-	/* Erase the page first */ 
-	FPEC_voidErasePage ((uint8)Local_PageNumber) ;
-	
-	/* Write to flash */
-	for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength  ;  Local_Counter+= READ_ADDRESS_STEP )
-	{
-		Local_Word = Cpy_DataPtr[Local_Counter] | (Cpy_DataPtr[Local_Counter+1] << SHIFT_RIGHT_8) ;
-		FPEC_WriteHalfWord (Global_WriteAddress , Local_Word);
-		Global_WriteAddress += READ_ADDRESS_STEP ;
+		/* Erase the page first */ 
+		FPEC_voidErasePage ((uint8)Local_PageNumber) ;
+		
+		/* Write to flash */
+		for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength  ;  Local_Counter+= READ_ADDRESS_STEP )
+		{
+			Local_Word = Cpy_DataPtr[Local_Counter] | (Cpy_DataPtr[Local_Counter+1] << SHIFT_RIGHT_8) ;
+			FPEC_WriteHalfWord (Global_WriteAddress , Local_Word);
+			Global_WriteAddress += READ_ADDRESS_STEP ;
+		}
 	}
 	
 	return Local_ReturnError ;
@@ -82,15 +81,12 @@ Std_ReturnType Nvm_ReadBlock(uint8 *Cpy_DataPtr , uint16 Cpy_DataLength)
 	}
 	else 
 	{
-		
+		for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength ; Local_Counter++)
+		{
+			Cpy_DataPtr[Local_Counter] = (* (uint8 *) Global_ReadAddress ) ;
+			Global_ReadAddress++;
+		}
 	}
-	
-	for (Local_Counter = INITIAL_ZERO ; Local_Counter < Cpy_DataLength ; Local_Counter++)
-	{
-		Cpy_DataPtr[Local_Counter] = (* (uint8 *) Global_ReadAddress ) ;
-		Global_ReadAddress++;
-	}
-	
 	return Local_ReturnError ;
 
 }
