@@ -32,25 +32,72 @@ typedef void (*Uart_pFunc_t)(uint8 );
 
 /********************* Prototypes **********************/
 
-/* 
-  * UART_voidInit - > Intialize UART module  
-*/
+/*************************************************************************
+ * Name : Uart_voidInit
+ * Parameter in : -
+ * Parameter out : -
+ * Parameter in/out : -
+ * Reentrancy: Non reentrant
+ * Sync
+ * Description: Initialize the Uart modules according to the Uart_Lcg.c file
+ ***************************************************************************/
 void Uart_voidInit(void);
 
-/* 
-  * UART_voidSendDataSynch - > send a character or string to uart  
-  * I/P : UART_Ch_t   /  pointer to (uint8)
-*/
+/*************************************************************************
+ * Name : Uart_voidTxSynch
+ * Parameter in : Channel of the UART (UART_Ch_t)
+ * Parameter out : -
+ * Parameter in/out : Pointer to uint8 (the data)
+ * Reentrancy: Non reentrant
+ * Sync
+ * Description: Send array of data 
+ ***************************************************************************/
 void Uart_voidTxSynch(UART_Ch_t copy_ch , uint8 *copy_u8data);
 
-/* 
-  * UART_voidRecDataSynch - > receive a character or string to uart  
-  * I/P : UART_Ch_t   /  pointer to (uint8)  /   (uint8) length of data 
-*/
+/*************************************************************************
+ * Name : Uart_voidTxByteSynch
+ * Parameter in : Channel of the UART (UART_Ch_t)
+ *                Byte of Data (uint8) 
+ * Parameter out : -
+ * Parameter in/out : -
+ * Reentrancy: Non reentrant
+ * Sync
+ * Description: Send Byte of Data 
+ ***************************************************************************/
+void Uart_voidTxByteSynch(UART_Ch_t copy_ch , uint8 copy_u8data);
+
+/*************************************************************************
+ * Name : Uart_voidRxSynch
+ * Parameter in : Channel of the UART (UART_Ch_t)
+ *                Length of the data to be received 
+ * Parameter out : -
+ * Parameter in/out : Pointer to uint8 (the data)
+ * Reentrancy: Non reentrant
+ * Sync
+ * Description: Receive Number of bytes 
+ ***************************************************************************/
 void Uart_voidRxSynch (UART_Ch_t copy_ch , uint8 *copy_u8data , uint8 copy_u8DataLength);
 
+/*************************************************************************
+ * Name : Uart_voidRxAsynch
+ * Parameter in : Channel of the UART (UART_Ch_t
+ * Parameter out : -
+ * Parameter in/out : Callback function for the uart receive interrupt (Uart_pFunc_t)
+ * Reentrancy: Non reentrant
+ * Async
+ * Description: Receive Byte Asynchronous 
+ ***************************************************************************/
 void Uart_voidRxAsynch(UART_Ch_t copy_ch , Uart_pFunc_t func );
 
+/*************************************************************************
+ * Name : Uart_voidRxDisableInterrupt
+ * Parameter in : -
+ * Parameter out : -
+ * Parameter in/out : -
+ * Reentrancy: Non reentrant
+ * Sync
+ * Description: Disable the receive interrupt
+ ***************************************************************************/
 void Uart_voidRxDisableInterrupt (UART_Ch_t copy_ch);
 
 
