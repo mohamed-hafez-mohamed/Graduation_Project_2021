@@ -8,9 +8,9 @@
 
 /*************** Regsiters defintions **************/
 volatile uint32 *UART[UART_MAX_CH] = {
-	(uint32 *) (0x40013800) ,    //APB2
-	(uint32 *) (0x40004400) ,    //APB1
-	(uint32 *) (0x40004800)      //APB1
+	(volatile uint32 *) (0x40013800) ,    //APB2
+	(volatile uint32 *) (0x40004400) ,    //APB1
+	(volatile uint32 *) (0x40004800)      //APB1
 };
 
 /*** Registers offsets ***/
