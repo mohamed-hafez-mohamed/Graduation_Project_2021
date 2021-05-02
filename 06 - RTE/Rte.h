@@ -22,8 +22,8 @@ Std_ReturnType Rte_ReadCrc (uint32 *Cpy_Crc);
 /**************************************************************************/
 /*                         CodeSize Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCodeSize (uint16 Cpy_CodeSize);
-Std_ReturnType Rte_ReadCodeSize (uint16 *Cpy_CodeSize);
+Std_ReturnType Rte_WriteCodeSize (uint32 Cpy_CodeSize);
+Std_ReturnType Rte_ReadCodeSize (uint32 *Cpy_CodeSize);
 
 /**************************************************************************/
 /*                         NodeId Port                                  */

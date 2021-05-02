@@ -17,7 +17,7 @@ typedef    uint8   PortStateType  ;
 
 /* Rte Golable Variables */
 static uint32 Global_CrcValue                         = INITIAL_VALUE ;
-static uint16 Global_CodeSizeValue                    = INITIAL_VALUE ;
+static uint32 Global_CodeSizeValue                    = INITIAL_VALUE ;
 static uint8  Global_NodeId                           = INITIAL_VALUE ;
 static uint8 *Global_DecryptedDataBufferPtr           = NULL_PTR ;
 static BufferFlagType Global_DecryptedDataBufferFlag  = INITIAL_VALUE ;
@@ -79,7 +79,7 @@ Std_ReturnType Rte_ReadCrc (uint32 *Cpy_Crc)
 /**************************************************************************/
 /*                         CodeSize Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCodeSize (uint16 Cpy_CodeSize)
+Std_ReturnType Rte_WriteCodeSize (uint32 Cpy_CodeSize)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -99,7 +99,7 @@ Std_ReturnType Rte_WriteCodeSize (uint16 Cpy_CodeSize)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadCodeSize (uint16 *Cpy_CodeSize)
+Std_ReturnType Rte_ReadCodeSize (uint32 *Cpy_CodeSize)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
