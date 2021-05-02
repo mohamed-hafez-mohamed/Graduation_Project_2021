@@ -36,6 +36,9 @@ Std_ReturnType FPEC_WriteHalfWord( uint32 copy_u32Address, uint16 copy_u16Data)
 	
 	/* Disable PG */
 	CLR_BIT ((FPEC -> FLASH_CR ), PG );
+	
+	/* End of Operation*/
+	SET_BIT ((FPEC -> FLASH_SR ), EOP);
 
 	/* Check on Data */
 	if ((*(uint16 *)copy_u32Address) == copy_u16Data){
@@ -72,8 +75,14 @@ void FPEC_voidErasePage( uint8 copy_u8PageNumber )
 	/* Wait till the erase is done */
 	while (GET_BIT ((FPEC -> FLASH_SR ), BSY ));
 
+	/* End of Operation*/
+	SET_BIT ((FPEC -> FLASH_SR ), EOP);
+	
 	/* Disable erase for page */
 	CLR_BIT ((FPEC -> FLASH_CR ), PER );
+	
+	/* Lock Flash */
+	SET_BIT ((FPEC -> FLASH_CR ),LOCK);
 	
 }
 
@@ -96,5 +105,3 @@ void FPEC_voidMassErase(void)
 	while (GET_BIT ((FPEC -> FLASH_SR ), BSY ));
 
 }
-
-
