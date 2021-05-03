@@ -16,23 +16,65 @@ typedef    uint8   PortStateType  ;
 #define BUSY          0x1u
 
 /* Rte Golable Variables */
-static uint32 Global_CrcValue                         = INITIAL_VALUE ;
-static uint32 Global_CodeSizeValue                    = INITIAL_VALUE ;
-static uint8  Global_NodeId                           = INITIAL_VALUE ;
-static uint8 *Global_DecryptedDataBufferPtr           = NULL_PTR ;
-static BufferFlagType Global_DecryptedDataBufferFlag  = INITIAL_VALUE ;
-static SystemStateType Global_SystemStateMachine      = INITIAL_VALUE ;
+static uint32          Global_HeaderFlagValue            = INITIAL_VALUE ;
+static uint32          Global_CrcValue                   = INITIAL_VALUE ;
+static uint32          Global_CodeSizeValue              = INITIAL_VALUE ;
+static uint8           Global_NodeId                     = INITIAL_VALUE ;
+static uint8         * Global_DecryptedDataBufferPtr     = NULL_PTR ;
+static BufferFlagType  Global_DecryptedDataBufferFlag    = INITIAL_VALUE ;
+static SystemStateType Global_SystemStateMachine         = INITIAL_VALUE ;
 
 
 /* Rte protection flag */
-static PortStateType Global_CrcPortState                   = IDLE;
-static PortStateType Global_CodeSizePortState              = IDLE;
-static PortStateType Global_NodeIdPortState                = IDLE;
-static PortStateType Global_DecryptedDataBufferState       = IDLE;
-static PortStateType Global_DecryptedDataBufferFlagState   = IDLE;
-static PortStateType Global_SystemStateMachineState        = IDLE;
+static PortStateType Global_HeaderFlagState              = IDLE;
+static PortStateType Global_CrcPortState                 = IDLE;
+static PortStateType Global_CodeSizePortState            = IDLE;
+static PortStateType Global_NodeIdPortState              = IDLE;
+static PortStateType Global_DecryptedDataBufferState     = IDLE;
+static PortStateType Global_DecryptedDataBufferFlagState = IDLE;
+static PortStateType Global_SystemStateMachineState      = IDLE;
 
 
+/**************************************************************************/
+/*                         Header Flag Port                               */
+/**************************************************************************/
+Std_ReturnType Rte_WriteHeaderFlag(uint32  Cpy_HeaderFlag)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	if (Global_HeaderFlagState == IDLE)
+	{
+		/* Lock the port to write */
+		Global_HeaderFlagState = BUSY ;
+		/* Write the data to the port */
+		Global_HeaderFlagValue = Cpy_HeaderFlag; 
+		/* Unlock the port after done writing */
+		Global_HeaderFlagState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
+
+Std_ReturnType Rte_ReadHeaderFlag(uint32 *Cpy_HeaderFlag)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	if ( (Global_HeaderFlagState == IDLE) && (Cpy_HeaderFlag != NULL_PTR) )
+	{
+		/* Lock the port to write */
+		Global_HeaderFlagState = BUSY ;
+		/* Write the data to the port */
+		(*Global_HeaderFlagValue) = Global_DecryptedDataBufferFlag ; 
+		/* Unlock the port after done writing */
+		Global_HeaderFlagState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
 /**************************************************************************/
 /*                         Crc Port                                       */
 /**************************************************************************/

@@ -17,10 +17,12 @@ typedef     uint8    SystemStateType ;
 #define    SYS_SEND_UPDATE             0x4u
 #define    SYS_DONE_UPDATE             0x5u
 
-
+typedef     uint8    HeaderFlagType ;
+/* Header flag  values */
+#define    HEADER_NOT_SET                    0x0u
+#define    HEADER_SET                        0x1u
 typedef     uint8    BufferFlagType ;
-
-/* SystemStateType  values */
+/* Buffer flag  values */
 #define    BUFFER_NOT_SET                    0x0u
 #define    BUFFER_SET                        0x1u
 
