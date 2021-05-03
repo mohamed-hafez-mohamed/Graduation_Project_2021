@@ -76,7 +76,7 @@ void Uart_voidTxByteSynch(UART_Ch_t copy_ch , uint8 copy_u8data);
  * Sync
  * Description: Receive Number of bytes 
  ***************************************************************************/
-void Uart_voidRxSynch (UART_Ch_t copy_ch , uint8 *copy_u8data , uint8 copy_u8DataLength);
+void Uart_voidRxSynch (UART_Ch_t copy_ch , uint8 *copy_u8data , uint16 copy_u8DataLength);
 
 /*************************************************************************
  * Name : Uart_voidRxAsynch
