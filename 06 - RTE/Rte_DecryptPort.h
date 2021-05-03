@@ -14,6 +14,7 @@
 #define     RTE_WRITE_DECRYPTED_DATA_BUFFER         Rte_WriteDecryptedDataBuffer
 #define     RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG    Rte_WriteDecryptedDataBufferFlag
 #define     RTE_WRITE_SYSTEM_STATE                  Rte_WriteSystemState
+#define     RTE_WRITE_BUFFER_SIZE                   Rte_WriteDecryptedBufferSize
 
 
 /**************************************************************************/

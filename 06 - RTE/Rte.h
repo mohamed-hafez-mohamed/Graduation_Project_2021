@@ -13,15 +13,12 @@
 /* Proto types */
 
 /**************************************************************************/
-/*                         Header Flag Port                               */
-/**************************************************************************/
-Std_ReturnType Rte_WriteHeaderFlag(uint32  Cpy_HeaderFlag);
-Std_ReturnType Rte_ReadHeaderFlag (uint32 *Cpy_HeaderFlag);
-/**************************************************************************/
 /*                         Crc Port                                       */
 /**************************************************************************/
 Std_ReturnType Rte_WriteCrc (uint32 Cpy_Crc);
 Std_ReturnType Rte_ReadCrc (uint32 *Cpy_Crc);
+
+
 /**************************************************************************/
 /*                         CodeSize Port                                  */
 /**************************************************************************/
@@ -39,6 +36,12 @@ Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId);
 /**************************************************************************/
 Std_ReturnType Rte_WriteDecryptedDataBuffer (uint8 *Cpy_DecryptedDataBufferPtr);
 Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr);
+
+/**************************************************************************/
+/*                         DecryptedBufferSize Port                   */
+/**************************************************************************/
+Std_ReturnType Rte_WriteDecryptedBufferSize (uint16 Cpy_DecryptedufferSize);
+Std_ReturnType Rte_ReadDecryptedBufferSize (uint16 *Cpy_DecryptedufferSize);
 
 /**************************************************************************/
 /*                         DecryptedDataBufferFlag Port                   */
