@@ -14,7 +14,8 @@
 #define    RTE_WRITE_CRC_VALUE         Rte_WriteCrc
 #define    RTE_WRITE_CODE_SIZE         Rte_WriteCodeSize
 #define    RTE_WRITE_SYSTEM_STATE      Rte_WriteSystemState
-#define    RT_WRITE_NODE_ID            Rte_WriteNodeId
+#define    RTE_WRITE_NODE_ID           Rte_WriteNodeId
+#define    RTE_WRITE_HEADER_ACK_FLAG   Rte_WriteHeaderAckFlag
 
 
 /**************************************************************************/

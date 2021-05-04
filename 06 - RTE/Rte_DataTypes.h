@@ -18,7 +18,7 @@ typedef     uint8    SystemStateType ;
 #define    SYS_DONE_UPDATE             0x5u
 
 
-typedef     uint8    BufferFlagType ;
+typedef     uint8    FlagType ;
 
 /* SystemStateType  values */
 #define    BUFFER_NOT_SET                    0x0u

@@ -32,22 +32,22 @@ Std_ReturnType Rte_WriteNodeId (uint8 Cpy_NodeId);
 Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId);
 
 /**************************************************************************/
+/*                         HeaderAckFlag Port                   */
+/**************************************************************************/
+Std_ReturnType Rte_WriteHeaderAckFlag (FlagType Cpy_HeaderAckFlag);
+Std_ReturnType Rte_ReadHeaderAckFlag (FlagType *Cpy_HeaderAckFlag);
+
+/**************************************************************************/
 /*                         DecryptedDataBuffer Port                       */
 /**************************************************************************/
 Std_ReturnType Rte_WriteDecryptedDataBuffer (uint8 *Cpy_DecryptedDataBufferPtr);
 Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr);
 
 /**************************************************************************/
-/*                         DecryptedBufferSize Port                   */
-/**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedBufferSize (uint16 Cpy_DecryptedufferSize);
-Std_ReturnType Rte_ReadDecryptedBufferSize (uint16 *Cpy_DecryptedufferSize);
-
-/**************************************************************************/
 /*                         DecryptedDataBufferFlag Port                   */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBufferFlag (BufferFlagType Cpy_DecryptedDataBufferFlag);
-Std_ReturnType Rte_ReadDecryptedDataBufferFlag (BufferFlagType *Cpy_DecryptedDataBufferFlag);
+Std_ReturnType Rte_WriteDecryptedDataBufferFlag (FlagType Cpy_DecryptedDataBufferFlag);
+Std_ReturnType Rte_ReadDecryptedDataBufferFlag (FlagType *Cpy_DecryptedDataBufferFlag);
 
 /**************************************************************************/
 /*                         SystemState Port                               */
