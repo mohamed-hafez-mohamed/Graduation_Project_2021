@@ -19,8 +19,8 @@
 /**************************************************************************/
 /*                         Received Ports                                 */
 /**************************************************************************/
-#define    RTE_READ_CODE_SIZE         Rte_ReadCodeSize
-#define    RTE_READ_SYSTEM_STATE      Rte_ReadSystemState
-#define    RTE_READ_DECRYPTED_DATA_BUFFER_FLAG Rte_ReadDecryptedDataBufferFlag
+#define    RTE_READ_CODE_SIZE                    Rte_ReadCodeSize
+#define    RTE_READ_SYSTEM_STATE                 Rte_ReadSystemState
+#define    RTE_READ_DECRYPTED_DATA_BUFFER_FLAG   Rte_ReadDecryptedDataBufferFlag
 
 #endif

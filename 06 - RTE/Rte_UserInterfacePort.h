@@ -12,12 +12,14 @@
 /*                         Provided Ports                                 */
 /**************************************************************************/
 #define     RTE_WRITE_SYSTEM_STATE             Rte_WriteSystemState
-
+#define     RTE_WRITE_USER_RESPONSE            Rte_WriteUserResponse
 
 /**************************************************************************/
 /*                         Received Ports                                 */
 /**************************************************************************/
-#define    RTE_READ_SYSTEM_STATE      Rte_ReadSystemState
+#define    RTE_READ_SYSTEM_STATE        Rte_ReadSystemState
+#define    RTE_READ_DOWNLOAD_PROGRESS   Rte_ReadUpdateProgress
+
 
 
 #endif

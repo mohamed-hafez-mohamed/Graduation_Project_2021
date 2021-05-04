@@ -55,6 +55,17 @@ Std_ReturnType Rte_ReadDecryptedDataBufferFlag (FlagType *Cpy_DecryptedDataBuffe
 Std_ReturnType Rte_WriteSystemState (SystemStateType Cpy_SystemState);
 Std_ReturnType Rte_ReadSystemState (SystemStateType *Cpy_SystemState);
 
+/**************************************************************************/
+/*                         UserResponse Port                              */
+/**************************************************************************/
+Std_ReturnType Rte_WriteUserResponse (uint8 Cpy_UserResponse);
+Std_ReturnType Rte_ReadUserResponse (uint8 *Cpy_UserResponse);
+
+/**************************************************************************/
+/*                         UpdateProgress Port                            */
+/**************************************************************************/
+Std_ReturnType Rte_WriteUpdateProgress (uint8 Cpy_UpdateProgress);
+Std_ReturnType Rte_ReadUpdateProgress (uint8 *Cpy_UpdateProgress);
 
 
 
