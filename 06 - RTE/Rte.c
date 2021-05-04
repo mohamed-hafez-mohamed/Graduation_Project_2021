@@ -38,93 +38,6 @@ static PortStateType Global_SystemStateMachineState        = IDLE;
 static PortStateType Global_UserResponsePortState          = IDLE;
 static PortStateType Global_UpdateProgressPortState        = IDLE;
 
-
-/**************************************************************************/
-/*                         Crc Port                                       */
-/**************************************************************************/
-Std_ReturnType Rte_WriteCrc (uint32 Cpy_Crc)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if (Global_CrcPortState == IDLE)
-	{
-		/* Lock the port to write */
-		Global_CrcPortState = BUSY ;
-		/* Write the data to the port */
-		Global_CrcValue = Cpy_Crc ; 
-		/* Unlock the port after done writing */
-		Global_CrcPortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-Std_ReturnType Rte_ReadCrc (uint32 *Cpy_Crc)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ( (Global_CrcPortState == IDLE) && (Cpy_Crc != NULL_PTR) )
-	{
-		/* Lock the port to write */
-		Global_CrcPortState = BUSY ;
-		/* Write the data to the port */
-		 (*Cpy_Crc) = Global_CrcValue ; 
-		/* Unlock the port after done writing */
-		Global_CrcPortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-/**************************************************************************/
-/*                         CodeSize Port                                  */
-/**************************************************************************/
-Std_ReturnType Rte_WriteCodeSize (uint32 Cpy_CodeSize)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if (Global_CodeSizePortState == IDLE)
-	{
-		/* Lock the port to write */
-		Global_CodeSizePortState = BUSY ;
-		/* Write the data to the port */
-		Global_CodeSizeValue = Cpy_CodeSize ; 
-		/* Unlock the port after done writing */
-		Global_CodeSizePortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-Std_ReturnType Rte_ReadCodeSize (uint32 *Cpy_CodeSize)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ( (Global_CodeSizePortState == IDLE) && (Cpy_CodeSize != NULL_PTR))
-	{
-		/* Lock the port to write */
-		Global_CodeSizePortState = BUSY ;
-		/* Write the data to the port */
-		 (*Cpy_CodeSize) = Global_CodeSizeValue ; 
-		/* Unlock the port after done writing */
-		Global_CodeSizePortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
 /**************************************************************************/
 /*                         NodeId Port                                  */
 /**************************************************************************/
@@ -169,9 +82,95 @@ Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId)
 }
 
 /**************************************************************************/
-/*                         HeaderAckFlag Port                   */
+/*                         CodeSize Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteHeaderAckFlag (FlagType Cpy_HeaderAckFlag)
+Std_ReturnType Rte_WriteCodeSize(uint32 Cpy_CodeSize)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	
+	if (Global_CodeSizePortState == IDLE)
+	{
+		/* Lock the port to write */
+		Global_CodeSizePortState = BUSY ;
+		/* Write the data to the port */
+		Global_CodeSizeValue = Cpy_CodeSize ; 
+		/* Unlock the port after done writing */
+		Global_CodeSizePortState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
+
+Std_ReturnType Rte_ReadCodeSize(uint32 *Cpy_CodeSize)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	
+	if ( (Global_CodeSizePortState == IDLE) && (Cpy_CodeSize != NULL_PTR))
+	{
+		/* Lock the port to write */
+		Global_CodeSizePortState = BUSY ;
+		/* Write the data to the port */
+		 (*Cpy_CodeSize) = Global_CodeSizeValue ; 
+		/* Unlock the port after done writing */
+		Global_CodeSizePortState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
+
+/**************************************************************************/
+/*                         Crc Port                                       */
+/**************************************************************************/
+Std_ReturnType Rte_WriteCrc(uint32 Cpy_Crc)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	
+	if (Global_CrcPortState == IDLE)
+	{
+		/* Lock the port to write */
+		Global_CrcPortState = BUSY ;
+		/* Write the data to the port */
+		Global_CrcValue = Cpy_Crc ; 
+		/* Unlock the port after done writing */
+		Global_CrcPortState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
+
+Std_ReturnType Rte_ReadCrc(uint32 *Cpy_Crc)
+{
+	Std_ReturnType Local_ReturnError = E_OK ;
+	
+	if ( (Global_CrcPortState == IDLE) && (Cpy_Crc != NULL_PTR) )
+	{
+		/* Lock the port to write */
+		Global_CrcPortState = BUSY ;
+		/* Write the data to the port */
+		 (*Cpy_Crc) = Global_CrcValue ; 
+		/* Unlock the port after done writing */
+		Global_CrcPortState = IDLE ;
+	}
+	else
+	{
+		Local_ReturnError = E_NOT_OK ;
+	}
+	return Local_ReturnError ;
+}
+
+/**************************************************************************/
+/*                         Header Ack Flag Port                           */
+/**************************************************************************/
+Std_ReturnType Rte_WriteHeaderAckFlag(FlagType Cpy_HeaderAckFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -191,7 +190,7 @@ Std_ReturnType Rte_WriteHeaderAckFlag (FlagType Cpy_HeaderAckFlag)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadHeaderAckFlag (FlagType *Cpy_HeaderAckFlag)
+Std_ReturnType Rte_ReadHeaderAckFlag(FlagType *Cpy_HeaderAckFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -212,9 +211,9 @@ Std_ReturnType Rte_ReadHeaderAckFlag (FlagType *Cpy_HeaderAckFlag)
 }
 
 /**************************************************************************/
-/*                         DecryptedDataBuffer Port                       */
+/*                         Decrypted Data Buffer Port                     */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBuffer (uint8 *Cpy_DecryptedDataBufferPtr)
+Std_ReturnType Rte_WriteDecryptedDataBuffer(uint8 *Cpy_DecryptedDataBufferPtr)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -234,7 +233,7 @@ Std_ReturnType Rte_WriteDecryptedDataBuffer (uint8 *Cpy_DecryptedDataBufferPtr)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr)
+Std_ReturnType Rte_ReadDecryptedDataBuffer(uint8 **Cpy_DecryptedDataBufferPtr)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -255,9 +254,9 @@ Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr)
 }
 
 /**************************************************************************/
-/*                         DecryptedDataBufferFlag Port                   */
+/*                         Decrypted Data Buffer Flag Port                */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBufferFlag (FlagType Cpy_DecryptedDataBufferFlag)
+Std_ReturnType Rte_WriteDecryptedDataBufferFlag(FlagType Cpy_DecryptedDataBufferFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -277,7 +276,7 @@ Std_ReturnType Rte_WriteDecryptedDataBufferFlag (FlagType Cpy_DecryptedDataBuffe
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadDecryptedDataBufferFlag (FlagType *Cpy_DecryptedDataBufferFlag)
+Std_ReturnType Rte_ReadDecryptedDataBufferFlag(FlagType *Cpy_DecryptedDataBufferFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -297,12 +296,10 @@ Std_ReturnType Rte_ReadDecryptedDataBufferFlag (FlagType *Cpy_DecryptedDataBuffe
 	return Local_ReturnError ;
 }
 
-
-
 /**************************************************************************/
 /*                         SystemState Port                               */
 /**************************************************************************/
-Std_ReturnType Rte_WriteSystemState (SystemStateType Cpy_SystemState)
+Std_ReturnType Rte_WriteSystemState(SystemStateType Cpy_SystemState)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -322,7 +319,7 @@ Std_ReturnType Rte_WriteSystemState (SystemStateType Cpy_SystemState)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadSystemState (SystemStateType *Cpy_SystemState)
+Std_ReturnType Rte_ReadSystemState(SystemStateType *Cpy_SystemState)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -345,7 +342,7 @@ Std_ReturnType Rte_ReadSystemState (SystemStateType *Cpy_SystemState)
 /**************************************************************************/
 /*                         UserResponse Port                              */
 /**************************************************************************/
-Std_ReturnType Rte_WriteUserResponse (uint8 Cpy_UserResponse)
+Std_ReturnType Rte_WriteUserResponse(uint8 Cpy_UserResponse)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -365,7 +362,7 @@ Std_ReturnType Rte_WriteUserResponse (uint8 Cpy_UserResponse)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadUserResponse (uint8 *Cpy_UserResponse)
+Std_ReturnType Rte_ReadUserResponse(uint8 *Cpy_UserResponse)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -386,9 +383,9 @@ Std_ReturnType Rte_ReadUserResponse (uint8 *Cpy_UserResponse)
 }
 
 /**************************************************************************/
-/*                         UpdateProgress Port                            */
+/*                         Update Progress Port                           */
 /**************************************************************************/
-Std_ReturnType Rte_WriteUpdateProgress (uint8 Cpy_UpdateProgress)
+Std_ReturnType Rte_WriteUpdateProgress(uint8 Cpy_UpdateProgress)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -408,7 +405,7 @@ Std_ReturnType Rte_WriteUpdateProgress (uint8 Cpy_UpdateProgress)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadUpdateProgress (uint8 *Cpy_UpdateProgress)
+Std_ReturnType Rte_ReadUpdateProgress(uint8 *Cpy_UpdateProgress)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	

@@ -20,12 +20,15 @@ typedef     uint8    SystemStateType ;
 
 typedef     uint8    FlagType ;
 
-/* SystemStateType  values */
-#define    BUFFER_NOT_SET                    0x0u
-#define    BUFFER_SET                        0x1u
+/* Header flag  values */
+#define    HEADER_NOT_SET              0x0u
+#define    HEADER_SET                  0x1u
+/* System State Type  vaale*/ 
+#define    BUFFER_NOT_SET              0x0u
+#define    BUFFER_SET                  0x1u
 
 /* User response */
-#define   ACCEPT_UPDATE     0X01u
-#define   REFUSE_UPDATE     0X02u
+#define   ACCEPT_UPDATE                0X01u
+#define   REFUSE_UPDATE                0X02u
 
 #endif
