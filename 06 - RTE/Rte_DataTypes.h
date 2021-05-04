@@ -23,10 +23,10 @@ typedef     uint8    FlagType ;
 /* Header flag  values */
 #define    HEADER_NOT_SET              0x0u
 #define    HEADER_SET                  0x1u
-/* Buffer state Type  value*/ 
+/* System State Type  vaale*/ 
 #define    BUFFER_NOT_SET              0x0u
 #define    BUFFER_SET                  0x1u
-
+#define    DATA_BUFFER_SIZE            0x40
 /* User response */
 #define   ACCEPT_UPDATE                0X01u
 #define   REFUSE_UPDATE                0X02u
