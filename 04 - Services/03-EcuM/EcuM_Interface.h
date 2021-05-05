@@ -62,7 +62,7 @@ Std_ReturnType EcuM_unit8RccPeriphInit() ;
 *Return     :   Error status
 
 ****************************************************************************************/                                   	
-Std_ReturnType EcuM_unit8DioPeriphInit() ;
+Std_ReturnType EcuM_unit8DioPeriphInit();
 /***********************************************************************************
 *Name       :   EcuM_unit8StartupPeriph
 
