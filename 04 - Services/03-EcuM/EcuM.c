@@ -1,15 +1,15 @@
 /*******************************************************************************
-**  FILENAME     : EcuM.c         			                                        **
+**  FILENAME     : EcuM.c         			                                  **
 **                                                                            **
 **  VERSION      : 1.0.0                                                      **
 **                                                                            **
-**  DATE         : 2021-04-30                                                  **
+**  DATE         : 2021-04-30                                                 **
 **                                                                            **
-**  PLATFORM     : stm32f103		                                              **
+**  PLATFORM     : stm32f103		                                          **
 **                                                                            **
 **  AUTHOR       : osamahijazi	                                              **
-**                                                                            ***                                                                           **
-**  DESCRIPTION  : EcuM Driver source file                                     **
+**                                                                            **                                                                         **
+**  DESCRIPTION  : EcuM Driver source file                                    **
 **                                                                            **
 *******************************************************************************/
 
@@ -25,6 +25,7 @@
 #include "GPIO_interface.h"
 #include "RCC_interface.h"
 #include "CAN_Interface.h"
+#include "Uart_Interface.h"
 /*******************  Externed Types  *******************/
  //volatile extern  Can_ConfigType Can_Configurations ;
 
@@ -39,41 +40,36 @@ Std_ReturnType EcuM_unit8RccPeriphInit()
 {       
 	
 	  /*Local variable , Return = ok*/
-  	Std_ReturnType Local_ReturnError = E_OK;
+	Std_ReturnType Local_ReturnError = E_OK;
 	/*******************  RCC SOURCE CLOCK  *******************/
-    RCC_VoidInitSysClock(); 
+	RCC_VoidInitSysClock(); 
 
 	/*******************  PORTA ENABLE CLOCK  *******************/
-    RCC_VoidEnableClock(RCC_APB2_EN,RCC_GPIOA); 
+	RCC_VoidEnableClock(RCC_APB2_EN,RCC_GPIOA); 
 	
 	/*******************  AFIO ENABLE CLOCK  *******************/	   
-    RCC_VoidEnableClock(RCC_APB2_EN,RCC_AFIO); 
+	RCC_VoidEnableClock(RCC_APB2_EN,RCC_AFIO); 
 	
 	/*******************  CAN1 ENABLE CLOCK  *******************/
-    RCC_VoidEnableClock(RCC_APB1_EN,RCC_CAN); 
+	RCC_VoidEnableClock(RCC_APB1_EN,RCC_CAN); 
 	
 	/*******************  UART1 ENABLE CLOCK  *******************/
+	RCC_VoidEnableClock(RCC_APB2_EN , RCC_USART1);
 	
-	
-  return  Local_ReturnError ;
+	return  Local_ReturnError ;
 	
 }
 /************************************************END OF FUNCTION*******************************/
 Std_ReturnType EcuM_unit8DioPeriphInit()
 {
 	/*Local variable , Return = ok*/
-  	Std_ReturnType Local_ReturnError = E_OK;
+	Std_ReturnType Local_ReturnError = E_OK;
 	/*******************  CAN1 ENABLE PINS   *******************/
-  GPIO_VoidSetPinDirection(GPIOA,PIN11 , INPUT_FLOATING);   //RX
+	GPIO_VoidSetPinDirection(GPIOA,PIN11 , INPUT_FLOATING);   //RX
 	GPIO_VoidSetPinDirection(GPIOA,PIN12 , OUTPUT_2MHZ_AFPP); //TX
 	/*******************  UART1 ENABLE PINS   *******************/
-
-	
-	
-	
-	
-	
-	
+	GPIO_VoidSetPinDirection(GPIOA , PIN9 , OUTPUT_10MHZ_AFPP);
+	GPIO_VoidSetPinDirection(GPIOA , PIN10 , INPUT_FLOATING);
 	
   return  Local_ReturnError ;
 }
@@ -81,23 +77,19 @@ Std_ReturnType EcuM_unit8DioPeriphInit()
 Std_ReturnType EcuM_unit8StartupPeriph()
 {
 	/*Local variable , Return = ok*/
-  	Std_ReturnType Local_ReturnError = E_OK;
+	Std_ReturnType Local_ReturnError = E_OK;
 	
-		/*******************  CAN1 INTI HW  *******************/		
-   CAN_VoidInit(  CAN1 , &CAN_InitStruct ) ; //Init can					
+	/*******************  CAN1 INTI HW  *******************/		
+	CAN_VoidInit(  CAN1 , &CAN_InitStruct ) ; //Init can					
 
-		/*******************  CAN1 INTIT FILTERS  *******************/	
-	  CAN_VoidFilterSet( & CAN_FilterInitStruct_1 ); // ID = OXO3
-         CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
+	/*******************  CAN1 INTIT FILTERS  *******************/	
+	CAN_VoidFilterSet( & CAN_FilterInitStruct_1 ); // ID = OXO3
+	CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
 	
-		/*******************  UART1 INTI HW  *******************/		
-	
-	
-	
+	/*******************  UART1 INTI HW  *******************/		
+	Uart_voidInit();
 
-	
 
-               
   return  Local_ReturnError ;
 
 }
