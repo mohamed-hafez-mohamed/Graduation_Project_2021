@@ -206,6 +206,9 @@ void ReceiveUpdate_MainFunction (void)
 			Global_DownloadUpdateProgeress = INITIAL_VALUE ;
 			Global_ReceivedBytes = INITIAL_VALUE;
 			
+			/* Reset Nvm Variables */
+			Nvm_voidInitVariables();
+			
 			/* Change system state */
 			Global_RxInternalSate = RX_IDLE ;
 			
