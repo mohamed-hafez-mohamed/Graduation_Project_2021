@@ -35,6 +35,8 @@
 #define FRAME_DATA_BYTES             8
 #define ONE_BTYE                     1
 #define BYTE_ZERO                    0
+#define ONE_MILLI                   1000
+#define ZERO                        0
 
 
 

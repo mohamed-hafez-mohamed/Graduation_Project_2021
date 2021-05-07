@@ -24,7 +24,6 @@
 /*
 Description: CAN Rx message structure for pending interrupt
 */
-CanRxMsg*  RxMessage;               // CAN messge   struct  for  receiving
 
 /************************************************Functions Definition*******************************/
 void CAN_VoidInit(CAN_TypeDef* CANx, CAN_InitTypeDef* CANInitStruct)
@@ -94,12 +93,13 @@ void CAN_VoidInit(CAN_TypeDef* CANx, CAN_InitTypeDef* CANInitStruct)
       CANx->MCR &= ~(uint32)CAN_MCR_TXFP;
     }
 		
-		                   /* Set the bit timing register and can mode*/
+		                 
     CANx->BTR =(uint32)      ((uint32)CANInitStruct->CAN_MODE << 30   )  
                        |     ((uint32)CANInitStruct->CAN_SJW  << 24   )  
                        |     ((uint32)CANInitStruct->CAN_BS1  << 16   )  
                        |     ((uint32)CANInitStruct->CAN_BS2  << 20   )  
                        |     ((uint32)CANInitStruct->CAN_Prescaler-1  ) ;
+		
 
     /* Request leave initialisation */
     CANx->MCR &= ~(uint32)CAN_MCR_INRQ;
@@ -442,6 +442,9 @@ void CAN_VoidTimeTriggerCommMode(CAN_TypeDef* CANx, FunctionalState NewState , u
 void USB_HP_CAN1_TX0_IRQHandler (void)
 	{
                                   /*Check For Request completed mailbox */
+		
+		CanRxMsg   RxMessage;               // CAN messge   struct  for  receiving
+
 				
   if (CAN1->TSR & CAN_TSR_RQCP0)   // request completed mbx 0
 		{                
@@ -476,7 +479,8 @@ else
 /************************************************END OF FUNCTION*******************************/
 void USB_LP_CAN1_RX0_IRQHandler (void) {
 
-		
+		CanRxMsg   RxMessage;               // CAN messge   struct  for  receiving
+
 
   if (CAN1->RF0R & CAN_RF0R_FMP0)  // CHECK IF fifo 0 is not empty
 		
@@ -499,3 +503,66 @@ else
 }	
 }
 /************************************************END OF FUNCTION*******************************/
+void Can_voidSynRecieveArray( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLenght)
+{
+	
+  uint8 counter1 = ZERO ;	
+	uint8 Frame_Number = (Copy_uint8DataLenght / FRAME_DATA) ;
+	
+	for(uint8 Data_Counter1 = ZERO ; Data_Counter1 < Frame_Number ; Data_Counter1++)
+{	
+	
+CanRxMsg   RxMessage;               // CAN messge   struct  for  receiving
+
+ while (!(CAN1->RF0R & CAN_RF0R_FMP0));  // wait until fifo 0 become pending	
+  
+	CAN_VoidReceive ( CAN1 , CAN_FIFO0 ,&RxMessage);                       // read the message of FIFO 0		
+	
+	for( uint8 Data_Counter = ZERO ; Data_Counter < FRAME_DATA ; Data_Counter++)	
+	 {
+				
+      Copy_uint8DataPtr[counter1]= RxMessage.DATA[Data_Counter]   ;
+				
+					counter1++ ;							
+   }
+	
+
+}	
+}
+
+/************************************************END OF FUNCTION*******************************/
+uint32 Can_uint32SynRecieveWord(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber  )
+{
+	
+  uint32 Copy_uint32Data = ZERO ;
+	
+  CanRxMsg   RxMessage;               // CAN messge   struct  for  receiving
+	
+  while (!(CAN1->RF0R & CAN_RF0R_FMP0));  // wait until fifo 0 become pending	
+  
+	CAN_VoidReceive ( CANx , Copy_u8FifoNumber ,&RxMessage);   // read the message of FIFO 0		
+	
+	Copy_uint32Data = (uint32)((RxMessage.DATA[BYTE_THREE]<<24) | (RxMessage.DATA[BYTE_TWO]<<16) | (RxMessage.DATA[BYTE_ONE]<<8) | (RxMessage.DATA[BYTE_ZERO]) ) ;
+	
+	return  Copy_uint32Data ;
+}
+
+/************************************************END OF FUNCTION*******************************/
+uint8 Can_uint8SynRecieveByte( CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber  )
+{
+
+ uint8 Copy_uint8Data = ZERO ;		
+	
+  CanRxMsg   RxMessage;               // CAN messge   struct  for  receiving
+
+  while (!(CAN1->RF0R & CAN_RF0R_FMP0));  // wait until fifo 0 become pending	
+  
+	CAN_VoidReceive ( CANx , Copy_u8FifoNumber ,&RxMessage);   // read the message of FIFO 0		
+	
+	Copy_uint8Data = (uint8)((RxMessage.DATA[BYTE_ZERO]) ) ;
+	
+	return  Copy_uint8Data ;
+
+
+}
+	

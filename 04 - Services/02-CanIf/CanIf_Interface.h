@@ -46,43 +46,7 @@
 *Return     : error status
 
 *************************************************************************************/
-uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8NodeID , uint8 Copy_uint8DataLenght);
-/************************************************************************************
-
-*Name       :   CanIf_uint8Transmit_1Byte
-
-*Description: *Send only one byte as ack according to static configuration
-								
-*Pre-Cond   :	can is init
-							
-*pos-Cond   : None
-
-*Input      : - Byte to sent
-              - target ID 						 
-
-*Output     : void
-
-*Return     : error status
-
-*************************************************************************************/
-uint8 CanIf_uint8Transmit_1Byte( uint8 Copy_uint8Data, uint8 NODE_ID);
-/************************************************************************************
-
-*Name       :   CanIf_uint8Receive_1Byte
-
-*Description: *check FIFO O and recive only one byte if exist as ack 
-								
-*Pre-Cond   :	can is init
-							
-*pos-Cond   : None
-
-*Input      : void
-
-*Output     : void
-
-*Return     : recived byte if exist and zero if there is not message received
-*************************************************************************************/
-uint8 CanIf_uint8Receive_1Byte(void);
+uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8NodeID , uint16 Copy_uint8DataLenght);
 /************************************************************************************
 
 *Name       :   CanIf_uint8Receive_Struct
@@ -124,12 +88,58 @@ uint8 CanIf_uint8Receive_Struct(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber, CanR
 
 *************************************************************************************/
 uint8 CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage ); 
+/************************************************************************************
 
+*Name       :   CanIf_uint32Receive_Word
 
+*Description: *block FIFO until recive only one word  
+								
+*Pre-Cond   :	can is init
+							
+*pos-Cond   : None
 
+*Input      : void
 
+*Output     : void
 
+*Return     : Received word
+*************************************************************************************/
+uint32 CanIf_uint32Receive_Word(void);
+/************************************************************************************
 
+*Name       :   CanIf_uint8Receive_Byte
+
+*Description: *block FIFO until recive only one byte  
+								
+*Pre-Cond   :	can is init
+							
+*pos-Cond   : None
+
+*Input      : void
+
+*Output     : void
+
+*Return     : Received byte
+*************************************************************************************/
+uint8 CanIf_uint8Receive_Byte( void );
+/************************************************************************************
+
+*Name       :   CanIf_uint8Receive_Byte
+
+*Description: *block FIFO until All Bytes is received    
+								
+*Pre-Cond   :	can is init
+							
+*pos-Cond   : None
+
+*Input      : array address and excepted Data length
+
+*Output     : void
+
+*Return     : local error
+*************************************************************************************/
+
+uint8 CanIf_uint8Receive_Block( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLenght);
 
 
 

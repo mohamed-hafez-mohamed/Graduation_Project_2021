@@ -285,6 +285,14 @@ typedef struct
 #define  CAN_RDH1R_DATA6                     ((uint32)0x00FF0000)        /*!< Data byte 6 */
 #define  CAN_RDH1R_DATA7                     ((uint32)0xFF000000)        /*!< Data byte 7 */
 
+/*****************************Private Macros************************************/
+#define FRAME_DATA              8
+#define ZERO                    0
+#define BYTE_ZERO               0
+#define BYTE_ONE                1
+#define BYTE_TWO                2
+#define BYTE_THREE              3
+
                             /*!< CAN filter registers */
 /*******************  Bit definition for CAN_FMR register  ********************/
 #define  CAN_FMR_FINIT                       ((uint8)0x01)               /*!< Filter Init Mode */
