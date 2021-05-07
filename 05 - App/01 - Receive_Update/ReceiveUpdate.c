@@ -86,6 +86,7 @@ void ReceiveUpdate_MainFunction (void)
 			{
 				
 			}
+			break;
 		}
 		
 		/*****************************RX_ACCEPT_UPDATE ***********************************/
@@ -103,10 +104,14 @@ void ReceiveUpdate_MainFunction (void)
 		{
 			/* Inform ESP to Reject request */
 			ESP_TX_BYTE(REQUEST_REFUSED);
-			/* Change Internal State */
-			Global_RxInternalSate = RX_IDLE ;
+			/* Initialize */
+			Global_RxUserResponse = INITIAL_VALUE;
 			/* Change System state */
 			RTE_WRITE_SYSTEM_STATE(SYS_IDLE);
+			/* Enable Uart interrupt */
+			ESP_RX_ASYNCH (Esp_NewReq);
+			/* Change Internal State */
+			Global_RxInternalSate = RX_IDLE ;
 			break;
 		}
 		
@@ -205,6 +210,8 @@ void ReceiveUpdate_MainFunction (void)
 			Global_DownloadPercentage = INITIAL_VALUE ;
 			Global_DownloadUpdateProgeress = INITIAL_VALUE ;
 			Global_ReceivedBytes = INITIAL_VALUE;
+			
+			RTE_WRITE_DOWNLOAD_PROGRESS(INITIAL_VALUE);
 			
 			/* Reset Nvm Variables */
 			Nvm_voidInitVariables();
