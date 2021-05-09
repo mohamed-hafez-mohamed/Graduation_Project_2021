@@ -390,7 +390,7 @@ void CAN_VoidTimeTriggerCommMode(CAN_TypeDef* CANx, FunctionalState NewState , u
 void Can_voidSynRecieveArray( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLenght);
 /************************************************************************************
 
-*Name       :   Can_uint32SynRecieveWord
+*Name       :   Can_voidSynRecieveWord
 
 *Description: * Recive only one word in FIFO O
 								
@@ -408,7 +408,7 @@ void Can_voidSynRecieveArray( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLe
 uint32 Can_uint32SynRecieveWord(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber  );
 /************************************************************************************
 
-*Name       :   Can_uint8SynRecieveByte
+*Name       :   Can_voidSynRecieveByte
 
 *Description: * Recive only one byte in FIFO O
 								

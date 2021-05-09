@@ -247,7 +247,7 @@ void CAN_VoidFilterSet(CAN_FilterInitTypeDef* CAN_FilterInitStruct)
 
 	uint8 Local_u8TransMailboxNumber = 0; //contain empty mailbox number
   uint8 Local_u8TransDataCounter ; //counter to set data into Transit Data register byte by byte	
-	
+/*	
 	if ((CANx->TSR&CAN_TSR_TME0) == CAN_TSR_TME0) //check if mailox 0 is empty
   {
     Local_u8TransMailboxNumber = 0;
@@ -264,11 +264,13 @@ void CAN_VoidFilterSet(CAN_FilterInitTypeDef* CAN_FilterInitStruct)
   {
     Local_u8TransMailboxNumber = CAN_TxStatus_NoMailBox; // no mail box is empty
   }
-	 
-  if (Local_u8TransMailboxNumber != CAN_TxStatus_NoMailBox) //
-  {
+	*/
+	       /*mail box always is zero so that receiver chould catch all frams properly*/
+//  if (Local_u8TransMailboxNumber != CAN_TxStatus_NoMailBox) //
+ // {
 		
-		
+		 while(!(CAN1->TSR & CAN_TSR_TME0));   // Block until mailbox 0 is empty
+		 
 		CANx->sTxMailBox[Local_u8TransMailboxNumber].TIR = 0;     //reset identifier register
 		
 		CANx->sTxMailBox[Local_u8TransMailboxNumber].TIR |= (TxMessage->IDE << 2) | (TxMessage->RTR << 1 ) ;//setrtr and ide of input fram
@@ -306,7 +308,7 @@ void CAN_VoidFilterSet(CAN_FilterInitTypeDef* CAN_FilterInitStruct)
 		}
 		
 		CANx->sTxMailBox[Local_u8TransMailboxNumber].TIR |= CAN_TI0R_TXRQ;  //Transmit Mailbox Request
-	} 
+//	} 
 
 		  return Local_u8TransMailboxNumber; // return result state
 

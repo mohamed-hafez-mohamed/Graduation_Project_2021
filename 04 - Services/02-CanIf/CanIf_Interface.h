@@ -46,7 +46,7 @@
 *Return     : error status
 
 *************************************************************************************/
-uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8NodeID , uint16 Copy_uint8DataLenght);
+Std_ReturnType CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8NodeID , uint8 Copy_uint8DataLenght);
 /************************************************************************************
 
 *Name       :   CanIf_uint8Receive_Struct
@@ -66,7 +66,7 @@ uint8 CanIf_uint8TransmitData( const uint8 *Copy_uint8DataPtr, uint8 Copy_uint8N
 *Return     : error status
 
 *************************************************************************************/
-uint8 CanIf_uint8Receive_Struct(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber, CanRxMsg RxMessage);
+static Std_ReturnType CanIf_uint8Receive_Struct(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber, CanRxMsg RxMessage);
 /************************************************************************************
 
 *Name       :   CanIf_uint8Transmit_Struct
@@ -87,7 +87,7 @@ uint8 CanIf_uint8Receive_Struct(CAN_TypeDef* CANx, uint8 Copy_u8FifoNumber, CanR
 *Return     : error status
 
 *************************************************************************************/
-uint8 CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage ); 
+static Std_ReturnType CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage ); 
 /************************************************************************************
 
 *Name       :   CanIf_uint32Receive_Word
@@ -98,13 +98,13 @@ uint8 CanIf_uint8Transmit_Struct( CAN_TypeDef* CANx, CanTxMsg TxMessage );
 							
 *pos-Cond   : None
 
-*Input      : void
+*Input      : addres of uint32 variable
 
-*Output     : void
+*Output     : reciverd word
 
-*Return     : Received word
+*Return     : local errror
 *************************************************************************************/
-uint32 CanIf_uint32Receive_Word(void);
+Std_ReturnType CanIf_uint32Receive_Word( uint32 *Copy_uint32Word);
 /************************************************************************************
 
 *Name       :   CanIf_uint8Receive_Byte
@@ -115,13 +115,13 @@ uint32 CanIf_uint32Receive_Word(void);
 							
 *pos-Cond   : None
 
-*Input      : void
+*Input      : address of unit8  variable
 
-*Output     : void
+*Output     : Received byte
 
-*Return     : Received byte
+*Return     : local errror
 *************************************************************************************/
-uint8 CanIf_uint8Receive_Byte( void );
+Std_ReturnType CanIf_uint8Receive_Byte( uint8*Copy_uint8Byte ) ;
 /************************************************************************************
 
 *Name       :   CanIf_uint8Receive_Byte
@@ -138,9 +138,41 @@ uint8 CanIf_uint8Receive_Byte( void );
 
 *Return     : local error
 *************************************************************************************/
+Std_ReturnType CanIf_uint8Receive_Block( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLenght);
+/************************************************************************************
 
-uint8 CanIf_uint8Receive_Block( uint8 *Copy_uint8DataPtr ,  uint8 Copy_uint8DataLenght);
+*Name       :   CanIf_uint8Transmit_Byte
 
+*Description: *transmit only one byte to corresponding node    
+								
+*Pre-Cond   :	can is init
+							
+*pos-Cond   : mailbox 0 is empty 
+
+*Input      : Byte to be sent and node id
+
+*Output     : void
+
+*Return     : local error
+*************************************************************************************/
+Std_ReturnType CanIf_uint8Transmit_Byte( uint8 Copy_uint8Data , uint8  Copy_uint8NodeID  );
+/************************************************************************************
+
+*Name       :   CanIf_uint32Transmit_Word
+
+*Description: *transmit only one word to corresponding node    
+								
+*Pre-Cond   :	can is init
+							
+*pos-Cond   : mailbox 0 is empty
+
+*Input      : word to be sent and node id
+
+*Output     : void
+
+*Return     : local error
+*************************************************************************************/
+Std_ReturnType CanIf_uint32Transmit_Word( uint32 Copy_uint32Data , uint8  Copy_uint8NodeID  );
 
 
 
