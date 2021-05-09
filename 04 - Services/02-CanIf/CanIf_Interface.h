@@ -124,7 +124,7 @@ Std_ReturnType CanIf_uint32Receive_Word( uint32 *Copy_uint32Word);
 Std_ReturnType CanIf_uint8Receive_Byte( uint8*Copy_uint8Byte ) ;
 /************************************************************************************
 
-*Name       :   CanIf_uint8Receive_Byte
+*Name       :   CanIf_uint8Receive_Block
 
 *Description: *block FIFO until All Bytes is received    
 								
