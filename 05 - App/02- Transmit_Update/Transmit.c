@@ -86,7 +86,7 @@ Std_ReturnType Transmit_MainFunction(void)
    Std_ReturnType       Local_ReturnStatus = STD_IDLE;
    State_PtrToFunction  RunState;
    RunState           = Static_ArrayOfStates[Static_StateVariable];
-   Local_ReturnStatus = RunState(NULL);
+   Local_ReturnStatus = RunState(NULL_PTR);
    return Local_ReturnStatus;
 }
 
@@ -145,8 +145,20 @@ static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
    // Check received Ack
    if(UDS_MCU_ACKNOWLEDGE_UPGRADE_REQUEST == Local_u8ReceivedAck)
    {
-      // Request and sending header.
-      CanIf_uint8TransmitData(Local_HeaderBuffer,Static_u8NodeId,HEADER_INFORMATION_SIZE);
+      // Request sending Header.
+      CanIf_uint8Transmit_Byte(UDS_GWY_PROVIDE_HEADER, Static_u8NodeId);
+      // Wait Ack from BL
+      CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
+      if (UDS_MCU_ACCEPT_RECEIVING_HEADER == Local_u8ReceivedAck)
+      {
+         // sending header.
+         CanIf_uint8TransmitData(Local_HeaderBuffer,Static_u8NodeId,HEADER_INFORMATION_SIZE);
+      }
+      else
+      {
+         //TODO: Handle the situation that the Bootloader Doesn't reply correctly.
+      }
+   
    }
    else
    {
@@ -269,18 +281,16 @@ static Std_ReturnType Transmit_ConsumeHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size,
 
 static Std_ReturnType Transmit_HandleHeader(uint32 Cpy_Size,uint32 Cpy_Crc,uint8 *Cpy_PtrToBytes)
 {
-   // Store Header sending request in the first byte
-   Cpy_PtrToBytes[FIRST_BYTE]   = UDS_GWY_PROVIDE_HEADER;
    // Convert code size into bytes and store it in buffer.
-   Cpy_PtrToBytes[SECOND_BYTE]  = (Cpy_Size & GET_FIRST_BYTE);
-   Cpy_PtrToBytes[THIRD_BYTE]   = (Cpy_Size & GET_SECOND_BYTE);
-   Cpy_PtrToBytes[FOURTH_BYTE]  = (Cpy_Size & GET_THIRD_BYTE);
-   Cpy_PtrToBytes[FIFTH_BYTE]   = (Cpy_Size & GET_FOURTH_BYTE);
+   Cpy_PtrToBytes[FIRST_BYTE]   = (Cpy_Size & GET_FIRST_BYTE);
+   Cpy_PtrToBytes[SECOND_BYTE]  = (Cpy_Size & GET_SECOND_BYTE);
+   Cpy_PtrToBytes[THIRD_BYTE]   = (Cpy_Size & GET_THIRD_BYTE);
+   Cpy_PtrToBytes[FOURTH_BYTE]  = (Cpy_Size & GET_FOURTH_BYTE);
    // Convert CRC Value into bytes and store it in buffer.
-   Cpy_PtrToBytes[SIXTH_BYTE]   = (Cpy_Crc  & GET_FIRST_BYTE);
-   Cpy_PtrToBytes[SEVENTH_BYTE] = (Cpy_Crc  & GET_SECOND_BYTE);
-   Cpy_PtrToBytes[EIGHTH_BYTE]  = (Cpy_Crc  & GET_THIRD_BYTE);
-   Cpy_PtrToBytes[NINETH_BYTE]  = (Cpy_Crc  & GET_FOURTH_BYTE);
+   Cpy_PtrToBytes[FIFTH_BYTE]   = (Cpy_Crc  & GET_FIRST_BYTE);
+   Cpy_PtrToBytes[SIXTH_BYTE]   = (Cpy_Crc  & GET_SECOND_BYTE);
+   Cpy_PtrToBytes[SEVENTH_BYTE] = (Cpy_Crc  & GET_THIRD_BYTE);
+   Cpy_PtrToBytes[EIGHTH_BYTE]  = (Cpy_Crc  & GET_FOURTH_BYTE);
 }
 
 static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size)

@@ -44,6 +44,7 @@
 #define UDS_MCU_ACKNOWLEDGE_UPGRADE_REQUEST         0x50
 // Header constants
 #define UDS_GWY_PROVIDE_HEADER                      0x34
+#define UDS_MCU_ACCEPT_RECEIVING_HEADER             0x73
 #define UDS_MCU_ACKNOWLEDGE_HEADER_RECEIVED         0x74
 // Code Constants
 #define UDS_GWY_REQUEST_SENDING_LINE_OF_CODE        0x36

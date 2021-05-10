@@ -47,15 +47,16 @@ typedef enum
 /******************************************************************************
 * Preprocessor Constants
 *******************************************************************************/
-
-/******************************************************************************
-* Configuration Constants
-*******************************************************************************/
-#define HEADER_INFORMATION_SIZE                     9
 #define INITIALIZE_WITH_ZERO                        0
 #define INITIALIZE_WITH_ONE                         1
 #define RESET_FLAG                                  0
 #define ONE_BYTE                                    1
+/******************************************************************************
+* Configuration Constants
+*******************************************************************************/
+#define HEADER_INFORMATION_SIZE                     8
+
+
 #define GET_FIRST_BYTE                              0X000000FF
 #define GET_SECOND_BYTE                             0X0000FF00
 #define GET_THIRD_BYTE                              0X00FF0000
@@ -68,7 +69,6 @@ typedef enum
 #define SIXTH_BYTE                                  5
 #define SEVENTH_BYTE                                6
 #define EIGHTH_BYTE                                 7
-#define NINETH_BYTE                                 8
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
