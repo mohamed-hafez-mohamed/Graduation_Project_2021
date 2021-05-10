@@ -38,7 +38,7 @@
 /******************************************************************************
 * Module Preprocessor Macros
 *******************************************************************************/
-
+#define NULL ((void*)0)
 /******************************************************************************
 * Module Typedefs
 *******************************************************************************/
@@ -46,10 +46,14 @@
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
-static uint32                   Static_u32CodeSize;
-static uint8                    Static_u8NodeId;
-static TransmitStates_t         Static_StateVariable;
-static State_PtrToFunction      Static_ArrayOfStates[NUBER_OF_STATES];
+static uint32               Static_u32CodeSize;
+static uint8                Static_u8NodeId;
+static uint16               Static_u16PacketsCounter;             
+static uint16               Static_u16NumberOfPackets;            
+static uint8                Static_u8NumOfBytesInLastPacket;      
+
+static TransmitStates_t     Static_StateVariable;
+static State_PtrToFunction  Static_ArrayOfStates[NUBER_OF_STATES];
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
@@ -62,9 +66,15 @@ static State_PtrToFunction      Static_ArrayOfStates[NUBER_OF_STATES];
 
 Std_ReturnType Transmit_InitializeModule(void)
 {
+   // Initalize static variable in this module
    Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
    Static_u8NodeId                             = INITIALIZE_WITH_ZERO;
+   Static_u16PacketsCounter                    = INITIALIZE_WITH_ONE;
+   Static_u16NumberOfPackets                   = INITIALIZE_WITH_ONE;
+   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ONE;
+   // Initialize current state variable
    Static_StateVariable                        = IDLE_STATE;
+   // Fill state array with function represent each state
    Static_ArrayOfStates[IDLE_STATE]            = Transmit_IdleState;
    Static_ArrayOfStates[GET_TRANSMIT_HEADER]   = Transmit_GetTransmitHeader;
    Static_ArrayOfStates[CONSUME_TRANSMIT_DATA] = Transmit_ConsumeTransmitData;
@@ -83,7 +93,7 @@ Std_ReturnType Transmit_MainFunction(void)
 /*****************************Private Functions' Definitions*******************************/
 
 /*****************************Functions Represent states***********************************/
-static Std_ReturnType Transmit_IdleState(void*)
+static Std_ReturnType Transmit_IdleState(void *Cpy_voidPtr)
 {
    Std_ReturnType Local_ReturnStatus       = E_OK;
    FlagType       Local_u8HeaderFlagValue  = HEADER_NOT_SET;
@@ -106,10 +116,12 @@ static Std_ReturnType Transmit_IdleState(void*)
    {
       Local_ReturnStatus = E_NOT_OK;
    }
+   // Just remove unused parameter warning
+   (uint8*)(Cpy_voidPtr);
    return Local_ReturnStatus;
 }
 
-static Std_ReturnType Transmit_GetTransmitHeader(void*)
+static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
 {
    Std_ReturnType Local_ReturnStatus                          = E_OK;
    Std_ReturnType Local_CanIfReturnStatus                     = E_OK;
@@ -151,16 +163,18 @@ static Std_ReturnType Transmit_GetTransmitHeader(void*)
    {
       //TODO: Handle the situation that the Bootloader Doesn't reply correctly.
    }
+   // Just remove unused parameter warning
+   (uint8*)(Cpy_voidPtr);
 }
 
-static Std_ReturnType Transmit_ConsumeTransmitData(void*)
-{
-   static uint16  Static_u16PacketsCounter             = INITIALIZE_WITH_ONE;
-   static uint16  Static_u16NumberOfPackets            = (Static_u32CodeSize) / (DATA_BUFFER_SIZE);
-   static uint8   Static_u8NumOfBytesInLastPacket      = (Static_u32CodeSize) % (DATA_BUFFER_SIZE); 
+static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
+{    
    FlagType       Local_u8BufferFlagValue              = BUFFER_NOT_SET;
    uint8          Local_u8DataBuffer[DATA_BUFFER_SIZE] = {INITIALIZE_WITH_ZERO}; 
    uint8          Local_u8ReceivedAck                  = INITIALIZE_WITH_ZERO;
+   // Calculate number of packets and number of bytes in the last packet.
+   Static_u16NumberOfPackets            = (Static_u32CodeSize) / (DATA_BUFFER_SIZE);
+   Static_u8NumOfBytesInLastPacket      = (Static_u32CodeSize) % (DATA_BUFFER_SIZE);
    // Get Buffer Flag Value.
    RTE_READ_DECRYPTED_DATA_BUFFER_FLAG(&Local_u8BufferFlagValue);
    // Check The Buffer Flag Value
@@ -217,9 +231,11 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void*)
          //TODO: Handle the situation that the Bootloader Doesn't reply correctly.
       } 
    }  
+   // Just remove unused parameter warning
+   (uint8*)(Cpy_voidPtr);
 }
 
-static Std_ReturnType Transmit_FinishingState(void*)
+static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr)
 {
    uint8 Local_u8ReceivedAck = INITIALIZE_WITH_ZERO;
    // Reset Buffer flag
@@ -235,6 +251,8 @@ static Std_ReturnType Transmit_FinishingState(void*)
       // Change System State To System Done Update.
       RTE_WRITE_SYSTEM_STATE(SYS_DONE_UPDATE);
    }
+   // Just remove unused parameter warning
+   (uint8*)(Cpy_voidPtr);
 }
 
 /*******************************Auxalriy Private Function***************************/

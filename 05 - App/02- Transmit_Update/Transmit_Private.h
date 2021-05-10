@@ -81,9 +81,9 @@ static Std_ReturnType Transmit_HandleHeader(uint32 Cpy_Size,uint32 Cpy_Crc,uint8
 static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size);
 static Std_ReturnType Transmit_FinishHeaderTansmission(void);
 // Functions that handle states.
-static Std_ReturnType Transmit_IdleState(void*);
-static Std_ReturnType Transmit_GetTransmitHeader(void*);
-static Std_ReturnType Transmit_ConsumeTransmitData(void*);
-static Std_ReturnType Transmit_FinishingState(void*);
+static Std_ReturnType Transmit_IdleState(void *Cpy_voidPtr);
+static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr);
+static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr);
+static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr);
 #endif
 /*** End of File **************************************************************/
