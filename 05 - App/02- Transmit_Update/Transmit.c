@@ -143,10 +143,10 @@ static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
    // Wait Ack from BL
    CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
    // Check received Ack
-   if(UDS_MCU_ACKNOWLEDGE_UPGRADE_REQUEST == Local_u8ReceivedAck)
+   if(UDS_MCU_ACCEPT_UPGRADE_REQUEST == Local_u8ReceivedAck)
    {
       // Request sending Header.
-      CanIf_uint8Transmit_Byte(UDS_GWY_PROVIDE_HEADER, Static_u8NodeId);
+      CanIf_uint8Transmit_Byte(UDS_GWY_REQUEST_SENDING_HEADER, Static_u8NodeId);
       // Wait Ack from BL
       CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
       if (UDS_MCU_ACCEPT_RECEIVING_HEADER == Local_u8ReceivedAck)
@@ -158,7 +158,6 @@ static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
       {
          //TODO: Handle the situation that the Bootloader Doesn't reply correctly.
       }
-   
    }
    else
    {
@@ -196,11 +195,11 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
       RTE_READ_DECRYPTED_DATA_BUFFER(&Local_u8DataBuffer);
       Static_u16PacketsCounter++;
       // Request Sending line of code code.
-      CanIf_uint8Transmit_Byte(UDS_GWY_REQUEST_SENDING_LINE_OF_CODE, Static_u8NodeId);
+      CanIf_uint8Transmit_Byte(UDS_GWY_REQUEST_SENDING_PACKET_OF_CODE, Static_u8NodeId);
       // Wait Ack from BL
       CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
       // Check The node ack
-      if(UDS_MCU_ACCEPT_LINE_OF_CODE == Local_u8ReceivedAck) 
+      if(UDS_MCU_ACCEPT_RECEIVING_PACKET_OF_CODE == Local_u8ReceivedAck) 
       {
          // condition to know are we will send the last packet or ordinary packet.
          if(Static_u16PacketsCounter < Static_u16NumberOfPackets)
@@ -209,7 +208,7 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
             CanIf_uint8TransmitData(Local_u8DataBuffer,Static_u8NodeId,DATA_BUFFER_SIZE);
             // Wait Ack from BL
             CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
-            if(UDS_MCU_ACKNOWLEDGE_LINE_OF_CODE_RECEIVED == Local_u8ReceivedAck)
+            if(UDS_MCU_ACKNOWLEDGE_PACKET_OF_CODE_RECEIVED == Local_u8ReceivedAck)
             {
                // Reset Buffer flag
                RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG(RESET_FLAG);
@@ -227,7 +226,7 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
             CanIf_uint8TransmitData(Local_u8DataBuffer,Static_u8NodeId,Static_u8NumOfBytesInLastPacket);
             // Wait Ack from BL
             CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
-            if(UDS_MCU_ACKNOWLEDGE_LINE_OF_CODE_RECEIVED == Local_u8ReceivedAck)
+            if(UDS_MCU_ACKNOWLEDGE_PACKET_OF_CODE_RECEIVED == Local_u8ReceivedAck)
             {
                // Go to Finial State.
                Static_StateVariable = FINISHING_STATE;

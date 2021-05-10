@@ -41,16 +41,16 @@
 #define UDS_PROGRAM_SESSION                         0x03
 // Open Program session
 #define UDS_CONTROL_PROGRAM_SESSION                 0x0310
-#define UDS_MCU_ACKNOWLEDGE_UPGRADE_REQUEST         0x50
+#define UDS_MCU_ACCEPT_UPGRADE_REQUEST              0x50
 // Header constants
-#define UDS_GWY_PROVIDE_HEADER                      0x34
+#define UDS_GWY_REQUEST_SENDING_HEADER              0x34
 #define UDS_MCU_ACCEPT_RECEIVING_HEADER             0x73
 #define UDS_MCU_ACKNOWLEDGE_HEADER_RECEIVED         0x74
 // Code Constants
-#define UDS_GWY_REQUEST_SENDING_LINE_OF_CODE        0x36
-#define UDS_MCU_ACCEPT_LINE_OF_CODE                 0x75
+#define UDS_GWY_REQUEST_SENDING_PACKET_OF_CODE      0x36
+#define UDS_MCU_ACCEPT_RECEIVING_PACKET_OF_CODE     0x75
 
-#define UDS_MCU_ACKNOWLEDGE_LINE_OF_CODE_RECEIVED   0x76 
+#define UDS_MCU_ACKNOWLEDGE_PACKET_OF_CODE_RECEIVED 0x76 
 // Finishing communication
 #define UDS_GWY_ACKNOWLEDGE_FINISHING_SENDING_CODE  0x37 // 0x04
 #define UDS_MCU_ACKNOWLEDGE_RECEIVED_CODE           0x77
