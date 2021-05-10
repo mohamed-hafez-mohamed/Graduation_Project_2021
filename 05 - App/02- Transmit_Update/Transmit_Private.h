@@ -51,23 +51,24 @@ typedef enum
 /******************************************************************************
 * Configuration Constants
 *******************************************************************************/
-#define HEADER_INFORMATION_SIZE 9
-#define INITIALIZE_WITH_ZERO    0
-#define INITIALIZE_WITH_ONE     1
-#define RESET_FLAG              0
-#define GET_FIRST_BYTE          0X000000FF
-#define GET_SECOND_BYTE         0X0000FF00
-#define GET_THIRD_BYTE          0X00FF0000
-#define GET_FOURTH_BYTE         0XFF000000
-#define FIRST_BYTE              0
-#define SECOND_BYTE             1
-#define THIRD_BYTE              2
-#define FOURTH_BYTE             3
-#define FIFTH_BYTE              4
-#define SIXTH_BYTE              5
-#define SEVENTH_BYTE            6
-#define EIGHTH_BYTE             7
-#define NINTH_BYTE              8
+#define HEADER_INFORMATION_SIZE                     9
+#define INITIALIZE_WITH_ZERO                        0
+#define INITIALIZE_WITH_ONE                         1
+#define RESET_FLAG                                  0
+#define ONE_BYTE                                    1
+#define GET_FIRST_BYTE                              0X000000FF
+#define GET_SECOND_BYTE                             0X0000FF00
+#define GET_THIRD_BYTE                              0X00FF0000
+#define GET_FOURTH_BYTE                             0XFF000000
+#define FIRST_BYTE                                  0
+#define SECOND_BYTE                                 1
+#define THIRD_BYTE                                  2
+#define FOURTH_BYTE                                 3
+#define FIFTH_BYTE                                  4
+#define SIXTH_BYTE                                  5
+#define SEVENTH_BYTE                                6
+#define EIGHTH_BYTE                                 7
+#define NINETH_BYTE                                 8
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
@@ -75,7 +76,11 @@ typedef enum
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-static Std_ReturnType Transmit_HandleHeader(uint8 Cpy_Id,uint32 Cpy_Size,uint32 Cpy_Crc,uint8 *Cpy_PtrToBytes);
+static Std_ReturnType Transmit_ConsumeHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size,uint32 *Cpy_Crc);
+static Std_ReturnType Transmit_HandleHeader(uint32 Cpy_Size,uint32 Cpy_Crc,uint8 *Cpy_PtrToBytes);
+static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size);
+static Std_ReturnType Transmit_FinishHeaderTansmission(void);
+// Functions that handle states.
 static Std_ReturnType Transmit_IdleState(void*);
 static Std_ReturnType Transmit_GetTransmitHeader(void*);
 static Std_ReturnType Transmit_ConsumeTransmitData(void*);
