@@ -266,6 +266,12 @@ static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr)
       // Change System State To System Done Update.
       RTE_WRITE_SYSTEM_STATE(SYS_DONE_UPDATE);
    }
+   // Reinitalize static variable in this module
+   Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
+   Static_u8NodeId                             = INITIALIZE_WITH_ZERO;
+   Static_u16TransmittedPacketsCounter         = INITIALIZE_WITH_ZERO;
+   Static_u16NumberOfPacketsInCode             = INITIALIZE_WITH_ZERO;
+   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ZERO;
    // Just remove unused parameter warning
    (uint8*)(Cpy_voidPtr);
 }
