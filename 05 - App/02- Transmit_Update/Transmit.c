@@ -90,6 +90,18 @@ Std_ReturnType Transmit_MainFunction(void)
    return Local_ReturnStatus;
 }
 
+Std_ReturnType Transmit_MainFunction(void)
+{
+   // Initalize static variable in this module
+   Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
+   Static_u8NodeId                             = INITIALIZE_WITH_ZERO;
+   Static_u16TransmittedPacketsCounter         = INITIALIZE_WITH_ZERO;
+   Static_u16NumberOfPacketsInCode             = INITIALIZE_WITH_ZERO;
+   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ZERO;
+   // Initialize current state variable
+   Static_StateVariable                        = IDLE_STATE;
+}
+
 /*****************************Private Functions' Definitions*******************************/
 
 /*****************************Functions Represent states***********************************/
@@ -261,17 +273,11 @@ static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr)
    CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
    if(UDS_MCU_ACKNOWLEDGE_RECEIVED_CODE == Local_u8ReceivedAck)
    {
-      // Go To Idle State Here
-      Static_StateVariable = IDLE_STATE;
+      // Deinitialze the module
+      Transmit_MainFunction();
       // Change System State To System Done Update.
       RTE_WRITE_SYSTEM_STATE(SYS_DONE_UPDATE);
    }
-   // Reinitalize static variable in this module
-   Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
-   Static_u8NodeId                             = INITIALIZE_WITH_ZERO;
-   Static_u16TransmittedPacketsCounter         = INITIALIZE_WITH_ZERO;
-   Static_u16NumberOfPacketsInCode             = INITIALIZE_WITH_ZERO;
-   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ZERO;
    // Just remove unused parameter warning
    (uint8*)(Cpy_voidPtr);
 }

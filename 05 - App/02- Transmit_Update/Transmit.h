@@ -131,6 +131,32 @@ Std_ReturnType Transmit_InitializeModule(void);
 *******************************************************************************/
 Std_ReturnType Transmit_MainFunction(void);
 
+/******************************************************************************
+* Function : Transmit_DeinitializeModule()
+*//** 
+* \b Description:
+*
+* This function is used to deinitialize transmitmodule.
+*
+* PRE-CONDITION:  None
+*
+* POST-CONDITION: None
+*
+* @param [in]     void
+* 
+* @return 		   Std_ReturnType
+*
+* \b Example Example:
+* @code
+* 	FunctionReturnStatus = Transmit_DeinitializeModule();
+*
+* @endcode
+*
+* @see Transmit_DeinitializeModule
+*
+*******************************************************************************/
+Std_ReturnType Transmit_DeinitializeModule(void);
+
 #endif /*File_H_*/
 
 /*** End of File **************************************************************/
