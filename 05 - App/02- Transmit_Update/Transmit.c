@@ -16,7 +16,7 @@
 *
 *******************************************************************************/
 /** @file Transmit_program.c
- *  @brief This is the source file for transmit tpdate to nodes connected on can bus. 
+ *  @brief This is the source file for transmit updates to nodes connected on can bus. 
  */
 /******************************************************************************
 * Includes
@@ -48,8 +48,8 @@
 *******************************************************************************/
 static uint32               Static_u32CodeSize;
 static uint8                Static_u8NodeId;
-static uint16               Static_u16PacketsCounter;             
-static uint16               Static_u16NumberOfPackets;            
+static uint16               Static_u16TransmittedPacketsCounter;             
+static uint16               Static_u16NumberOfPacketsInCode;            
 static uint8                Static_u8NumOfBytesInLastPacket;      
 
 static TransmitStates_t     Static_StateVariable;
@@ -69,9 +69,9 @@ Std_ReturnType Transmit_InitializeModule(void)
    // Initalize static variable in this module
    Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
    Static_u8NodeId                             = INITIALIZE_WITH_ZERO;
-   Static_u16PacketsCounter                    = INITIALIZE_WITH_ONE;
-   Static_u16NumberOfPackets                   = INITIALIZE_WITH_ONE;
-   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ONE;
+   Static_u16TransmittedPacketsCounter         = INITIALIZE_WITH_ZERO;
+   Static_u16NumberOfPacketsInCode             = INITIALIZE_WITH_ZERO;
+   Static_u8NumOfBytesInLastPacket             = INITIALIZE_WITH_ZERO;
    // Initialize current state variable
    Static_StateVariable                        = IDLE_STATE;
    // Fill state array with function represent each state
@@ -84,7 +84,7 @@ Std_ReturnType Transmit_InitializeModule(void)
 Std_ReturnType Transmit_MainFunction(void)
 {
    Std_ReturnType       Local_ReturnStatus = STD_IDLE;
-   State_PtrToFunction  RunState;
+   State_PtrToFunction  RunState           = NULL_PTR;
    RunState           = Static_ArrayOfStates[Static_StateVariable];
    Local_ReturnStatus = RunState(NULL_PTR);
    return Local_ReturnStatus;
@@ -106,6 +106,8 @@ static Std_ReturnType Transmit_IdleState(void *Cpy_voidPtr)
       {
          // Go to Get and Transmit Header State.
          Static_StateVariable = GET_TRANSMIT_HEADER;
+         // Change Header flag to a not set status
+         RTE_WRITE_HEADER_ACK_FLAG(HEADER_NOT_SET);
       }
       else
       {
@@ -168,7 +170,8 @@ static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
    // Check received Ack
    if(UDS_MCU_ACKNOWLEDGE_HEADER_RECEIVED == Local_u8ReceivedAck)
    {
-      Transmit_FinishHeaderTansmission();
+      // Go to Consume and Transmit data state.
+      Static_StateVariable = CONSUME_TRANSMIT_DATA;
    }
    else
    {
@@ -184,16 +187,15 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
    uint8          Local_u8DataBuffer[DATA_BUFFER_SIZE] = {INITIALIZE_WITH_ZERO}; 
    uint8          Local_u8ReceivedAck                  = INITIALIZE_WITH_ZERO;
    // Calculate number of packets and number of bytes in the last packet.
-   Static_u16NumberOfPackets            = (Static_u32CodeSize) / (DATA_BUFFER_SIZE);
-   Static_u8NumOfBytesInLastPacket      = (Static_u32CodeSize) % (DATA_BUFFER_SIZE);
+   Static_u16NumberOfPacketsInCode                     = (Static_u32CodeSize) / (DATA_BUFFER_SIZE);
+   Static_u8NumOfBytesInLastPacket                     = (Static_u32CodeSize) % (DATA_BUFFER_SIZE);
    // Get Buffer Flag Value.
    RTE_READ_DECRYPTED_DATA_BUFFER_FLAG(&Local_u8BufferFlagValue);
    // Check The Buffer Flag Value
    if(BUFFER_SET == Local_u8BufferFlagValue)
    {
-      // Consume Data and Increase packet counter by 1
+      // Consume Data
       RTE_READ_DECRYPTED_DATA_BUFFER(&Local_u8DataBuffer);
-      Static_u16PacketsCounter++;
       // Request Sending line of code code.
       CanIf_uint8Transmit_Byte(UDS_GWY_REQUEST_SENDING_PACKET_OF_CODE, Static_u8NodeId);
       // Wait Ack from BL
@@ -202,7 +204,7 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
       if(UDS_MCU_ACCEPT_RECEIVING_PACKET_OF_CODE == Local_u8ReceivedAck) 
       {
          // condition to know are we will send the last packet or ordinary packet.
-         if(Static_u16PacketsCounter < Static_u16NumberOfPackets)
+         if(Static_u16TransmittedPacketsCounter < Static_u16NumberOfPacketsInCode)
          {
             // Sending 64 byte of data
             CanIf_uint8TransmitData(Local_u8DataBuffer,Static_u8NodeId,DATA_BUFFER_SIZE);
@@ -210,8 +212,10 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
             CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
             if(UDS_MCU_ACKNOWLEDGE_PACKET_OF_CODE_RECEIVED == Local_u8ReceivedAck)
             {
-               // Reset Buffer flag
-               RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG(RESET_FLAG);
+               // Increase packet counter by 1
+               Static_u16TransmittedPacketsCounter++;
+               // Change Buffer flag to a not set status
+               RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG(BUFFER_NOT_SET);
                // Change System State To Decrypt state.
                RTE_WRITE_SYSTEM_STATE(SYS_DECRYPT);
             }
@@ -228,6 +232,8 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
             CanIf_uint8Receive_Byte(&Local_u8ReceivedAck);
             if(UDS_MCU_ACKNOWLEDGE_PACKET_OF_CODE_RECEIVED == Local_u8ReceivedAck)
             {
+               // Change Buffer flag to a not set status
+               RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG(BUFFER_NOT_SET);
                // Go to Finial State.
                Static_StateVariable = FINISHING_STATE;
             }
@@ -249,8 +255,6 @@ static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
 static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr)
 {
    uint8 Local_u8ReceivedAck = INITIALIZE_WITH_ZERO;
-   // Reset Buffer flag
-   RTE_WRITE_DECRYPTED_DATA_BUFFER_FLAG(RESET_FLAG);
    // Ack node of the end of code transmission
    CanIf_uint8Transmit_Byte(UDS_GWY_ACKNOWLEDGE_FINISHING_SENDING_CODE, Static_u8NodeId);
    // Wait Ack from BL
@@ -281,15 +285,15 @@ static Std_ReturnType Transmit_ConsumeHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size,
 static Std_ReturnType Transmit_HandleHeader(uint32 Cpy_Size,uint32 Cpy_Crc,uint8 *Cpy_PtrToBytes)
 {
    // Convert code size into bytes and store it in buffer.
-   Cpy_PtrToBytes[FIRST_BYTE]   = (Cpy_Size & GET_FIRST_BYTE);
-   Cpy_PtrToBytes[SECOND_BYTE]  = (Cpy_Size & GET_SECOND_BYTE);
-   Cpy_PtrToBytes[THIRD_BYTE]   = (Cpy_Size & GET_THIRD_BYTE);
-   Cpy_PtrToBytes[FOURTH_BYTE]  = (Cpy_Size & GET_FOURTH_BYTE);
+   Cpy_PtrToBytes[FIRST_BYTE]   = (Cpy_Size  &  GET_BYTE);
+   Cpy_PtrToBytes[SECOND_BYTE]  = ((Cpy_Size >> SHIFT_TO_GET_SECOND_BYTE) & GET_BYTE);
+   Cpy_PtrToBytes[THIRD_BYTE]   = ((Cpy_Size >> SHIFT_TO_GET_THIRD_BYTE)  & GET_BYTE);
+   Cpy_PtrToBytes[FOURTH_BYTE]  = ((Cpy_Size >> SHIFT_TO_GET_FOURTH_BYTE) & GET_BYTE);
    // Convert CRC Value into bytes and store it in buffer.
-   Cpy_PtrToBytes[FIFTH_BYTE]   = (Cpy_Crc  & GET_FIRST_BYTE);
-   Cpy_PtrToBytes[SIXTH_BYTE]   = (Cpy_Crc  & GET_SECOND_BYTE);
-   Cpy_PtrToBytes[SEVENTH_BYTE] = (Cpy_Crc  & GET_THIRD_BYTE);
-   Cpy_PtrToBytes[EIGHTH_BYTE]  = (Cpy_Crc  & GET_FOURTH_BYTE);
+   Cpy_PtrToBytes[FIFTH_BYTE]   = (Cpy_Crc   &  GET_BYTE);
+   Cpy_PtrToBytes[SIXTH_BYTE]   = ((Cpy_Crc  >> SHIFT_TO_GET_SECOND_BYTE) & GET_BYTE);
+   Cpy_PtrToBytes[SEVENTH_BYTE] = ((Cpy_Crc  >> SHIFT_TO_GET_THIRD_BYTE)  & GET_BYTE);
+   Cpy_PtrToBytes[EIGHTH_BYTE]  = ((Cpy_Crc  >> SHIFT_TO_GET_FOURTH_BYTE) & GET_BYTE);
 }
 
 static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size)
@@ -300,13 +304,4 @@ static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size)
    Static_u32CodeSize = *Cpy_Size;
 }
 
-static Std_ReturnType Transmit_FinishHeaderTansmission(void)
-{
-   // Reset The Header Flag
-   RTE_WRITE_HEADER_ACK_FLAG(RESET_FLAG);
-   // Go to Consume and Transmit data state.
-   Static_StateVariable = CONSUME_TRANSMIT_DATA;
-   // Change System state to Decrypt.
-   RTE_WRITE_SYSTEM_STATE(SYS_DECRYPT);
-}
 /*************** END OF FUNCTIONS ***************************************************************************/

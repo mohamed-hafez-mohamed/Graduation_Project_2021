@@ -56,11 +56,11 @@ typedef enum
 *******************************************************************************/
 #define HEADER_INFORMATION_SIZE                     8
 
+#define GET_BYTE                                    0X000000FF
+#define SHIFT_TO_GET_SECOND_BYTE                    8
+#define SHIFT_TO_GET_THIRD_BYTE                     16
+#define SHIFT_TO_GET_FOURTH_BYTE                    24
 
-#define GET_FIRST_BYTE                              0X000000FF
-#define GET_SECOND_BYTE                             0X0000FF00
-#define GET_THIRD_BYTE                              0X00FF0000
-#define GET_FOURTH_BYTE                             0XFF000000
 #define FIRST_BYTE                                  0
 #define SECOND_BYTE                                 1
 #define THIRD_BYTE                                  2
@@ -79,7 +79,6 @@ typedef enum
 static Std_ReturnType Transmit_ConsumeHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size,uint32 *Cpy_Crc);
 static Std_ReturnType Transmit_HandleHeader(uint32 Cpy_Size,uint32 Cpy_Crc,uint8 *Cpy_PtrToBytes);
 static Std_ReturnType Transmit_SaveHeader(uint8 *Cpy_NodeId,uint32 *Cpy_Size);
-static Std_ReturnType Transmit_FinishHeaderTansmission(void);
 // Functions that handle states.
 static Std_ReturnType Transmit_IdleState(void *Cpy_voidPtr);
 static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr);

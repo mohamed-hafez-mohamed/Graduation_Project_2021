@@ -78,7 +78,57 @@
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
+
+/******************************************************************************
+* Function : Transmit_InitializeModule()
+*//** 
+* \b Description:
+*
+* This function is used to initialize transmitmodule.
+*
+* PRE-CONDITION:  None
+*
+* POST-CONDITION: None
+*
+* @param [in]     void
+* 
+* @return 		   Std_ReturnType
+*
+* \b Example Example:
+* @code
+* 	FunctionReturnStatus = Transmit_InitializeModule();
+*
+* @endcode
+*
+* @see Transmit_InitializeModule
+*
+*******************************************************************************/
 Std_ReturnType Transmit_InitializeModule(void);
+
+/******************************************************************************
+* Function : Transmit_MainFunction()
+*//** 
+* \b Description:
+*
+* This function is used to run main functionality of module.
+*
+* PRE-CONDITION:  Module has been initialized and the states has been implemented
+*
+* POST-CONDITION: None
+*
+* @param [in]     void
+* 
+* @return 		   Std_ReturnType
+*
+* \b Example Example:
+* @code
+* 	FunctionReturnStatus = Transmit_MainFunction();
+*
+* @endcode
+*
+* @see Transmit_MainFunction
+*
+*******************************************************************************/
 Std_ReturnType Transmit_MainFunction(void);
 
 #endif /*File_H_*/
