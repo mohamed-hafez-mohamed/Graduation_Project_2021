@@ -90,7 +90,7 @@ Std_ReturnType Transmit_MainFunction(void)
    return Local_ReturnStatus;
 }
 
-Std_ReturnType Transmit_MainFunction(void)
+Std_ReturnType Transmit_DeinitializeModule(void)
 {
    // Initalize static variable in this module
    Static_u32CodeSize                          = INITIALIZE_WITH_ZERO;
@@ -274,7 +274,7 @@ static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr)
    if(UDS_MCU_ACKNOWLEDGE_RECEIVED_CODE == Local_u8ReceivedAck)
    {
       // Deinitialze the module
-      Transmit_MainFunction();
+      Transmit_DeinitializeModule();
       // Change System State To System Done Update.
       RTE_WRITE_SYSTEM_STATE(SYS_DONE_UPDATE);
    }
