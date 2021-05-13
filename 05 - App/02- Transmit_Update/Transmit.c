@@ -196,7 +196,7 @@ static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr)
 static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr)
 {    
    FlagType       Local_u8BufferFlagValue              = BUFFER_NOT_SET;
-   uint8          Local_u8DataBuffer[DATA_BUFFER_SIZE] = {INITIALIZE_WITH_ZERO}; 
+   uint8         *Local_u8DataBuffer                   = NULL_PTR; 
    uint8          Local_u8ReceivedAck                  = INITIALIZE_WITH_ZERO;
    // Calculate number of packets and number of bytes in the last packet.
    Static_u16NumberOfPacketsInCode                     = (Static_u32CodeSize) / (DATA_BUFFER_SIZE);
