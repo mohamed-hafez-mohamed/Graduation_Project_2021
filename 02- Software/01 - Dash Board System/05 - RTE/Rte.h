@@ -1,7 +1,7 @@
 /*****************************************************/
  /* Author      : Mosad                              */
  /* Version     : v01                                */
- /* date        : 29/4/2020                          */
+ /* date        : 25/5/2021                          */
 /*****************************************************/
 #ifndef RTE_H
 #define RTE_H
@@ -13,59 +13,40 @@
 /* Proto types */
 
 /**************************************************************************/
-/*                         Code Size Port                                 */
+/*                         Temp val  Port                                 */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCodeSize(uint32 Cpy_CodeSize);
-Std_ReturnType Rte_ReadCodeSize (uint32 *Cpy_CodeSize);
+Std_ReturnType Rte_WriteTempVal(uint8 Cpy_CodeSize);
+Std_ReturnType Rte_ReadTempVal (uint8 *Cpy_CodeSize);
 
 /**************************************************************************/
-/*                         Node Id Port                                   */
+/*                         Temp val flag Port                             */
 /**************************************************************************/
-Std_ReturnType Rte_WriteNodeId(uint8 Cpy_NodeId);
-Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId);
+Std_ReturnType Rte_WriteTempvalFlag (uint8 Cpy_TempvalFlag);
+Std_ReturnType Rte_ReadTempvalFlag (uint8 *Cpy_TempvalFlag);
 
 /**************************************************************************/
-/*                         Crc Port                                       */
+/*                          Speed Port                                    */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCrc(uint32 Cpy_Crc);
-Std_ReturnType Rte_ReadCrc (uint32 *Cpy_Crc);
+Std_ReturnType Rte_WriteSpeed (uint8 Cpy_Speed);
+Std_ReturnType Rte_ReadSpeed (uint8 *Cpy_Speed);
 
 /**************************************************************************/
-/*                         HeaderAckFlag Port                   */
+/*                         Speed flag Port                                */
 /**************************************************************************/
-Std_ReturnType Rte_WriteHeaderAckFlag(FlagType Cpy_HeaderAckFlag);
-Std_ReturnType Rte_ReadHeaderAckFlag (FlagType *Cpy_HeaderAckFlag);
+Std_ReturnType Rte_WriteSpeedFlag (uint8 Cpy_SpeedFlag);
+Std_ReturnType Rte_ReadSpeedFlag (uint8 *Cpy_SpeedFlag);
 
 /**************************************************************************/
-/*                         Decrypted Data Buffer Port                     */
+/*                          TimePtr Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBuffer(uint8 *Cpy_DecryptedDataBufferPtr);
-Std_ReturnType Rte_ReadDecryptedDataBuffer (uint8 **Cpy_DecryptedDataBufferPtr);
+Std_ReturnType Rte_WriteTimePtr (uint8 *Cpy_TimePtr);
+Std_ReturnType Rte_ReadTimePtr (uint8 **Cpy_TimePtr);
 
 /**************************************************************************/
-/*                         DecryptedDataBufferFlag Port                   */
+/*                         TimePtr flag Port                              */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBufferFlag(FlagType Cpy_DecryptedDataBufferFlag);
-Std_ReturnType Rte_ReadDecryptedDataBufferFlag (FlagType *Cpy_DecryptedDataBufferFlag);
-
-/**************************************************************************/
-/*                         SystemState Port                               */
-/**************************************************************************/
-Std_ReturnType Rte_WriteSystemState(SystemStateType Cpy_SystemState);
-Std_ReturnType Rte_ReadSystemState (SystemStateType *Cpy_SystemState);
-
-/**************************************************************************/
-/*                         UserResponse Port                              */
-/**************************************************************************/
-Std_ReturnType Rte_WriteUserResponse(uint8 Cpy_UserResponse);
-Std_ReturnType Rte_ReadUserResponse (uint8 *Cpy_UserResponse);
-
-/**************************************************************************/
-/*                         UpdateProgress Port                            */
-/**************************************************************************/
-Std_ReturnType Rte_WriteUpdateProgress (uint8 Cpy_UpdateProgress);
-Std_ReturnType Rte_ReadUpdateProgress (uint8 *Cpy_UpdateProgress);
-
+Std_ReturnType Rte_WriteTimePtrFlag (uint8 Cpy_TimePtrFlag);
+Std_ReturnType Rte_ReadTimePtrFlag (uint8 *Cpy_TimePtrFlag);
 
 
 

@@ -1,7 +1,7 @@
 /*****************************************************/
  /* Author      : Mosad                              */
  /* Version     : v01                                */
- /* date        : 29/4/2020                          */
+ /* date        : 25/5/2021                          */
 /*****************************************************/
 
 /* Module includes */
@@ -11,48 +11,41 @@
 typedef    uint8   PortStateType  ; 
 
 /* Local Macros */
-#define INITIAL_VALUE 0x0u
+#define INITIAL_ValUE 0x0u
 #define IDLE          0x0u
 #define BUSY          0x1u
 
 /* Rte Golable Variables */
-static uint32 Global_CrcValue                         = INITIAL_VALUE ;
-static uint32 Global_CodeSizeValue                    = INITIAL_VALUE ;
-static uint8  Global_NodeId                           = INITIAL_VALUE ;
-static FlagType Global_HeaderAckFlag                  = INITIAL_VALUE ;
-static uint8 *Global_DecryptedDataBufferPtr           = NULL_PTR ;
-static FlagType Global_DecryptedDataBufferFlag        = INITIAL_VALUE ;
-static SystemStateType Global_SystemStateMachine      = INITIAL_VALUE ;
-static uint8 Global_UserResponse                      = INITIAL_VALUE ;
-static uint8 Global_UpdateProgress                    = INITIAL_VALUE ;
-
+static uint8 Global_TempVal                                    = INITIAL_ValUE ;
+static FlagType Global_TempValFlag                             = INITIAL_ValUE ;
+static uint8 Global_Speed                                      = INITIAL_ValUE ;
+static FlagType Global_SpeedFlag                               = INITIAL_ValUE ;
+static uint8 *Global_TimePtr                                   = NULL_PTR ;
+static FlagType Global_TimePtrFlag                             = INITIAL_ValUE ;
 
 /* Rte protection flag */
-static PortStateType Global_CrcPortState                   = IDLE;
-static PortStateType Global_CodeSizePortState              = IDLE;
-static PortStateType Global_NodeIdPortState                = IDLE;
-static PortStateType Global_HeaderAckFlagState             = IDLE;
-static PortStateType Global_DecryptedDataBufferState       = IDLE;
-static PortStateType Global_DecryptedDataBufferFlagState   = IDLE;
-static PortStateType Global_SystemStateMachineState        = IDLE;
-static PortStateType Global_UserResponsePortState          = IDLE;
-static PortStateType Global_UpdateProgressPortState        = IDLE;
+static PortStateType Global_TempValPortState                   = IDLE;
+static PortStateType Global_TempValFlagPortState               = IDLE ;
+static PortStateType Global_SpeedPortState                     = IDLE ;
+static PortStateType Global_SpeedFlagPortState                 = IDLE ;
+static PortStateType Global_TimePtrPortState                   = IDLE ;
+static PortStateType Global_TimePtrFlagPortState               = IDLE ;
 
 /**************************************************************************/
-/*                         NodeId Port                                  */
+/*                         Temp Val Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteNodeId (uint8 Cpy_NodeId)
+Std_ReturnType Rte_WriteTempVal (uint8 Cpy_TempVal)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_NodeIdPortState == IDLE)
+	if (Global_TempValPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_NodeIdPortState = BUSY ;
+		Global_TempValPortState = BUSY ;
 		/* Write the data to the port */
-		Global_NodeId = Cpy_NodeId ; 
+		Global_TempVal = Cpy_TempVal ; 
 		/* Unlock the port after done writing */
-		Global_NodeIdPortState = IDLE ;
+		Global_TempValPortState = IDLE ;
 	}
 	else
 	{
@@ -61,18 +54,18 @@ Std_ReturnType Rte_WriteNodeId (uint8 Cpy_NodeId)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId)
+Std_ReturnType Rte_ReadTempVal (uint8 *Cpy_TempVal)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_NodeIdPortState == IDLE) && (Cpy_NodeId != NULL_PTR))
+	if ( (Global_TempValPortState == IDLE) && (Cpy_TempVal != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_NodeIdPortState = BUSY ;
+		Global_TempValPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_NodeId) = Global_NodeId ; 
+		 (*Cpy_TempVal) = Global_TempVal ; 
 		/* Unlock the port after done writing */
-		Global_NodeIdPortState = IDLE ;
+		Global_TempValPortState = IDLE ;
 	}
 	else
 	{
@@ -81,21 +74,22 @@ Std_ReturnType Rte_ReadNodeId (uint8 *Cpy_NodeId)
 	return Local_ReturnError ;
 }
 
+
 /**************************************************************************/
-/*                         CodeSize Port                                  */
+/*                         Temp Val flag Port                             */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCodeSize(uint32 Cpy_CodeSize)
+Std_ReturnType Rte_WriteTempValFlag (uint8 Cpy_TempValFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_CodeSizePortState == IDLE)
+	if (Global_TempValFlagPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_CodeSizePortState = BUSY ;
+		Global_TempValFlagPortState = BUSY ;
 		/* Write the data to the port */
-		Global_CodeSizeValue = Cpy_CodeSize ; 
+		Global_TempValFlag = Cpy_TempValFlag ; 
 		/* Unlock the port after done writing */
-		Global_CodeSizePortState = IDLE ;
+		Global_TempValFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -104,18 +98,18 @@ Std_ReturnType Rte_WriteCodeSize(uint32 Cpy_CodeSize)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadCodeSize(uint32 *Cpy_CodeSize)
+Std_ReturnType Rte_ReadTempValFlag (uint8 *Cpy_TempValFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_CodeSizePortState == IDLE) && (Cpy_CodeSize != NULL_PTR))
+	if ( (Global_TempValFlagPortState == IDLE) && (Cpy_TempValFlag != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_CodeSizePortState = BUSY ;
+		Global_TempValFlagPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_CodeSize) = Global_CodeSizeValue ; 
+		 (*Cpy_TempValFlag) = Global_TempValFlag ; 
 		/* Unlock the port after done writing */
-		Global_CodeSizePortState = IDLE ;
+		Global_TempValFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -124,21 +118,22 @@ Std_ReturnType Rte_ReadCodeSize(uint32 *Cpy_CodeSize)
 	return Local_ReturnError ;
 }
 
+
 /**************************************************************************/
-/*                         Crc Port                                       */
+/*                          Speed Port                                    */
 /**************************************************************************/
-Std_ReturnType Rte_WriteCrc(uint32 Cpy_Crc)
+Std_ReturnType Rte_WriteSpeed (uint8 Cpy_Speed)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_CrcPortState == IDLE)
+	if (Global_SpeedPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_CrcPortState = BUSY ;
+		Global_SpeedPortState = BUSY ;
 		/* Write the data to the port */
-		Global_CrcValue = Cpy_Crc ; 
+		Global_Speed = Cpy_Speed ; 
 		/* Unlock the port after done writing */
-		Global_CrcPortState = IDLE ;
+		Global_SpeedPortState = IDLE ;
 	}
 	else
 	{
@@ -147,18 +142,18 @@ Std_ReturnType Rte_WriteCrc(uint32 Cpy_Crc)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadCrc(uint32 *Cpy_Crc)
+Std_ReturnType Rte_ReadSpeed (uint8 *Cpy_Speed)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_CrcPortState == IDLE) && (Cpy_Crc != NULL_PTR) )
+	if ( (Global_SpeedPortState == IDLE) && (Cpy_Speed != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_CrcPortState = BUSY ;
+		Global_SpeedPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_Crc) = Global_CrcValue ; 
+		 (*Cpy_Speed) = Global_Speed ; 
 		/* Unlock the port after done writing */
-		Global_CrcPortState = IDLE ;
+		Global_SpeedPortState = IDLE ;
 	}
 	else
 	{
@@ -167,21 +162,22 @@ Std_ReturnType Rte_ReadCrc(uint32 *Cpy_Crc)
 	return Local_ReturnError ;
 }
 
+
 /**************************************************************************/
-/*                         Header Ack Flag Port                           */
+/*                         Speed flag Port                                */
 /**************************************************************************/
-Std_ReturnType Rte_WriteHeaderAckFlag(FlagType Cpy_HeaderAckFlag)
+Std_ReturnType Rte_WriteSpeedFlag (uint8 Cpy_SpeedFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_HeaderAckFlagState == IDLE)
+	if (Global_SpeedFlagPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_HeaderAckFlagState = BUSY ;
+		Global_SpeedFlagPortState = BUSY ;
 		/* Write the data to the port */
-		Global_HeaderAckFlag = Cpy_HeaderAckFlag ; 
+		Global_SpeedFlag = Cpy_SpeedFlag ; 
 		/* Unlock the port after done writing */
-		Global_HeaderAckFlagState = IDLE ;
+		Global_SpeedFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -190,61 +186,18 @@ Std_ReturnType Rte_WriteHeaderAckFlag(FlagType Cpy_HeaderAckFlag)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadHeaderAckFlag(FlagType *Cpy_HeaderAckFlag)
+Std_ReturnType Rte_ReadSpeedFlag (uint8 *Cpy_SpeedFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_HeaderAckFlagState == IDLE) && (Cpy_HeaderAckFlag != NULL_PTR) )
+	if ( (Global_SpeedFlagPortState == IDLE) && (Cpy_SpeedFlag != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_HeaderAckFlagState = BUSY ;
+		Global_SpeedFlagPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_HeaderAckFlag) = Global_HeaderAckFlag ; 
+		 (*Cpy_SpeedFlag) = Global_SpeedFlag ; 
 		/* Unlock the port after done writing */
-		Global_HeaderAckFlagState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-/**************************************************************************/
-/*                         Decrypted Data Buffer Port                     */
-/**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBuffer(uint8 *Cpy_DecryptedDataBufferPtr)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ((Global_DecryptedDataBufferState == IDLE)&& (Cpy_DecryptedDataBufferPtr != NULL_PTR))
-	{
-		/* Lock the port to write */
-		Global_DecryptedDataBufferState = BUSY ;
-		/* Write the data to the port */
-		Global_DecryptedDataBufferPtr = Cpy_DecryptedDataBufferPtr ; 
-		/* Unlock the port after done writing */
-		Global_DecryptedDataBufferState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-Std_ReturnType Rte_ReadDecryptedDataBuffer(uint8 **Cpy_DecryptedDataBufferPtr)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ( (Global_DecryptedDataBufferState == IDLE) && (Cpy_DecryptedDataBufferPtr != NULL_PTR))
-	{
-		/* Lock the port to write */
-		Global_DecryptedDataBufferState = BUSY ;
-		/* Write the data to the port */
-		 (*Cpy_DecryptedDataBufferPtr) = Global_DecryptedDataBufferPtr ; 
-		/* Unlock the port after done writing */
-		Global_DecryptedDataBufferState = IDLE ;
+		Global_SpeedFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -254,20 +207,20 @@ Std_ReturnType Rte_ReadDecryptedDataBuffer(uint8 **Cpy_DecryptedDataBufferPtr)
 }
 
 /**************************************************************************/
-/*                         Decrypted Data Buffer Flag Port                */
+/*                          TimePtr Port                                  */
 /**************************************************************************/
-Std_ReturnType Rte_WriteDecryptedDataBufferFlag(FlagType Cpy_DecryptedDataBufferFlag)
+Std_ReturnType Rte_WriteTimePtr (uint8 *Cpy_TimePtr)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_DecryptedDataBufferFlagState == IDLE)
+	if ((Global_TimePtrPortState == IDLE)  && (Cpy_TimePtr != NULL_PTR) )
 	{
 		/* Lock the port to write */
-		Global_DecryptedDataBufferFlagState = BUSY ;
+		Global_TimePtrPortState = BUSY ;
 		/* Write the data to the port */
-		Global_DecryptedDataBufferFlag = Cpy_DecryptedDataBufferFlag ; 
+		Global_TimePtr = Cpy_TimePtr ; 
 		/* Unlock the port after done writing */
-		Global_DecryptedDataBufferFlagState = IDLE ;
+		Global_TimePtrPortState = IDLE ;
 	}
 	else
 	{
@@ -276,18 +229,18 @@ Std_ReturnType Rte_WriteDecryptedDataBufferFlag(FlagType Cpy_DecryptedDataBuffer
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadDecryptedDataBufferFlag(FlagType *Cpy_DecryptedDataBufferFlag)
+Std_ReturnType Rte_ReadTimePtr (uint8 **Cpy_TimePtr)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_DecryptedDataBufferFlagState == IDLE) && (Cpy_DecryptedDataBufferFlag != NULL_PTR) )
+	if ( (Global_TimePtrPortState == IDLE) && (Cpy_TimePtr != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_DecryptedDataBufferFlagState = BUSY ;
+		Global_TimePtrPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_DecryptedDataBufferFlag) = Global_DecryptedDataBufferFlag ; 
+		 (*Cpy_TimePtr) = Global_TimePtr ; 
 		/* Unlock the port after done writing */
-		Global_DecryptedDataBufferFlagState = IDLE ;
+		Global_TimePtrPortState = IDLE ;
 	}
 	else
 	{
@@ -296,64 +249,22 @@ Std_ReturnType Rte_ReadDecryptedDataBufferFlag(FlagType *Cpy_DecryptedDataBuffer
 	return Local_ReturnError ;
 }
 
-/**************************************************************************/
-/*                         SystemState Port                               */
-/**************************************************************************/
-Std_ReturnType Rte_WriteSystemState(SystemStateType Cpy_SystemState)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if (Global_SystemStateMachineState == IDLE)
-	{
-		/* Lock the port to write */
-		Global_SystemStateMachineState = BUSY ;
-		/* Write the data to the port */
-		Global_SystemStateMachine = Cpy_SystemState ; 
-		/* Unlock the port after done writing */
-		Global_SystemStateMachineState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-Std_ReturnType Rte_ReadSystemState(SystemStateType *Cpy_SystemState)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ( (Global_SystemStateMachineState == IDLE) && (Cpy_SystemState != NULL_PTR))
-	{
-		/* Lock the port to write */
-		Global_SystemStateMachineState = BUSY ;
-		/* Write the data to the port */
-		 (*Cpy_SystemState) = Global_SystemStateMachine ; 
-		/* Unlock the port after done writing */
-		Global_SystemStateMachineState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
 
 /**************************************************************************/
-/*                         UserResponse Port                              */
+/*                         TimePtr flag Port                              */
 /**************************************************************************/
-Std_ReturnType Rte_WriteUserResponse(uint8 Cpy_UserResponse)
+Std_ReturnType Rte_WriteTimePtrFlag (uint8 Cpy_TimePtrFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if (Global_UserResponsePortState == IDLE)
+	if (Global_TimePtrFlagPortState == IDLE)
 	{
 		/* Lock the port to write */
-		Global_UserResponsePortState = BUSY ;
+		Global_TimePtrFlagPortState = BUSY ;
 		/* Write the data to the port */
-		Global_UserResponse = Cpy_UserResponse ; 
+		Global_TimePtrFlag = Cpy_TimePtrFlag ; 
 		/* Unlock the port after done writing */
-		Global_UserResponsePortState = IDLE ;
+		Global_TimePtrFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -362,18 +273,18 @@ Std_ReturnType Rte_WriteUserResponse(uint8 Cpy_UserResponse)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadUserResponse(uint8 *Cpy_UserResponse)
+Std_ReturnType Rte_ReadTimePtrFlag (uint8 *Cpy_TimePtrFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
-	if ( (Global_UserResponsePortState == IDLE) && (Cpy_UserResponse != NULL_PTR) )
+	if ( (Global_TimePtrFlagPortState == IDLE) && (Cpy_TimePtrFlag != NULL_PTR))
 	{
 		/* Lock the port to write */
-		Global_UserResponsePortState = BUSY ;
+		Global_TimePtrFlagPortState = BUSY ;
 		/* Write the data to the port */
-		 (*Cpy_UserResponse) = Global_UserResponse ; 
+		 (*Cpy_TimePtrFlag) = Global_TimePtrFlag ; 
 		/* Unlock the port after done writing */
-		Global_UserResponsePortState = IDLE ;
+		Global_TimePtrFlagPortState = IDLE ;
 	}
 	else
 	{
@@ -381,47 +292,3 @@ Std_ReturnType Rte_ReadUserResponse(uint8 *Cpy_UserResponse)
 	}
 	return Local_ReturnError ;
 }
-
-/**************************************************************************/
-/*                         Update Progress Port                           */
-/**************************************************************************/
-Std_ReturnType Rte_WriteUpdateProgress(uint8 Cpy_UpdateProgress)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if (Global_UpdateProgressPortState == IDLE)
-	{
-		/* Lock the port to write */
-		Global_UpdateProgressPortState = BUSY ;
-		/* Write the data to the port */
-		Global_UpdateProgress = Cpy_UpdateProgress ; 
-		/* Unlock the port after done writing */
-		Global_UpdateProgressPortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
-Std_ReturnType Rte_ReadUpdateProgress(uint8 *Cpy_UpdateProgress)
-{
-	Std_ReturnType Local_ReturnError = E_OK ;
-	
-	if ( (Global_UpdateProgressPortState == IDLE) && (Cpy_UpdateProgress != NULL_PTR) )
-	{
-		/* Lock the port to write */
-		Global_UpdateProgressPortState = BUSY ;
-		/* Write the data to the port */
-		 (*Cpy_UpdateProgress) = Global_UpdateProgress ; 
-		/* Unlock the port after done writing */
-		Global_UpdateProgressPortState = IDLE ;
-	}
-	else
-	{
-		Local_ReturnError = E_NOT_OK ;
-	}
-	return Local_ReturnError ;
-}
-
