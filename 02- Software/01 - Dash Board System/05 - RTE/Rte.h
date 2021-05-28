@@ -21,7 +21,7 @@ Std_ReturnType Rte_ReadTempVal (uint8 *Cpy_CodeSize);
 /**************************************************************************/
 /*                         Temp val flag Port                             */
 /**************************************************************************/
-Std_ReturnType Rte_WriteTempvalFlag (uint8 Cpy_TempvalFlag);
+Std_ReturnType Rte_WriteTempvalFlag(uint8 Cpy_TempvalFlag);
 Std_ReturnType Rte_ReadTempvalFlag (uint8 *Cpy_TempvalFlag);
 
 /**************************************************************************/

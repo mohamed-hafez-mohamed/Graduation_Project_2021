@@ -10,8 +10,9 @@
 /**************************************************************************/
 /*                         Provided Ports                                 */
 /**************************************************************************/
-
-
+#define  RTE_WRITE_SPEED_FLAG              Rte_WriteSpeedFlag
+#define  RTE_WRITE_TEMP_VAL_FLAG           Rte_WriteTempvalFlag
+#define  RTE_WRITE_TIME_PTR_FLAG           Rte_WriteTimePtrFlag
 /**************************************************************************/
 /*                         Received Ports                                 */
 /**************************************************************************/
