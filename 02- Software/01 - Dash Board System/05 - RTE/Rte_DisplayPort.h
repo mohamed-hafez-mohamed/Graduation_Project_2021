@@ -11,13 +11,13 @@
 /*                         Provided Ports                                 */
 /**************************************************************************/
 #define  RTE_WRITE_SPEED_FLAG              Rte_WriteSpeedFlag
-#define  RTE_WRITE_TEMP_VAL_FLAG           Rte_WriteTempvalFlag
+#define  RTE_WRITE_TEMP_VAL_FLAG           Rte_WriteTempValFlag
 #define  RTE_WRITE_TIME_PTR_FLAG           Rte_WriteTimePtrFlag
 /**************************************************************************/
 /*                         Received Ports                                 */
 /**************************************************************************/
 #define      RTE_READ_TEMP_VAL             Rte_ReadTempVal
-#define      RTE_READ_TEMP_VAL_FLAG        Rte_ReadTempvalFlag
+#define      RTE_READ_TEMP_VAL_FLAG        Rte_ReadTempValFlag
 #define      RTE_READ_SPEED                Rte_ReadSpeed
 #define      RTE_READ_SPEED_FLAG           Rte_ReadSpeedFlag
 #define      RTE_READ_TIME_PTR             Rte_ReadTimePtr
