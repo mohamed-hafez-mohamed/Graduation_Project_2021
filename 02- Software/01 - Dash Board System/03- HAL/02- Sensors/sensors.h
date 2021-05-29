@@ -42,6 +42,8 @@
 *******************************************************************************/
 #define ADJUST_FACTOR                  10
 #define MAPPING_FROM_MV_TO_TEMPERATURE 100
+#define SPEED_CHANNEL                  CHANNEL0
+#define TEMPERATURE_CHANNEL            CHANNEL1
 /******************************************************************************
 * Macros
 *******************************************************************************/
@@ -58,7 +60,7 @@
 * Function Prototypes
 *******************************************************************************/
 Std_ReturnType HSENSORS_u8InitializeModule(void);
-Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel);
+Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber);
 
 #endif /*File_H_*/
 

@@ -70,8 +70,6 @@ Std_ReturnType MADC_u8InitializeAdc(void)
          AdcChannel[Local_u8AdcNumber]->SQR2  = CLR_REGISTER;
          AdcChannel[Local_u8AdcNumber]->SQR3  = CLR_REGISTER;
          // Configurations
-         // Specify Regular channel sequence length
-         AdcChannel[Local_u8AdcNumber]->SQR1 |= ((Static_AdcConfig[Local_u8AdcNumber].NumberOfChannels) << L0);
          // Specify Data Alignment
          AdcChannel[Local_u8AdcNumber]->CR2  |= ((Static_AdcConfig[Local_u8AdcNumber].DataAlignment) << ALIGN);
          // Specify Calibration
@@ -121,7 +119,7 @@ Std_ReturnType MADC_u8SetConversionMode(AdcPeripherals_t Cpy_PeripheralNumber, A
 }
 
 Std_ReturnType MADC_u8SetRegularChannelOrder(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel,
-                                      AdcChannelOrder_t Cpy_u8ConvertionOrder)
+            AdcChannelOrder_t Cpy_u8ConvertionOrder)
 {
    
    if(Cpy_u8Channel <= END_OF_SQR3)
@@ -142,17 +140,17 @@ Std_ReturnType MADC_u8SetRegularChannelOrder(AdcPeripherals_t Cpy_PeripheralNumb
    }
 }
 
-Std_ReturnType MADC_u8SetSamplingTime(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel,
+Std_ReturnType MADC_u8SetSamplingTime(AdcPeripherals_t Cpy_PeripheralNumber, AdcChannels_t Cpy_u8Channel,
                                       AdcSampleTime_t Cpy_u8SamplingTime)
 {
    if(Cpy_u8Channel <= END_OF_SMPR2)
    {
-      AdcChannel[Cpy_PeripheralNumber]->SMPR2 |= (Cpy_u8Channel * OFFSET) << (Cpy_u8SamplingTime);
+      AdcChannel[Cpy_PeripheralNumber]->SMPR2 |= (Cpy_u8SamplingTime) << (Cpy_u8Channel * OFFSET);
    }
    else if(Cpy_u8Channel <= END_OF_SMPR1)
    {
       Cpy_u8Channel -= ADJUST_CHANNEL;
-      AdcChannel[Cpy_PeripheralNumber]->SMPR1 |= (Cpy_u8Channel * OFFSET) << (Cpy_u8SamplingTime);
+      AdcChannel[Cpy_PeripheralNumber]->SMPR1 |= (Cpy_u8SamplingTime) << (Cpy_u8Channel * OFFSET);
    }
    else
    {
@@ -160,8 +158,14 @@ Std_ReturnType MADC_u8SetSamplingTime(AdcPeripherals_t Cpy_PeripheralNumber,AdcC
    }
 }
 
-Std_ReturnType MADC_u8ReadResultBlocking(AdcPeripherals_t Cpy_PeripheralNumber, uint16 * Cpy_u16Result)
+Std_ReturnType MADC_u8ReadResultBlocking(AdcPeripherals_t Cpy_PeripheralNumber, AdcChannels_t Cpy_u8Channel,
+                              AdcRegularChannelSquanceLength_t Cpy_NumberOfChannels, uint16 * Cpy_u16Result)
 {
+   AdcChannel[Cpy_PeripheralNumber]->SQR3  = CLR_REGISTER;
+   // Specify Regular channel sequence length
+   AdcChannel[Cpy_PeripheralNumber]->SQR3 |= (Cpy_NumberOfChannels) << L0;
+   // Make the passsed channel is the first conversion
+   AdcChannel[Cpy_PeripheralNumber]->SQR3 |= (Cpy_u8Channel) << (FIRST_ORDER);
    // Start Conversion
    SET_BIT(AdcChannel[Cpy_PeripheralNumber]->CR2, ADON);
    SET_BIT(AdcChannel[Cpy_PeripheralNumber]->CR2, SWSTART);
@@ -171,10 +175,17 @@ Std_ReturnType MADC_u8ReadResultBlocking(AdcPeripherals_t Cpy_PeripheralNumber, 
    *Cpy_u16Result = ((AdcChannel[Cpy_PeripheralNumber]->DR) & GET_RIGHT_ALIGNED_DATA);
    // Clear flag
    CLR_BIT(AdcChannel[Cpy_PeripheralNumber]->SR, EOC);
+   CLR_BIT(AdcChannel[Cpy_PeripheralNumber]->SR, STRT);
 }
 
-Std_ReturnType MADC_u8ReadResultNonBlocking(AdcPeripherals_t Cpy_PeripheralNumber, uint16 * Cpy_u16Result)
+Std_ReturnType MADC_u8ReadResultNonBlocking(AdcPeripherals_t Cpy_PeripheralNumber, AdcChannels_t Cpy_u8Channel,
+      AdcRegularChannelSquanceLength_t Cpy_NumberOfChannels, uint16 * Cpy_u16Result)
 {
+   AdcChannel[Cpy_PeripheralNumber]->SQR3  = CLR_REGISTER;
+   // Specify Regular channel sequence length
+   AdcChannel[Cpy_PeripheralNumber]->SQR3 |= (Cpy_NumberOfChannels) << L0;
+   // Make the passsed channel is the first conversion
+   AdcChannel[Cpy_PeripheralNumber]->SQR3 |= (Cpy_u8Channel) << (FIRST_ORDER);
    // Start Conversion
    SET_BIT(AdcChannel[Cpy_PeripheralNumber]->CR2, ADON);
    SET_BIT(AdcChannel[Cpy_PeripheralNumber]->CR2, SWSTART);
@@ -184,6 +195,7 @@ Std_ReturnType MADC_u8ReadResultNonBlocking(AdcPeripherals_t Cpy_PeripheralNumbe
       *Cpy_u16Result = ((AdcChannel[Cpy_PeripheralNumber]->DR) & GET_RIGHT_ALIGNED_DATA);
       // Clear flag
       CLR_BIT(AdcChannel[Cpy_PeripheralNumber]->SR, EOC);
+      CLR_BIT(AdcChannel[Cpy_PeripheralNumber]->SR, STRT);
    }
 }
 Std_ReturnType MADC_u8ReadDigitalAsynch(AdcPeripherals_t Cpy_PeripheralNumber, PtrToFunction CallBack)
@@ -198,6 +210,7 @@ void ADC1_2_IRQHandler(void)
 {
    CallBackFunction((AdcChannel[0]->DR) & GET_RIGHT_ALIGNED_DATA);
    CLR_BIT(AdcChannel[0]->SR, EOC);
+   CLR_BIT(AdcChannel[0]->SR, STRT);
 }
 
 

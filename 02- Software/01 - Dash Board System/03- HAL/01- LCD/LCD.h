@@ -59,6 +59,7 @@
 Std_ReturnType HLCD_u8Init(void);
 Std_ReturnType HLCD_u8CMD(uint8 Copy_u8Command);
 Std_ReturnType HLCD_u8SetCursor(uint8 Copy_u8Row, uint8 Copy_u8Col);
+Std_ReturnType HLCD_u8ClearPiexels(uint8 Cpy_ROW, uint8 Cpy_Initial, uint8 Cpy_End);
 Std_ReturnType HLCD_u8ClearSreen(void);
 Std_ReturnType HLCD_u8TurnOffDisplay(void);
 Std_ReturnType HLCD_u8WriteChar(uint8 Copy_u8Character);

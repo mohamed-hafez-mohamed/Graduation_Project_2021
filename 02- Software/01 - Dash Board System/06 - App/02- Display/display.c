@@ -45,8 +45,9 @@
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
-uint8 Static_u8SpeedData = INITIALIZED_WITH_ZERO;
-uint8 Static_u8TempData  = INITIALIZED_WITH_ZERO;
+uint8 Static_u8SpeedData   = INITIALIZED_WITH_ZERO;
+uint8 Static_u8TempData    = INITIALIZED_WITH_ZERO;
+uint8 *Static_u8TimeBuffer = NULL_PTR;
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
@@ -56,17 +57,19 @@ uint8 Static_u8TempData  = INITIALIZED_WITH_ZERO;
 *******************************************************************************/
 Std_ReturnType HDISPLAY_u8InitializeModule(void)
 {
-   HLCD_u8SetCursor(0,0);
+   HLCD_u8SetCursor(SPEED_ROW, SPEED_WORD_COLUMN);
    HLCD_u8WriteString("Speed:");
-   HLCD_u8SetCursor(0,9);
+   HLCD_u8SetCursor(SPEED_ROW, SPEED_DISCRIMINATION_UNIT_COLUMN);
    HLCD_u8WriteString("KM");
-   HLCD_u8SetCursor(1,0);
+   HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_WORD_COLUMN);
    HLCD_u8WriteString("Temperature:");
-   HLCD_u8SetCursor(1,14);
+   HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_DISCRIMINATION_UNIT_COLUMN);
    HLCD_u8WriteString("C");
-   HLCD_u8SetCursor(2,0);
+   HLCD_u8SetCursor(TIME_ROW, TIME_WORD_COLUMN);
    HLCD_u8WriteString("Time:");
-   HLCD_u8SetCursor(2,7);
+   HLCD_u8SetCursor(TIME_ROW, FIRST_COLON);
+   HLCD_u8WriteChar(':');
+   HLCD_u8SetCursor(TIME_ROW, SECOND_COLON);
    HLCD_u8WriteChar(':');
 }
 
@@ -78,6 +81,7 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
    FlagType Local_u8TimeFlagValue  = FLAG_NOT_SET;
    uint8    Local_u8SpeedData      = INITIALIZED_WITH_ZERO;
    uint8    Local_u8TempData       = INITIALIZED_WITH_ZERO;
+   uint8    *Local_u8TimeBuffer    = NULL_PTR;
    // Read flag values
    RTE_READ_SPEED_FLAG(&Local_u8SpeedFlagValue);
    RTE_READ_TEMP_VAL_FLAG(&Local_u8TempFlagValue);
@@ -92,7 +96,12 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
       // Check if new data differ from old data, display it
       if(Local_u8SpeedData != Static_u8SpeedData)
       {
-         HLCD_u8SetCursor(0,6);
+         // Store new speed value
+         Static_u8SpeedData = Local_u8SpeedData;
+         // Clear old value
+         HLCD_u8ClearPiexels(SPEED_ROW, SPEED_VALUE_COLUMN, END_OF_SPEED_VALUE_COLUMN);
+         // Display speed value
+         HLCD_u8SetCursor(SPEED_ROW, SPEED_VALUE_COLUMN);
          HLCD_u8WriteIntNum(Local_u8SpeedData);
       }
    }
@@ -105,11 +114,56 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
       // Check if new data differ from old data, display it
       if(Local_u8TempData != Static_u8TempData)
       {
-         HLCD_u8SetCursor(0,12);
+         // Store new temperature value
+         Static_u8TempData = Local_u8TempData;
+         // Clear old value
+         HLCD_u8ClearPiexels(TEMPERATURE_ROW, TEMPERATURE_VALUE_COLUMN, TEMPERATURE_END_VALUE_COLUMN);
+         // Display temperature value
+         HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_VALUE_COLUMN);
          HLCD_u8WriteIntNum(Local_u8TempData);
       }
    }
-   /*!<TODO: Time*/
+   if(FLAG_SET == Local_u8TimeFlagValue)
+   {
+      // Consume Data
+      RTE_READ_TIME_PTR(&Local_u8TimeBuffer);
+      // Reset Flag
+      RTE_WRITE_TIME_PTR_FLAG(FLAG_NOT_SET);
+      // Check if new data differ from old data, display it
+      // check second
+      if(Local_u8TimeBuffer[RTC_SECONDS_INDEX] != Static_u8TimeBuffer[RTC_SECONDS_INDEX])
+      {
+         // Store new seconds value
+         Static_u8TimeBuffer[RTC_SECONDS_INDEX] = Local_u8TimeBuffer[RTC_SECONDS_INDEX];
+         // Clear old value
+         HLCD_u8ClearPiexels(TIME_ROW, SECONDS_COLUMN, SECONDS_END_COLUMN);
+         // Display seconds value
+         HLCD_u8SetCursor(TIME_ROW, SECONDS_COLUMN);
+         HLCD_u8WriteIntNum(Local_u8TimeBuffer[RTC_SECONDS_INDEX]);
+      }
+      // check minutes
+      if(Local_u8TimeBuffer[RTC_MINUTES_INDEX] != Static_u8TimeBuffer[RTC_MINUTES_INDEX])
+      {
+         // Store new minutes value
+         Static_u8TimeBuffer[RTC_MINUTES_INDEX] = Local_u8TimeBuffer[RTC_MINUTES_INDEX];
+         // Clear old value
+         HLCD_u8ClearPiexels(TIME_ROW, MINUTES_COLUMN, MINUTES_END_COLUMN);
+         // Display minutes value
+         HLCD_u8SetCursor(TIME_ROW, MINUTES_COLUMN);
+         HLCD_u8WriteIntNum(Local_u8TimeBuffer[RTC_MINUTES_INDEX]);
+      }
+      // check hours
+      if(Local_u8TimeBuffer[RTC_HOURS_INDEX] != Static_u8TimeBuffer[RTC_HOURS_INDEX])
+      {
+         // Store new hours value
+         Static_u8TimeBuffer[RTC_HOURS_INDEX] = Local_u8TimeBuffer[RTC_HOURS_INDEX];
+         // Clear old value
+         HLCD_u8ClearPiexels(TIME_ROW, HOURS_COLUMN, HOURS_END_COLUMN);
+         // Display hours value
+         HLCD_u8SetCursor(TIME_ROW, HOURS_COLUMN);
+         HLCD_u8WriteIntNum(Local_u8TimeBuffer[RTC_HOURS_INDEX]);
+      }
+   }
 } 
 
 

@@ -59,7 +59,7 @@ Std_ReturnType HSENSORS_u8InitializeModule(void)
    /*!<TODO: Initialize Variables*/
 }
 
-Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel)
+Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber)
 {
    // Define Local variables
    uint16 Local_u16ADCResultSpeed       = INITIALIZED_WITH_ZERO;
@@ -67,8 +67,8 @@ Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber,AdcChann
    uint8  Local_u8Speed                 = INITIALIZED_WITH_ZERO;
    uint8  Local_u8Temperature           = INITIALIZED_WITH_ZERO;
    // Get converted data
-   MADC_u8ReadResultBlocking(ADC1, &Local_u16ADCResultSpeed);
-   MADC_u8ReadResultBlocking(ADC1, &Local_u16ADCResultTemperature);
+   MADC_u8ReadResultBlocking(ADC1, SPEED_CHANNEL      , _2_CONVERSION, &Local_u16ADCResultSpeed);
+   MADC_u8ReadResultBlocking(ADC1, TEMPERATURE_CHANNEL, _2_CONVERSION, &Local_u16ADCResultTemperature);
    // Adjust speed
    float32 Local_Speed = (Local_u16ADCResultSpeed * REFERENCE_VOLTAGE_FLOAT) / (MAXIMUM_LEVEL_FLOAT);
    Local_u8Speed       = (uint8)(Local_Speed * ADJUST_FACTOR);

@@ -40,7 +40,28 @@
 /******************************************************************************
 * Configuration Constants
 *******************************************************************************/
+#define SPEED_ROW                                0   
+#define SPEED_WORD_COLUMN                        0
+#define SPEED_VALUE_COLUMN                       6
+#define END_OF_SPEED_VALUE_COLUMN                8
+#define SPEED_DISCRIMINATION_UNIT_COLUMN         9
 
+#define TEMPERATURE_ROW                          1
+#define TEMPERATURE_WORD_COLUMN                  0
+#define TEMPERATURE_VALUE_COLUMN                 12
+#define TEMPERATURE_END_VALUE_COLUMN             13
+#define TEMPERATURE_DISCRIMINATION_UNIT_COLUMN   14
+
+#define TIME_ROW                                 2
+#define TIME_WORD_COLUMN                         0
+#define FIRST_COLON                              7
+#define SECOND_COLON                             10
+#define SECONDS_COLUMN                           11
+#define SECONDS_END_COLUMN                       12
+#define MINUTES_COLUMN                           8
+#define MINUTES_END_COLUMN                       9
+#define HOURS_COLUMN                             5
+#define HOURS_END_COLUMN                         6
 /******************************************************************************
 * Macros
 *******************************************************************************/
@@ -56,7 +77,56 @@
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
+
+/******************************************************************************
+* Function : HDISPLAY_InitializeModule()
+*//** 
+* \b Description:
+*
+* This function is used to initialize display.
+*
+* PRE-CONDITION:  None
+*
+* POST-CONDITION: None
+*
+* @param [in]     void
+* 
+* @return 		   Std_ReturnType
+*
+* \b Example Example:
+* @code
+* 	FunctionReturnStatus = HDISPLAY_u8InitializeModule();
+*
+* @endcode
+*
+* @see HDISPLAY_u8InitializeModule
+*
+*******************************************************************************/
 Std_ReturnType HDISPLAY_u8InitializeModule(void);
+/******************************************************************************
+* Function : HDISPLAY_HDISPLAY_u8DisplayDataModule()
+*//** 
+* \b Description:
+*
+* This function is used to display sensors' data.
+*
+* PRE-CONDITION:  None
+*
+* POST-CONDITION: None
+*
+* @param [in]     void
+* 
+* @return 		   Std_ReturnType
+*
+* \b Example Example:
+* @code
+* 	FunctionReturnStatus = HDISPLAY_u8DisplayData();
+*
+* @endcode
+*
+* @see HDISPLAY_u8DisplayData
+*
+*******************************************************************************/
 Std_ReturnType HDISPLAY_u8DisplayData(void);
 
 #endif /*File_H_*/

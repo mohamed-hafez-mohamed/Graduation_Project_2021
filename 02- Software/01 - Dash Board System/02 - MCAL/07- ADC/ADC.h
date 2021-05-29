@@ -48,8 +48,10 @@
 /******************************************************************************
 * Configuration Constants
 *******************************************************************************/
-// Configure Pin as analog pin
- //  MGPIO_u8SetPinMode(Static_u8Channels[Copy_u8Channel], AFIO_INPUT_ANALOG);
+#define MAXIMUM_LEVEL_INTEGER      4095
+#define REFERENCE_VOLTAGE_INTEGER  5
+#define MAXIMUM_LEVEL_FLOAT        4095.0
+#define REFERENCE_VOLTAGE_FLOAT    5.0
 /******************************************************************************
 * Macros
 *******************************************************************************/
@@ -129,6 +131,29 @@ typedef enum
 }AdcChannelOrder_t;
 
 /**
+* specify Regular channel sequence length.
+*/
+typedef enum
+{
+	_1_CONVERSION = 0, 
+   _2_CONVERSION,
+   _3_CONVERSION,
+   _4_CONVERSION,
+   _5_CONVERSION,
+   _6_CONVERSION,
+   _7_CONVERSION,
+   _8_CONVERSION,
+   _9_CONVERSION,
+   _10_CONVERSION,
+   _11_CONVERSION,
+   _12_CONVERSION,
+   _13_CONVERSION,
+   _14_CONVERSION,
+   _15_CONVERSION,
+   _16_CONVERSION                                 
+}AdcRegularChannelSquanceLength_t;
+
+/**
 * Defines Channel x Sample time selection.
 */
 typedef enum
@@ -158,13 +183,17 @@ Std_ReturnType MADC_u8SetConversionMode(AdcPeripherals_t Cpy_PeripheralNumber, A
                                         uint8 Cpy_u8NumberOfConversions);
 
 Std_ReturnType MADC_u8SetRegularChannelOrder(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel,
-                                      AdcChannelOrder_t Cpy_u8ConvertionOrder);
+            AdcChannelOrder_t Cpy_u8ConvertionOrder);
 
 Std_ReturnType MADC_u8SetSamplingTime(AdcPeripherals_t Cpy_PeripheralNumber,AdcChannels_t Cpy_u8Channel,
                                       AdcSampleTime_t Cpy_u8SamplingTime);
 
-Std_ReturnType MADC_u8ReadResultBlocking(AdcPeripherals_t Cpy_PeripheralNumber, uint16 * Cpy_u16Result);
-Std_ReturnType MADC_u8ReadResultNonBlocking(AdcPeripherals_t Cpy_PeripheralNumber, uint16 * Cpy_u16Result);
+Std_ReturnType MADC_u8ReadResultBlocking(AdcPeripherals_t Cpy_PeripheralNumber, AdcChannels_t Cpy_u8Channel,
+         AdcRegularChannelSquanceLength_t Cpy_NumberOfChannels, uint16 * Cpy_u16Result);
+
+Std_ReturnType MADC_u8ReadResultNonBlocking(AdcPeripherals_t Cpy_PeripheralNumber, AdcChannels_t Cpy_u8Channel,
+         AdcRegularChannelSquanceLength_t Cpy_NumberOfChannels, uint16 * Cpy_u16Result);
+
 Std_ReturnType MADC_u8ReadResultAsynch(AdcPeripherals_t Cpy_PeripheralNumber, PtrToFunction CallBack);
 #endif /*File_H_*/
 

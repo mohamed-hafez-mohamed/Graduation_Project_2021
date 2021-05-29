@@ -157,6 +157,15 @@ Std_ReturnType HLCD_u8ClearSreen(void)
    HLCD_u8CMD(LCD_CLEAR_SCREEN_CMD);
 }
 
+Std_ReturnType HLCD_u8ClearPiexels(uint8 Cpy_ROW, uint8 Cpy_Initial, uint8 Cpy_End)
+{
+   for(uint8 Local_PixelCounter = Cpy_Initial;Local_PixelCounter <= Cpy_End;Local_PixelCounter++)
+   {
+      HLCD_u8SetCursor(Cpy_ROW, Local_PixelCounter);
+      HLCD_u8WriteChar(' ');
+   }
+}
+
 Std_ReturnType HLCD_u8TurnOffDisplay(void)
 {
    HLCD_u8CMD(LCD_DISPLAY_OFF_CMD);

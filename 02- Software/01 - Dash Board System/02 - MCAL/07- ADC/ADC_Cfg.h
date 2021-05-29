@@ -54,29 +54,6 @@ typedef enum
 }AdcState_t;
 
 /**
-* specify Regular channel sequence length.
-*/
-typedef enum
-{
-	_1_CONVERSION = 0, 
-   _2_CONVERSION,
-   _3_CONVERSION,
-   _4_CONVERSION,
-   _5_CONVERSION,
-   _6_CONVERSION,
-   _7_CONVERSION,
-   _8_CONVERSION,
-   _9_CONVERSION,
-   _10_CONVERSION,
-   _11_CONVERSION,
-   _12_CONVERSION,
-   _13_CONVERSION,
-   _14_CONVERSION,
-   _15_CONVERSION,
-   _16_CONVERSION                                 
-}AdcRegularChannelSquanceLength_t;
-
-/**
 * Defines two variables which specify the data alignment.
 */
 typedef enum 
@@ -95,7 +72,6 @@ typedef enum
 typedef struct
 {
 	AdcState_t                        ModuleState;           /**<ADC State */
-	AdcRegularChannelSquanceLength_t  NumberOfChannels;
    AdcDataAlignment_t                DataAlignment;
    AdcCalibrationState_t             CalibrationState;
 }AdcConfig_t;
@@ -110,8 +86,8 @@ static const AdcConfig_t Static_AdcConfig[NUMBER_OF_ADC_PERIPHERALS] =
 //    ADC        Channel Squance     Sampling
 //    State         Length             Time
 //
-   {ENABLE_ADC,  _2_CONVERSION, RIGHT_ALIGNEMENT, ENABLE_CALIBRATION},
-   {DISABLE_ADC, _1_CONVERSION, RIGHT_ALIGNEMENT, ENABLE_CALIBRATION}
+   {ENABLE_ADC,  RIGHT_ALIGNEMENT, ENABLE_CALIBRATION},
+   {DISABLE_ADC, RIGHT_ALIGNEMENT, ENABLE_CALIBRATION}
 };
 
 #endif /*File_H_*/
