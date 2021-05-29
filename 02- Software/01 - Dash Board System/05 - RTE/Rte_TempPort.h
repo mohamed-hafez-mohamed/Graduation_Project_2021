@@ -12,10 +12,10 @@
 /*                         Provided Ports                                 */
 /**************************************************************************/
 #define  RTE_WRITE_TEMP_VAL         Rte_WriteTempVal
-#define  RTE_WRITE_TEMP_VAL_FLAG    Rte_WriteTempvalFlag
+#define  RTE_WRITE_TEMP_VAL_FLAG    Rte_WriteTempValFlag
 
 /**************************************************************************/
-/*                         Requsted Ports                                  */
+/*                         Received Ports                                 */
 /**************************************************************************/
 
 
