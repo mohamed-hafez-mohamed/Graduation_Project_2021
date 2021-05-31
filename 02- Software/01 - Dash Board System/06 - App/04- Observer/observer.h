@@ -1,8 +1,8 @@
 /****************************************************************************
-* Title                 :   SENSORS   
-* Filename              :   SENSORS.h
+* Title                 :   OBSERVER   
+* Filename              :   OBSERVER.h
 * Author                :   Mohamed Hafez
-* Origin Date           :   22/05/2021
+* Origin Date           :   30/05/2021
 * Version               :   1.0.0
 * Compiler              :   TODO: COMPILER GOES HERE
 * Target                :   TODO: MCU GOES HERE
@@ -16,34 +16,32 @@
 /*************** INTERFACE CHANGE LIST **************************************
 *
 *    Date    Version   Author          Description 
-*  22/05/21   1.0.0   Mohamed Hafez   Interface Created.
+*  30/05/21   1.0.0   Mohamed Hafez   Interface Created.
 *
 *****************************************************************************/
-/** @file  SENSORS_interface.h
+/** @file  OBSERVER.h
  *  @brief This module TODO: WHAT DO I DO?
  * 
  *  This is the header file for the definition TODO: MORE ABOUT ME!
  */
 //TODO: UPDATE MACRO BELOW
-#ifndef SENSORS_INTERFACE_H_
-#define SENSORS_INTERFACE_H_
+#ifndef OBSERVER_INTERFACE_H_
+#define OBSERVER_INTERFACE_H_
 
 /******************************************************************************
 * Includes
 *******************************************************************************/
-#include "Std_Types.h"
-#include "ADC.h"
+
 /******************************************************************************
 * Preprocessor Constants
 *******************************************************************************/
-#define INITIALIZED_WITH_ZERO          0
+
 /******************************************************************************
 * Configuration Constants
 *******************************************************************************/
-#define ADJUST_FACTOR                  10
-#define MAPPING_FROM_MV_TO_TEMPERATURE 100
-#define SPEED_CHANNEL                  CHANNEL0
-#define TEMPERATURE_CHANNEL            CHANNEL1
+#define MAXIMUM_TEMPERATURE      30
+#define MAXIMUM_SPEED            64
+#define MAXIMUM_DISTANCE         30
 /******************************************************************************
 * Macros
 *******************************************************************************/
@@ -59,8 +57,8 @@
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-Std_ReturnType HSENSORS_u8InitializeModule(void);
-Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber);
+Std_ReturnType HOBSERVER_u8InitializeModule(void);
+Std_ReturnType HOBSERVER_u8ObserveSystem(void);
 
 #endif /*File_H_*/
 

@@ -24,7 +24,7 @@
 #include "Std_Types.h"
 #include "BIT_MATH.h"
 #include "Rte_DataTypes.h"
-#include "Rte_DispalyPort.h"
+#include "Rte_DisplayPort.h"
 #include "LCD.h"
 #include "display.h"
 #include "display_Cfg.h"
@@ -45,9 +45,9 @@
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
-uint8 Static_u8SpeedData   = INITIALIZED_WITH_ZERO;
-uint8 Static_u8TempData    = INITIALIZED_WITH_ZERO;
-uint8 *Static_u8TimeBuffer = NULL_PTR;
+static uint8 Static_u8SpeedData;
+static uint8 Static_u8TempData;
+static uint8 *Static_u8TimeBuffer;
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
@@ -57,14 +57,19 @@ uint8 *Static_u8TimeBuffer = NULL_PTR;
 *******************************************************************************/
 Std_ReturnType HDISPLAY_u8InitializeModule(void)
 {
-   HLCD_u8SetCursor(SPEED_ROW, SPEED_WORD_COLUMN);
-   HLCD_u8WriteString("Speed:");
-   HLCD_u8SetCursor(SPEED_ROW, SPEED_DISCRIMINATION_UNIT_COLUMN);
-   HLCD_u8WriteString("KM");
+   // Initialize variable
+   Static_u8SpeedData   = INITIALIZED_WITH_ZERO;
+   Static_u8TempData    = INITIALIZED_WITH_ZERO;
+   Static_u8TimeBuffer  = NULL_PTR;
+   
    HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_WORD_COLUMN);
    HLCD_u8WriteString("Temperature:");
    HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_DISCRIMINATION_UNIT_COLUMN);
    HLCD_u8WriteString("C");
+   HLCD_u8SetCursor(SPEED_ROW, SPEED_WORD_COLUMN);
+   HLCD_u8WriteString("Speed:");
+   HLCD_u8SetCursor(SPEED_ROW, SPEED_DISCRIMINATION_UNIT_COLUMN);
+   HLCD_u8WriteString("KM/hr");
    HLCD_u8SetCursor(TIME_ROW, TIME_WORD_COLUMN);
    HLCD_u8WriteString("Time:");
    HLCD_u8SetCursor(TIME_ROW, FIRST_COLON);
@@ -87,24 +92,6 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
    RTE_READ_TEMP_VAL_FLAG(&Local_u8TempFlagValue);
    RTE_READ_TIME_PTR_FLAG(&Local_u8TimeFlagValue);
    // Check each flag value
-   if(FLAG_SET == Local_u8SpeedFlagValue)
-   {
-      // Get data
-      RTE_READ_SPEED(&Local_u8SpeedData);
-      // Reset Flag
-      RTE_WRITE_SPEED_FLAG(FLAG_NOT_SET);
-      // Check if new data differ from old data, display it
-      if(Local_u8SpeedData != Static_u8SpeedData)
-      {
-         // Store new speed value
-         Static_u8SpeedData = Local_u8SpeedData;
-         // Clear old value
-         HLCD_u8ClearPiexels(SPEED_ROW, SPEED_VALUE_COLUMN, END_OF_SPEED_VALUE_COLUMN);
-         // Display speed value
-         HLCD_u8SetCursor(SPEED_ROW, SPEED_VALUE_COLUMN);
-         HLCD_u8WriteIntNum(Local_u8SpeedData);
-      }
-   }
    if(FLAG_SET == Local_u8TempFlagValue)
    {
       // Get data
@@ -123,6 +110,26 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
          HLCD_u8WriteIntNum(Local_u8TempData);
       }
    }
+   
+   if(FLAG_SET == Local_u8SpeedFlagValue)
+   {
+      // Get data
+      RTE_READ_SPEED(&Local_u8SpeedData);
+      // Reset Flag
+      RTE_WRITE_SPEED_FLAG(FLAG_NOT_SET);
+      // Check if new data differ from old data, display it
+      if(Local_u8SpeedData != Static_u8SpeedData)
+      {
+         // Store new speed value
+         Static_u8SpeedData = Local_u8SpeedData;
+         // Clear old value
+         HLCD_u8ClearPiexels(SPEED_ROW, SPEED_VALUE_COLUMN, END_OF_SPEED_VALUE_COLUMN);
+         // Display speed value
+         HLCD_u8SetCursor(SPEED_ROW, SPEED_VALUE_COLUMN);
+         HLCD_u8WriteIntNum(Local_u8SpeedData);
+      }
+   }
+
    if(FLAG_SET == Local_u8TimeFlagValue)
    {
       // Consume Data
@@ -164,6 +171,7 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
          HLCD_u8WriteIntNum(Local_u8TimeBuffer[RTC_HOURS_INDEX]);
       }
    }
+   HLCD_u8SetCursor(LAST_ROW, LAST_COLUMN);
 } 
 
 

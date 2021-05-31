@@ -59,27 +59,26 @@ Std_ReturnType HSENSORS_u8InitializeModule(void)
    /*!<TODO: Initialize Variables*/
 }
 
-Std_ReturnType HSENSORS_u8GetData(AdcPeripherals_t Cpy_PeripheralNumber)
+Std_ReturnType HSENSORS_u8ScanSensors(uint8 * Cpy_TemperatureData, uint8 * Cpy_SpeedData)
 {
    // Define Local variables
-   uint16 Local_u16ADCResultSpeed       = INITIALIZED_WITH_ZERO;
-   uint16 Local_u16ADCResultTemperature = INITIALIZED_WITH_ZERO;
-   uint8  Local_u8Speed                 = INITIALIZED_WITH_ZERO;
-   uint8  Local_u8Temperature           = INITIALIZED_WITH_ZERO;
+   uint16  Local_u16ADCResultSpeed       = INITIALIZED_WITH_ZERO;
+   uint16  Local_u16ADCResultTemperature = INITIALIZED_WITH_ZERO;
+   float32 Local_Speed                   = INITIALIZED_WITH_ZERO_FLOAT;
+   float32 Local_Temperature             = INITIALIZED_WITH_ZERO_FLOAT;
    // Get converted data
-   MADC_u8ReadResultBlocking(ADC1, SPEED_CHANNEL      , _2_CONVERSION, &Local_u16ADCResultSpeed);
    MADC_u8ReadResultBlocking(ADC1, TEMPERATURE_CHANNEL, _2_CONVERSION, &Local_u16ADCResultTemperature);
-   // Adjust speed
-   float32 Local_Speed = (Local_u16ADCResultSpeed * REFERENCE_VOLTAGE_FLOAT) / (MAXIMUM_LEVEL_FLOAT);
-   Local_u8Speed       = (uint8)(Local_Speed * ADJUST_FACTOR);
+   MADC_u8ReadResultBlocking(ADC1, SPEED_CHANNEL      , _2_CONVERSION, &Local_u16ADCResultSpeed);
    // Adjust temperature
-   Local_u8Temperature = (Local_u16ADCResultTemperature * REFERENCE_VOLTAGE_INTEGER * MAPPING_FROM_MV_TO_TEMPERATURE) / (MAXIMUM_LEVEL_INTEGER);
-   // Write speed value into RTE
-   RTE_WRITE_SPEED(Local_u8Speed);
-   RTE_WRITE_SPEED_FLAG(FLAG_SET);
-   // Write temperature value into RTE
-   RTE_WRITE_TEMP_VAL(Local_u8Temperature);
-   RTE_WRITE_TEMP_VAL_FLAG(FLAG_SET);
+   Local_Temperature    = Local_u16ADCResultTemperature * REFERENCE_VOLTAGE_FLOAT * MAPPING_FROM_MV_TO_TEMPERATURE;
+   Local_Temperature    = Local_Temperature / MAXIMUM_LEVEL_INTEGER;
+   // Adjust speed
+   Local_Speed          = Local_u16ADCResultSpeed * REFERENCE_VOLTAGE_FLOAT;
+   Local_Speed          = Local_Speed / MAXIMUM_LEVEL_INTEGER;
+   Local_Speed          = Local_Speed * SPEED_ADJUST_FACTOR;
+   // Out data
+   *Cpy_TemperatureData = (uint8)(Local_Temperature);
+   *Cpy_SpeedData       = (uint8)(Local_Speed);
 }
 
 

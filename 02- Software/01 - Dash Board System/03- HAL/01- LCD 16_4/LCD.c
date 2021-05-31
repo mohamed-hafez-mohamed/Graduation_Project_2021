@@ -87,7 +87,7 @@ static void HLCD_voidkick(uint8 Copy_u8Character)
 		}
 	}
    MGPIO_u8SetPinValue(LCD_EN, HIGH);
-   STK_voidSetBusyWait(1, TIME_MS);
+   MSTK_voidSetBusyWait_ms(1);
    MGPIO_u8SetPinValue(LCD_EN, LOW);
 }
 
@@ -128,7 +128,7 @@ Std_ReturnType HLCD_u8CMD(uint8 Copy_u8Command)
    #elif LCD_MODE == LCD_8_BIT_MODE
    HLCD_voidkick(Copy_u8Command);
    #endif 
-   STK_voidSetBusyWait(2, TIME_MS);
+   MSTK_voidSetBusyWait_ms(2);
 }
 
 Std_ReturnType HLCD_u8SetCursor(uint8 Copy_u8Row, uint8 Copy_u8Col)
@@ -180,7 +180,7 @@ Std_ReturnType HLCD_u8WriteChar(uint8 Copy_u8Character)
    #elif LCD_MODE == LCD_8_BIT_MODE
    HLCD_voidkick(Copy_u8Character);
    #endif 
-   STK_voidSetBusyWait(2, TIME_MS);
+   MSTK_voidSetBusyWait_ms(2);
 }
 
 Std_ReturnType HLCD_u8WriteString(uint8 * Copy_u8String)
@@ -206,7 +206,7 @@ Std_ReturnType HLCD_u8WriteString(uint8 * Copy_u8String)
 Std_ReturnType HLCD_u8WriteIntNum(uint8 Copy_u8Number)
 {
    uint8 * Local_u8Buffer[16];
-   itoa(Copy_u8Number, Local_u8Buffer, LCD_DECIMAL);
+   sprintf(Local_u8Buffer, "%d", Copy_u8Number);
    HLCD_u8WriteString(Local_u8Buffer);
 }
 

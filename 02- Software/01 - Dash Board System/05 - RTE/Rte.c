@@ -78,7 +78,7 @@ Std_ReturnType Rte_ReadTempVal (uint8 *Cpy_TempVal)
 /**************************************************************************/
 /*                         Temp Val flag Port                             */
 /**************************************************************************/
-Std_ReturnType Rte_WriteTempValFlag (uint8 Cpy_TempValFlag)
+Std_ReturnType Rte_WriteTempvalFlag (uint8 Cpy_TempValFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	
@@ -98,7 +98,7 @@ Std_ReturnType Rte_WriteTempValFlag (uint8 Cpy_TempValFlag)
 	return Local_ReturnError ;
 }
 
-Std_ReturnType Rte_ReadTempValFlag (uint8 *Cpy_TempValFlag)
+Std_ReturnType Rte_ReadTempvalFlag (uint8 *Cpy_TempValFlag)
 {
 	Std_ReturnType Local_ReturnError = E_OK ;
 	

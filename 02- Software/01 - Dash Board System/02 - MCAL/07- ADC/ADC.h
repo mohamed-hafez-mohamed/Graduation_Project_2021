@@ -49,9 +49,9 @@
 * Configuration Constants
 *******************************************************************************/
 #define MAXIMUM_LEVEL_INTEGER      4095
-#define REFERENCE_VOLTAGE_INTEGER  5
+#define REFERENCE_VOLTAGE_INTEGER  3
 #define MAXIMUM_LEVEL_FLOAT        4095.0
-#define REFERENCE_VOLTAGE_FLOAT    5.0
+#define REFERENCE_VOLTAGE_FLOAT    3.0
 /******************************************************************************
 * Macros
 *******************************************************************************/
