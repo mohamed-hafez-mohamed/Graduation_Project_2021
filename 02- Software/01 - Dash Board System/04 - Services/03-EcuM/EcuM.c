@@ -29,6 +29,9 @@
 #include "CAN_Interface.h"
 #include "Nvic_Interface.h"
 #include "I2c_Interface.h"
+#include "LCD.h"
+#include "ADC.h"
+#include "TMR_Interface.h"
 
 
 /*******************  Externed Types  *******************/
@@ -60,8 +63,12 @@ Std_ReturnType EcuM_unit8RccPeriphInit()
 	
 	/*******************  CAN1 ENABLE CLOCK  *******************/
 	RCC_VoidEnableClock(RCC_APB1_EN,RCC_CAN); 
+	
+	/*******************  Timer 3 ENABLE CLOCK  *******************/
+	RCC_VoidEnableClock(RCC_APB1_EN,RCC_TIM3); 
 	/*******************  I2C ENABLE CLOCK  *******************/
 	RCC_VoidEnableClock(RCC_APB1_EN, RCC_I2C1);
+	RCC_VoidEnableClock(RCC_APB2_EN , RCC_ADC1);
 	
 	return  Local_ReturnError ;
 	
@@ -72,12 +79,16 @@ Std_ReturnType EcuM_unit8DioPeriphInit()
 	/*Local variable , Return = ok*/
 	Std_ReturnType Local_ReturnError = E_OK;
 	
-	MGPIO_u8SetPinMode(PINA11 , AFIO_INPUT_ANALOG);   //RX
+	/*******************  CAN ENABLE PINS   *******************/
+	MGPIO_u8SetPinMode(PINA11 , GPIO_INPUT_FLOATING);   //RX
 	MGPIO_u8SetPinMode(PINA12 , AFIO_OUTPUT_2M_PULL_UP_DN); //TX
 	/*******************  I2C ENABLE PINS   *******************/
 	MGPIO_u8SetPinMode(PINB6 , AFIO_OUTPUT_10M_OPEN_DRAIN);   //SCL
 	MGPIO_u8SetPinMode(PINB7 , AFIO_OUTPUT_10M_OPEN_DRAIN);   //SDA
-
+	
+	/*******************  ADC PINS   *************************/
+	MGPIO_u8SetPinMode(PINA0, AFIO_INPUT_ANALOG);
+	MGPIO_u8SetPinMode(PINA1, AFIO_INPUT_ANALOG);
 	
   return  Local_ReturnError ;
 }
@@ -92,7 +103,7 @@ Std_ReturnType EcuM_unit8StartupPeriph()
 
 	/*******************  CAN1 INTIT FILTERS  *******************/	
 	CAN_VoidFilterSet( & CAN_FilterInitStruct_1 ); // ID = OXO3
-	CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
+	//CAN_VoidFilterSet( & CAN_FilterInitStruct_2 );// ID =0X02
 	
 	/* Enable Interrupts */
 	NVIC_voidEnableIRQ(USB_LP_CAN_IRQ);
@@ -101,6 +112,21 @@ Std_ReturnType EcuM_unit8StartupPeriph()
 	/* Enabling I2C1 */
 	I2C_voidPeripheralControl(I2C1, I2C_ENABLE);
 	I2C_voidInit(I2C1);
+	
+	/* Init Stk */
+	STK_voidInit();
+	
+	/* Init Timer */
+	TMR_voidInit();
+	
+	/* Init ADC and LCD */
+	HLCD_u8Init();
+	
+	/* Init ADC */
+	MADC_u8InitializeAdc();
+  MADC_u8SetSamplingTime(ADC1, CHANNEL0, _1_AND_HALF_CYCLE);
+  MADC_u8SetSamplingTime(ADC1, CHANNEL1, _1_AND_HALF_CYCLE);
+	MADC_u8SetConversionMode(ADC1, SINGLE_CONVERSION, 0);
 
   return  Local_ReturnError ;
 
