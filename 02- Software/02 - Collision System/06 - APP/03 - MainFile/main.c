@@ -20,7 +20,7 @@
 #include "CanIf_Interface.h"
 #include "FPEC_interface.h"
 #include "WDT_interface.h"
-#include "UDS_interface.h"
+#include "Nvm_interface.h"
 #include "Rte_DistanceSensor.h"
 #include "Rte_Buzzer.h"
 /*****************************************************************************************/
@@ -41,14 +41,14 @@ void WDG_VoidSoftReset(void);
                                 /*CallBack Fun used to respond to Soft Reset Request*/
 void WDG_VoidSoftReset(void)
 {
-	uint8 Local_status ;
+  uint8 Local_status ;
   uint32 Local_uint32Data; 
   Local_status  =  CanIf_uint32Receive_Word(&Local_uint32Data);//receive header ack
-	if (Local_uint32Data == 0X00000310)
-	{	
-       FEE_voidEraseRestoreHeaderPage(BL_BRANCHING_FLAG_ADDRESS_HEX, SET_BRANCHING_FLAG );
-       IWDT_voidMakeSoftWareReset();		    		
-	}
+  if (Local_uint32Data == 0X00000310)
+   {	
+      FEE_voidEraseRestoreHeaderPage(BL_BRANCHING_FLAG_ADDRESS_HEX, SET_BRANCHING_FLAG );
+      IWDT_voidMakeSoftWareReset();		    		
+   }
 }
  /*****************************************************************************************/
 /*                         Main Function Definition                                     */
@@ -57,18 +57,18 @@ void WDG_VoidSoftReset(void)
  int main (void)
  {  
 	  /*Enable Clock*/
-	 EcuM_unit8RccPeriphInit();
+   EcuM_unit8RccPeriphInit();
 	  /* Enable mcal & hal pins */
-	 EcuM_unit8DioPeriphInit(); 
-	  /*Init  mcal & hal peripheral */
-	 EcuM_unit8StartupPeriph(); 
+   EcuM_unit8DioPeriphInit(); 
+	  /*Init  mcal & hal  */
+   EcuM_unit8StartupPeriph(); 
 	 
   while(1)  
   { 
-		/*Get Distance From Sensor SWC*/
-		DistanceSensor_MainFunction();
-	  /*Set action by Actuator SWC*/
-		Buzzer_MainFunction();
+	/*Get Distance From Sensor SWC*/
+   DistanceSensor_MainFunction();
+	/*Set action by Actuator SWC*/
+   Buzzer_MainFunction();
   }  
 	
 }
