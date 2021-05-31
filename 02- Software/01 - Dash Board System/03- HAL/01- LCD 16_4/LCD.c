@@ -94,15 +94,8 @@ static void HLCD_voidkick(uint8 Copy_u8Character)
 Std_ReturnType HLCD_u8Init(void)
 {
    /**
-	* Set dirction output for data and control pins
 	* Config the lcd to start working
 	**/
-   MGPIO_u8SetPinMode(LCD_RS, GPIO_OUTPUT_2M_PULL_UP_DN);
-   MGPIO_u8SetPinMode(LCD_EN, GPIO_OUTPUT_2M_PULL_UP_DN);
-   for(uint8 Local_u8Counter = 0;Local_u8Counter < LCD_DATA_PINS;Local_u8Counter++)
-	{
-		MGPIO_u8SetPinMode(Static_u8DataPins[Local_u8Counter], GPIO_OUTPUT_2M_PULL_UP_DN);
-	}
    #if   LCD_MODE == LCD_4_BIT_MODE
    HLCD_u8CMD(LCD_4BIT_MODE_CMD);
    HLCD_u8CMD(LCD_4BIT_MODE_2_LINE_CMD);

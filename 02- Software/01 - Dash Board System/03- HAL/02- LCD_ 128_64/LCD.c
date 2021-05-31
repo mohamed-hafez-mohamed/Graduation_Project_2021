@@ -45,7 +45,7 @@
 #if   LCD_DATA_PINS == 4
    static uint8 Static_u8DataPins[LCD_DATA_PINS] = {LCD_D4,LCD_D5,LCD_D6,LCD_D7};
 #elif LCD_DATA_PINS == 4
-   static u8 Static_u8DataPins[LCD_DATA_PINS] = {LCD_D0,LCD_D1,LCD_D2,LCD_D3,LCD_D4,LCD_D5,LCD_D6,LCD_D7};
+   static uint8 Static_u8DataPins[LCD_DATA_PINS] = {LCD_D0,LCD_D1,LCD_D2,LCD_D3,LCD_D4,LCD_D5,LCD_D6,LCD_D7};
 #endif
 
 #define LCD_COL_16        16
@@ -94,15 +94,8 @@ static void HLCD_voidkick(uint8 Copy_u8Character)
 Std_ReturnType HLCD_u8Init(void)
 {
    /**
-	* Set dirction output for data and control pins
 	* Config the lcd to start working
 	**/
-   MGPIO_u8SetPinMode(LCD_RS, GPIO_OUTPUT_2M_PULL_UP_DN);
-   MGPIO_u8SetPinMode(LCD_EN, GPIO_OUTPUT_2M_PULL_UP_DN);
-   for(uint8 Local_u8Counter = 0;Local_u8Counter < LCD_DATA_PINS;Local_u8Counter++)
-	{
-		MGPIO_u8SetPinMode(Static_u8DataPins[Local_u8Counter], GPIO_OUTPUT_2M_PULL_UP_DN);
-	}
    #if   LCD_MODE == LCD_4_BIT_MODE
    HLCD_u8CMD(LCD_4BIT_MODE_CMD);
    HLCD_u8CMD(LCD_4BIT_MODE_2_LINE_CMD);
