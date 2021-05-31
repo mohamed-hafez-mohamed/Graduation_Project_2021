@@ -44,9 +44,9 @@ void HCSR04_VoidInit(void)
 Std_ReturnType HCSR04_uint8ReadDistance(uint8 *Copy_uint8Distance)
 {
 	       /*Local Error = ok*/
-	  Std_ReturnType Local_ReturnError = E_OK ;
-    /*Local variables to get Duration of echo pulse */
-	  static uint32  Local_uint32Duration = INIT_VALUE ; 
+     Std_ReturnType Local_ReturnError = E_OK ;
+       /*Local variables to get Duration of echo pulse */ 
+     static uint32  Local_uint32Duration = INIT_VALUE ; 
     (*Copy_uint8Distance)  = INIT_VALUE ;
 	  /*
 	  Step 1 :*Send Trigger Pulse 
@@ -67,33 +67,32 @@ Std_ReturnType HCSR04_uint8ReadDistance(uint8 *Copy_uint8Distance)
                        	/*Set time interval and start timer */ 
     STK_voidSetIntervalSingle( TIMEOUT_INTERVAL , TIME_US , HCSR04_VoidCallBack) ; 
                  /*wait echo pin to be High with limited time out*/
-	while( GPIO_VoidGetPinValue( ECHO_PORT,ECHO_PIN) == LOW )
+    while( GPIO_VoidGetPinValue( ECHO_PORT,ECHO_PIN) == LOW )
     {		     	  /* incase of interrupt happened*/
-	    if(Global_uint8TimerFlag == HIGH) 
-        {	   
+	  if(Global_uint8TimerFlag == HIGH) 
+            {	   
          		 /*Distance = zero indicate that signal was not returned & return = not ok*/
-		   (*Copy_uint8Distance) = OUT_OF_RANGE ;
-			 Local_ReturnError = E_NOT_OK ;	
-       return Local_ReturnError ;
-					
-        }			
+            (*Copy_uint8Distance) = OUT_OF_RANGE ;
+              Local_ReturnError = E_NOT_OK ;	
+              return Local_ReturnError ;					
+           }			
     }
                        	/*Set time interval again and start timer */ 
-   STK_voidSetIntervalSingle( TIMEOUT_INTERVAL , TIME_US , HCSR04_VoidCallBack) ; 
+    STK_voidSetIntervalSingle( TIMEOUT_INTERVAL , TIME_US , HCSR04_VoidCallBack) ; 
                     /*wait echo pin to be Low with limited time out*/
-	while( GPIO_VoidGetPinValue( ECHO_PORT,ECHO_PIN) == HIGH )
+    while( GPIO_VoidGetPinValue( ECHO_PORT,ECHO_PIN) == HIGH )
 	{			          /* incase of interrupt happened*/
 	    if(Global_uint8TimerFlag == HIGH)
-		   {	
+	     {	
          		 /*Distance = zero indicate that signal was not returned & return = not ok*/
 	       (*Copy_uint8Distance) = OUT_OF_RANGE ;
-			   Local_ReturnError = E_NOT_OK ;	
-         return Local_ReturnError ;	
-        }			
-  }
+               Local_ReturnError = E_NOT_OK ;	
+               return Local_ReturnError ;	
+             }			
+       }
 	                  /*Get time between two Edges in us*/
     Local_uint32Duration = STK_uint32GetElapsedTime(TIME_US ) ; 	
-	  STK_voidStop();
+    STK_voidStop();
 	               /*Calculate the distance in cm by devide pulse duration by 58*/
     (*Copy_uint8Distance) = (uint8)(Local_uint32Duration / TIME_CONS ) ;
 		
