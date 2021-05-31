@@ -5,7 +5,7 @@
 /****************************************************/
 
 #ifndef  PLATFORM_TYPES_H
-#define PLATFORM_TYPES_H
+#define  PLATFORM_TYPES_H 
 
 /* Published information */
 #define    PLATFORM_MODULE_ID                     0x030u
