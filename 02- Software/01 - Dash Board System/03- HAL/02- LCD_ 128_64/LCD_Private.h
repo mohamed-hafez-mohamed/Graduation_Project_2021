@@ -58,10 +58,10 @@
 #define LCD_4BIT_MODE_2_LINE_CMD        0x28
 #define LCD_8BIT_MODE_2_LINE_CMD        0x38
 
-#define LCD_BEGIN_AT_FIRST_RAW_CMD		  0x80
-#define LCD_BEGIN_AT_SECOND_RAW_CMD		  0x90
-#define LCD_BEGIN_AT_THIRD_RAW_CMD		  0x88
-#define LCD_BEGIN_AT_FOURTH_RAW_CMD		  0x98
+#define LCD_BEGIN_AT_FIRST_RAW_CMD		 0x80
+#define LCD_BEGIN_AT_SECOND_RAW_CMD		 0x90
+#define LCD_BEGIN_AT_THIRD_RAW_CMD		 0x88
+#define LCD_BEGIN_AT_FOURTH_RAW_CMD		 0x98
 /******************************************************************************
 * Configuration Constants
 *******************************************************************************/

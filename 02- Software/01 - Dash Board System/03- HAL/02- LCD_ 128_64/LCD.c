@@ -26,9 +26,8 @@
 #include <stdio.h>
 #include "Std_Types.h"
 #include "BIT_MATH.h"
-#include "DataConversion.h"
 #include "GPIO_interface.h"
-#include "STK_interface.h"
+#include "TMR_Interface.h"
 #include "LCD.h"
 #include "LCD_Cfg.h"
 #include "LCD_Private.h"
@@ -87,8 +86,9 @@ static void HLCD_voidkick(uint8 Copy_u8Character)
 		}
 	}
    MGPIO_u8SetPinValue(LCD_EN, HIGH);
-   MSTK_voidSetBusyWait_ms(1);
+   TMR_voidSetBusyWait(TIM3, 20);
    MGPIO_u8SetPinValue(LCD_EN, LOW);
+   TMR_voidSetBusyWait(TIM3, 20);
 }
 
 Std_ReturnType HLCD_u8Init(void)
@@ -104,7 +104,7 @@ Std_ReturnType HLCD_u8Init(void)
    #endif 
    HLCD_u8SetCursor(0, 0);
    HLCD_u8CMD(LCD_ENTRY_MODE_CMD);
-   HLCD_u8CMD(LCD_CURSOR_BLINK_CMD);
+   HLCD_u8CMD(LCD_CURSOR_OFF_CMD);
    HLCD_u8CMD(LCD_CLEAR_SCREEN_CMD);
 }
 
@@ -121,7 +121,7 @@ Std_ReturnType HLCD_u8CMD(uint8 Copy_u8Command)
    #elif LCD_MODE == LCD_8_BIT_MODE
    HLCD_voidkick(Copy_u8Command);
    #endif 
-   MSTK_voidSetBusyWait_ms(2);
+   TMR_voidSetBusyWait(TIM3, 2000);
 }
 
 Std_ReturnType HLCD_u8SetCursor(uint8 Copy_u8Row, uint8 Copy_u8Col)
@@ -173,7 +173,7 @@ Std_ReturnType HLCD_u8WriteChar(uint8 Copy_u8Character)
    #elif LCD_MODE == LCD_8_BIT_MODE
    HLCD_voidkick(Copy_u8Character);
    #endif 
-   MSTK_voidSetBusyWait_ms(2);
+   TMR_voidSetBusyWait(TIM3, 2000);
 }
 
 Std_ReturnType HLCD_u8WriteString(uint8 * Copy_u8String)

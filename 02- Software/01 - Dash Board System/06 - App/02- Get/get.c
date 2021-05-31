@@ -56,7 +56,7 @@ uint16 Static_u16SpeedReads;
 /******************************************************************************
 * Function Definitions
 *******************************************************************************/
-Std_ReturnType HGET_u8InitializeModule(void)
+void HGET_u8InitializeModule(void)
 {
    // Initialization Variables
    Static_u8SWTimer           = INITIALIZED_WITH_ZERO;
@@ -64,7 +64,7 @@ Std_ReturnType HGET_u8InitializeModule(void)
    Static_u16SpeedReads       = INITIALIZED_WITH_ZERO;
 }
 
-Std_ReturnType HGET_u8GetData(void)
+void HGET_u8GetData(void  * Cpy_PtroParameter)
 {
    uint8 Local_u8Temperature  = INITIALIZED_WITH_ZERO;
    uint8 Local_u8Speed        = INITIALIZED_WITH_ZERO;
@@ -95,5 +95,6 @@ Std_ReturnType HGET_u8GetData(void)
       Static_u16SpeedReads       += Local_u8Speed;
       Static_u8SWTimer++;
    }
+   (uint8*)Cpy_PtroParameter;
 }
 /*************** END OF FUNCTIONS ***************************************************************************/

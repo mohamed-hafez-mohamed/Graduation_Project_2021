@@ -59,7 +59,6 @@ void SCHEDULER_voidInitScheduler(Queue_t * Copy_PtrQueue)
     Copy_PtrQueue->Queue_Front = NULL;
     Copy_PtrQueue->Queue_Rear  = NULL;
     Copy_PtrQueue->Queue_Size  = 0;
-	MSTK_voidInit();
 	MSTK_voidSetIntervalPeriodic_ms(1, &SCHEDULER_voidUpdateScheduler, (void *)(&ReadyQueue)); 
 }
 
@@ -104,7 +103,7 @@ uint8  SCHEDULER_u8CreateTask(uint8 Copy_u8Priority, uint16 Copy_u16ReleaseTime,
     Task->Task_PtrCode            = Copy_PtrTaskCode;
     Task->Task_PtrVoidParameter   = Copy_PtrTaskParameter;
     SCHEDULER_u8AddTask(Task, &ReadyQueue);
-	  //!<TODO: Return Status
+	//!<TODO: Return Status
 }
 
 /*This function will be invocked inside tin timer overflow ISR*/

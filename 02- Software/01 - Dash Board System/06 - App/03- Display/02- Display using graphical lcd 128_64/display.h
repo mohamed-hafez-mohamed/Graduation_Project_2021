@@ -54,10 +54,10 @@
 
 #define TIME_ROW                                 2
 #define TIME_WORD_COLUMN                         0
-#define FIRST_COLON                              5
+#define FIRST_COLON                              4
 
-#define MINUTES_COLUMN                           6
-#define MINUTES_END_COLUMN                       7
+#define MINUTES_COLUMN                           5
+#define MINUTES_END_COLUMN                       6
 #define HOURS_COLUMN                             3
 #define HOURS_END_COLUMN                         4
 
@@ -101,7 +101,7 @@
 * @see HDISPLAY_u8InitializeModule
 *
 *******************************************************************************/
-Std_ReturnType HDISPLAY_u8InitializeModule(void);
+void HDISPLAY_u8InitializeModule(void);
 /******************************************************************************
 * Function : HDISPLAY_HDISPLAY_u8DisplayDataModule()
 *//** 
@@ -126,7 +126,7 @@ Std_ReturnType HDISPLAY_u8InitializeModule(void);
 * @see HDISPLAY_u8DisplayData
 *
 *******************************************************************************/
-Std_ReturnType HDISPLAY_u8DisplayData(void);
+void HDISPLAY_u8DisplayData(void * Cpy_PtroParameter);
 
 #endif /*File_H_*/
 

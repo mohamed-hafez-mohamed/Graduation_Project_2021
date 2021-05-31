@@ -55,7 +55,7 @@ static uint8 *Static_u8TimeBuffer;
 /******************************************************************************
 * Function Definitions
 *******************************************************************************/
-Std_ReturnType HDISPLAY_u8InitializeModule(void)
+void HDISPLAY_u8InitializeModule(void)
 {
    // Initialize variable
    Static_u8SpeedData   = INITIALIZED_WITH_ZERO;
@@ -76,7 +76,7 @@ Std_ReturnType HDISPLAY_u8InitializeModule(void)
    HLCD_u8WriteChar(':');
 }
 
-Std_ReturnType HDISPLAY_u8DisplayData(void)
+void HDISPLAY_u8DisplayData(void * Cpy_PtroParameter)
 {
    // Variable definitions
    FlagType Local_u8SpeedFlagValue = FLAG_NOT_SET;
@@ -156,6 +156,7 @@ Std_ReturnType HDISPLAY_u8DisplayData(void)
          HLCD_u8WriteIntNum(Local_u8TimeBuffer[RTC_HOURS_INDEX]);
       }
    }
+   (uint8*)Cpy_PtroParameter;
 } 
 
 

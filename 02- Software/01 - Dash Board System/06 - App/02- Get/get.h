@@ -55,8 +55,8 @@
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-Std_ReturnType HGET_u8InitializeModule(void);
-Std_ReturnType HGET_u8GetData(void);
+void HGET_u8InitializeModule(void);
+void HGET_u8GetData(void * Cpy_PtroParameter);
 
 #endif /*File_H_*/
 
