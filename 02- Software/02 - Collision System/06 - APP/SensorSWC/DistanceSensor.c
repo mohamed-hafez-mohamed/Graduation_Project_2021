@@ -23,17 +23,17 @@ void DistanceSensor_MainFunction (void)
     Std_ReturnType status = RTE_E_OK ;
     SensorDistanceData Distance = INIT_VALUE ;
 	                          /* Read Distance */
-	status = HCSR04_uint8ReadDistance(&Distance);
+    status = HCSR04_uint8ReadDistance(&Distance);
 	           /*check if the status = ok & there are objects in the range of the sensor */
-	if( status == RTE_E_OK && Distance != INIT_VALUE )
-	{
+    if( status == RTE_E_OK && Distance != INIT_VALUE )
+     {
 		                 /*access piont & sender reciever*/
-	   status = RTE_WRITE_ULTRASENSOR_DISTANCE_DATA(Distance);	
-	}
-	else
-	{
+        status = RTE_WRITE_ULTRASENSOR_DISTANCE_DATA(Distance);	
+     }
+    else
+    {
 	           /*No objects exist in the sensor Range*/
-	}		
+    }		
 }
 /***************************************END OF FUNCTION********************************/					
 
