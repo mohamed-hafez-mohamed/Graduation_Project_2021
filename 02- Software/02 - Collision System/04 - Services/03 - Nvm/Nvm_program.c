@@ -24,7 +24,7 @@
 
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
-#include "UDS_interface.h"
+#include "Nvm_interface.h"
 #include "FPEC_interface.h"
 /******************************************************************************
 * Module Preprocessor Constants

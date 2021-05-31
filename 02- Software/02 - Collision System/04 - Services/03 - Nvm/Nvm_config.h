@@ -25,8 +25,8 @@
  *  This is the header file for the definition TODO: MORE ABOUT ME!
  */
 //TODO: UPDATE MACRO BELOW
-#ifndef UDS_CONFIG_H_
-#define UDS_CONFIG_H_
+#ifndef NVM_CONFIG_H_
+#define NVM_CONFIG_H_
 
 /******************************************************************************
 * Includes
