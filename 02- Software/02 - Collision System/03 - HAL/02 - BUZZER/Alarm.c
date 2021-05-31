@@ -43,10 +43,10 @@ void ALarm_VoidInit(void)
 Std_ReturnType Alarm_uint8SetPulse(void)
 {
                   /*Local Error = ok*/
-	  Std_ReturnType Local_ReturnError = E_OK ;
-    GPIO_VoidSetPinValue(ALARM_PORT  , ALARM_PIN , HIGH );  
-	  STK_voidSetBusyWait (PULSE_WIDTH  , TIME_US );	
-	  GPIO_VoidSetPinValue(ALARM_PORT  , ALARM_PIN , LOW ) ;
+    Std_ReturnType Local_ReturnError = E_OK ;
+    GPIO_VoidSetPinValue(ALARM_PORT  , ALARM_PIN , HIGH );   
+    STK_voidSetBusyWait (PULSE_WIDTH  , TIME_US );	
+    GPIO_VoidSetPinValue(ALARM_PORT  , ALARM_PIN , LOW ) ;
     return Local_ReturnError ; 
 }
 /***********************END OF FUNCTION************************/																                                  																 																
