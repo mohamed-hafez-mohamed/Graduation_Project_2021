@@ -25,17 +25,16 @@ void Buzzer_MainFunction (void)
     SensorDistanceData Distance = INIT_VALUE ;
 			                 /*access piont & sender reciever*/
 		                      /* Read Distance from Rte */
-	  status = RTE_READ_BUZZER_DISTANCE_DATA(&Distance);
-	
-	  if( status == RTE_E_OK && Distance <= MAX_RANGE )
-	  {
+    status = RTE_READ_BUZZER_DISTANCE_DATA(&Distance);
+    if( status == RTE_E_OK && Distance <= MAX_RANGE )
+      {
 		                 /*Set Buzzer Pulse*/
         status = Alarm_uint8SetPulse();
-	   }
-   	else
-	   {
+      }
+    else 
+     {
 	           /*Distance is out of configurable Range & No need for Buzzer*/
-	   }	
+     }	
 		
 }
 /***************************************END OF FUNCTION********************************/					
