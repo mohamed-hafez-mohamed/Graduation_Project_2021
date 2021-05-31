@@ -23,8 +23,8 @@
 /*****************************************************************************************/
                                /*** HW Pins Macros***/
 /*****************************************************************************************/						
-#define TRIGGER_PIN               (PIN10)
-#define ECHO_PIN                  (PIN9)
+#define TRIGGER_PIN               (PIN0)
+#define ECHO_PIN                  (PIN1)
 #define TRIGGER_PORT              (GPIOA)
 #define ECHO_PORT                 (GPIOA)
 			
