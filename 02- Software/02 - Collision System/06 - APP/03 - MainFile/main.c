@@ -20,7 +20,7 @@
 #include "CanIf_Interface.h"
 #include "FPEC_interface.h"
 #include "WDT_interface.h"
-#include "UDS_interface.h"
+#include "Nvm_interface.h"
 #include "Rte_DistanceSensor.h"
 #include "Rte_Buzzer.h"
 /*****************************************************************************************/
