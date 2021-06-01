@@ -47,7 +47,7 @@
 *******************************************************************************/
 static uint8 Static_u8SpeedData;
 static uint8 Static_u8TempData;
-static uint8 *Static_u8TimeBuffer;
+static uint8 Static_u8TimeBuffer[RTC_YEAR_INDEX + 1];
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
@@ -60,7 +60,6 @@ Std_ReturnType HDISPLAY_u8InitializeModule(void)
    // Initialize variable
    Static_u8SpeedData   = INITIALIZED_WITH_ZERO;
    Static_u8TempData    = INITIALIZED_WITH_ZERO;
-   Static_u8TimeBuffer  = NULL_PTR;
    
    HLCD_u8SetCursor(TEMPERATURE_ROW, TEMPERATURE_WORD_COLUMN);
    HLCD_u8WriteString("Temperature:");
