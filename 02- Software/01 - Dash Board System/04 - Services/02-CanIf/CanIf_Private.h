@@ -34,7 +34,13 @@
 #define EIGTH_ROUNDS                 8
 #define FRAME_DATA_BYTES             8
 #define ONE_BTYE                     1
+#define FOUR_BYTES                   4
 #define BYTE_ZERO                    0
+#define BYTE_ONE                     0
+#define BYTE_TWO                     0
+#define BYTE_THREE                   0
+#define ONE_MILLI                   1000
+#define ZERO                         0
 
 
 
