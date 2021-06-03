@@ -114,13 +114,14 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 * There are three major components to these systems that can be seen in the Figure :
   * They are the branching code (green).
   * The application code (blue).
-  * The boot-loader code (red). 
+  * The boot-loader code (red).
+
 **Application Behavior:**
 * The application needs to be able to : 
   1. Reset the system to initiate a branching decision.
   2. Start-Up Branching.
   3. There is a flag to  decide which image to load.
-  * More about test cases Application [Systems application]( )
+* More about test cases Application [Systems application]( )
 
 **Boot-loader Behavior:**
 * Start the branch code to determine which code will be executed.
