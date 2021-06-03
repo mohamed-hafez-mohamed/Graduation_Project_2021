@@ -49,6 +49,8 @@ typedef enum
 *******************************************************************************/
 #define INITIALIZE_WITH_ZERO                        0
 #define INITIALIZE_WITH_ONE                         1
+#define ZERO_BYTE                                   0
+#define COMPLETE_PACKET                             64
 #define RESET_FLAG                                  0
 #define ONE_BYTE                                    1
 /******************************************************************************
@@ -56,7 +58,7 @@ typedef enum
 *******************************************************************************/
 #define HEADER_INFORMATION_SIZE                     8
 
-#define GET_BYTE                                    0X000000FF
+#define GET_BYTE                                    0XFF
 #define SHIFT_TO_GET_SECOND_BYTE                    8
 #define SHIFT_TO_GET_THIRD_BYTE                     16
 #define SHIFT_TO_GET_FOURTH_BYTE                    24
@@ -84,5 +86,6 @@ static Std_ReturnType Transmit_IdleState(void *Cpy_voidPtr);
 static Std_ReturnType Transmit_GetTransmitHeader(void *Cpy_voidPtr);
 static Std_ReturnType Transmit_ConsumeTransmitData(void *Cpy_voidPtr);
 static Std_ReturnType Transmit_FinishingState(void *Cpy_voidPtr);
+static Std_ReturnType Transmit_FinishHeaderTansmission(void);
 #endif
 /*** End of File **************************************************************/

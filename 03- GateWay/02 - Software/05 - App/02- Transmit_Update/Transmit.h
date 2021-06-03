@@ -44,7 +44,7 @@
 #define UDS_CONTROL_SEESION                         0X10
 #define UDS_PROGRAM_SESSION                         0x03
 // Open Program session
-#define UDS_CONTROL_PROGRAM_SESSION                 0x0310
+#define UDS_CONTROL_PROGRAM_SESSION                 0x00000310u
 #define UDS_MCU_ACCEPT_UPGRADE_REQUEST              0x50
 // Header constants
 #define UDS_GWY_REQUEST_SENDING_HEADER              0x34
@@ -78,84 +78,8 @@
 /******************************************************************************
 * Function Prototypes
 *******************************************************************************/
-
-/******************************************************************************
-* Function : Transmit_InitializeModule()
-*//** 
-* \b Description:
-*
-* This function is used to initialize transmitmodule.
-*
-* PRE-CONDITION:  None
-*
-* POST-CONDITION: None
-*
-* @param [in]     void
-* 
-* @return 		   Std_ReturnType
-*
-* \b Example Example:
-* @code
-* 	FunctionReturnStatus = Transmit_InitializeModule();
-*
-* @endcode
-*
-* @see Transmit_InitializeModule
-*
-*******************************************************************************/
 Std_ReturnType Transmit_InitializeModule(void);
-
-/******************************************************************************
-* Function : Transmit_MainFunction()
-*//** 
-* \b Description:
-*
-* This function is used to run main functionality of module.
-*
-* PRE-CONDITION:  Module has been initialized and the states has been implemented
-*
-* POST-CONDITION: None
-*
-* @param [in]     void
-* 
-* @return 		   Std_ReturnType
-*
-* \b Example Example:
-* @code
-* 	FunctionReturnStatus = Transmit_MainFunction();
-*
-* @endcode
-*
-* @see Transmit_MainFunction
-*
-*******************************************************************************/
 Std_ReturnType Transmit_MainFunction(void);
-
-/******************************************************************************
-* Function : Transmit_DeinitializeModule()
-*//** 
-* \b Description:
-*
-* This function is used to deinitialize transmitmodule.
-*
-* PRE-CONDITION:  None
-*
-* POST-CONDITION: None
-*
-* @param [in]     void
-* 
-* @return 		   Std_ReturnType
-*
-* \b Example Example:
-* @code
-* 	FunctionReturnStatus = Transmit_DeinitializeModule();
-*
-* @endcode
-*
-* @see Transmit_DeinitializeModule
-*
-*******************************************************************************/
-Std_ReturnType Transmit_DeinitializeModule(void);
 
 #endif /*File_H_*/
 
