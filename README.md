@@ -68,7 +68,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 ## Graphical User Interface
 
 <p align="center">
-  <img width="600" src="07-Images/GUI.png ">
+  <img width="600" src="07-Images/Gui.png ">
 </p>
 
 * GUI is to make it easier for the user to upload updates to firebase and the relate information of the update.
