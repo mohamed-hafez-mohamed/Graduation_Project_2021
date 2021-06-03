@@ -154,7 +154,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 *  Cryptographic keys of 128, 192, or 256 bits may be used by the AES algorithm to encrypt and decrypt data in blocks of 128 bits.
 
 <p align="center">
-  <img width="600" src="04-Images/AES.png">
+  <img width="600" src="04-Images/Argorithm.png">
 </p>
 
 
