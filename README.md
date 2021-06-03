@@ -1,7 +1,7 @@
 # OTA/FOTA 
 
 <p align="center">
-  <img width="600" src="04-Images/Head_image.png ">
+  <img width="650" src="04-Images/Head_image.png ">
 </p>
 
 
