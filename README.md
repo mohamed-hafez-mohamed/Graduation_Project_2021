@@ -63,7 +63,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 
 * Using Real time database for storing information about the update like CRC value and a flag to notify the node of new update.
 
-* More about implementation of Intermediate Gateway and Server [NodeMcu&Firebase]( ). 
+* More about implementation of Intermediate Gateway and Server [NodeMcu&Firebase](https://github.com/mohamed-hafez-mohamed/Graduation_Project_2021/tree/master/04-%20Telematics%20Unit). 
 
 ## Graphical User Interface
 
@@ -77,7 +77,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 
 * The application will keep showing the update status till completed.
 
-* More about implementation Graphial user Interface [Gui]( ). 
+* More about implementation Graphial user Interface [Gui](https://github.com/mohamed-hafez-mohamed/Graduation_Project_2021/tree/master/05-%20GUI). 
 
 ## GateWay (OTA Manager)
 
@@ -121,7 +121,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
   1. Reset the system to initiate a branching decision.
   2. Start-Up Branching.
   3. There is a flag to  decide which image to load.
-* More about test cases Application [Systems application]( )
+* More about test cases Application [Systems application](https://github.com/mohamed-hafez-mohamed/Graduation_Project_2021/tree/master/06-%20Test%20Cases)
 
 **Boot-loader Behavior:**
 * Start the branch code to determine which code will be executed.
@@ -133,7 +133,7 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
   1. Check the image status and CRC to confirm it’s correctness.
   2. Execute image from the active region.
   3. If there is error detected, make flag for it.
-* More about Bootloader implementation [Bootloader]( )
+* More about Bootloader implementation [Bootloader](https://github.com/mohamed-hafez-mohamed/Graduation_Project_2021/tree/master/02-%20BootLoader)
 
 ## Software Security
 
