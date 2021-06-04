@@ -177,10 +177,10 @@ OTA is the wireless delivery of new software or data to mobile devices so we can
 </p>
 
 * GateWay Tasks :
-   1. Store decrypted packets into nonvolatile memory.
+   1. Store encrypted packets into nonvolatile memory.
    2. Processing Decryption Algorithm of Cipher received Data From Node-Mcu.
-   3. Transmit ECUs Update over Network bus.
-   4. Displaying loading process on TFT Screen.
+   3. Displaying loading process on TFT Screen.
+   4. Transmit ECUs Update over Network bus.
 
 * More about Software implementation GateWay ECU [GateWay System](https://github.com/mohamed-hafez-mohamed/Graduation_Project_2021/tree/master/03-%20GateWay). 
 
