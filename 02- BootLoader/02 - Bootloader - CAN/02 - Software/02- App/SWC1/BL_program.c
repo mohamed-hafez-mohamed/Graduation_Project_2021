@@ -79,7 +79,7 @@ void ABL_voidStoreRecord(u8 * Copy_u8BufferRecord, u32 Copy_u32RecordAdddress)
 {
 	// Initialize Local Variables.
 	u8 Local_u8DataCounter                                      = BL_INITIALIZE_WITH_ZERO;
-  u8 Local_u8Digit0                                           = BL_INITIALIZE_WITH_ZERO;
+   u8 Local_u8Digit0                                           = BL_INITIALIZE_WITH_ZERO;
 	u8 Local_u8Digit1                                           = BL_INITIALIZE_WITH_ZERO;
 	u8 Local_u8Digit2                                           = BL_INITIALIZE_WITH_ZERO;
 	u8 Local_u8Digit3                                           = BL_INITIALIZE_WITH_ZERO; 
@@ -102,12 +102,12 @@ void ABL_voidStoreRecord(u8 * Copy_u8BufferRecord, u32 Copy_u32RecordAdddress)
 
 void ABL_voidReceiveCode(void)
 {
-  u8  Local_u8RecordBuffer[BL_NUMBER_OF_DIGITS_IN_RECORD]  = {BL_INITIALIZE_WITH_ZERO};
-  u8  Local_u8RecordCounter                                = BL_RESET_COUNTER_TO_START_NEW_REC ;
+   u8  Local_u8RecordBuffer[BL_NUMBER_OF_DIGITS_IN_RECORD]  = {BL_INITIALIZE_WITH_ZERO};
+   u8  Local_u8RecordCounter                                = BL_RESET_COUNTER_TO_START_NEW_REC ;
 	u8  Local_u8UartReceivedStatus                           = BLNOT_RECEIVED;
 	u8  Local_u8GatewayRequest                               = BL_INITIALIZE_WITH_FALSE;
 	u32 Local_u32InactiveImageAddressCounter                 = ADRESS_OF_ACTIVE_IMAGE_STARTUP;
-	 Local_u32SizeOfCode = MFPEC_voidReadWord(ACTIVE_IMAGE_SIZE_ADDRESS);
+	Local_u32SizeOfCode = MFPEC_voidReadWord(ACTIVE_IMAGE_SIZE_ADDRESS);
 	// Erasing flash only one time to be written.
    MFPEC_voidEraseAppArea(FIRST_PAGE_NUMBER_IN_ACTIVE_IMAGE_REGION, LAST_PAGE_NUMBER_IN_ACTIVE_IMAGE_REGION);
 	// Acknowledge Gateway that Header Received.
@@ -149,7 +149,7 @@ void ABL_voidFinishBootLoader(void)
 	// Acknowledge Gateway that the New Cod Received.
 	CanIf_u8Transmit_Byte(UDS_MCU_ACKNOWLEDGE_FINISHING);
 	// Update Headers
-  FEE_voidEraseRestoreHeaderPage(ACTIVE_IMAGE_STATUS_ADDRESS, BR_SET_IMAGE_ACTIVE);
+   FEE_voidEraseRestoreHeaderPage(ACTIVE_IMAGE_STATUS_ADDRESS, BR_SET_IMAGE_ACTIVE);
 	FEE_voidEraseRestoreHeaderPage(BACKUP_IMAGE_STATUS_ADDRESS, BR_SET_IMAGE_BACKUP);
 	// Move the active image to the backup region when the backup region erased.
 	if(Global_u8FirstFlashingFlag == BL_FIRST_FLASHING)
